@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  servlet:
+    contextPath: /api
+spring:
+  messages:
+    basename: error-messages, parameter-name
+logging:
+  level:
+    root: INFO
+security:
+  username: username
+  password: password
+  token: b7e59712-906a-1ab2-f606-d5e8c60b381b
+  allowedOrigins:
+    - "*"
+  allowedMethods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+  allowedHeaders:
+    - Authorization
+  maskHeaderNames:
+    - Authorization
