@@ -6,6 +6,6 @@
     </encoder>
   </appender>
   <root>
-    <appender-ref ref="STDOUT" />
+    <appender-ref ref="STDOUT"/>
   </root>
 </configuration>

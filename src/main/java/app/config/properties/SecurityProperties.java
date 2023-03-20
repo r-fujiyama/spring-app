@@ -16,6 +16,6 @@ public class SecurityProperties {
   private String[] allowedOrigins;
   private String[] allowedMethods;
   private String[] allowedHeaders;
-  private List<String> maskHeaderNames;
+  private List<String> maskRequestHeaderNames;
 
 }

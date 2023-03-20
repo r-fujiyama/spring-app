@@ -21,13 +21,13 @@ public class WebSecurityConfig {
       UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider,
       ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint) throws Exception {
     http.authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.GET,"/v1/user/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/v1/user/**").permitAll()
             .anyRequest().authenticated()
         )
         .securityMatcher("/v1/**")
         .csrf().disable()
-        .authenticationProvider(usernamePasswordAuthenticationProvider)
         .httpBasic().and()
+        .authenticationProvider(usernamePasswordAuthenticationProvider)
         .exceptionHandling()
         .authenticationEntryPoint(errorAuthenticationEntryPoint);
     return http.build();
@@ -38,13 +38,13 @@ public class WebSecurityConfig {
       TokenAuthenticationProvider tokenAuthenticationProvider,
       ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint) throws Exception {
     http.authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.GET,"/v1/user/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/v1/user/**").permitAll()
             .anyRequest().authenticated()
         )
         .securityMatcher("/v2/**")
         .csrf().disable()
-        .authenticationProvider(tokenAuthenticationProvider)
         .httpBasic().and()
+        .authenticationProvider(tokenAuthenticationProvider)
         .exceptionHandling()
         .authenticationEntryPoint(errorAuthenticationEntryPoint);
     return http.build();

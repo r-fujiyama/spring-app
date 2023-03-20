@@ -9,8 +9,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
-@Component
 @AllArgsConstructor
+@Component
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
   private final SecurityProperties securityProperties;

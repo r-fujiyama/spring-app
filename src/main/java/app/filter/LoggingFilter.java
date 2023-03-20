@@ -20,8 +20,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
-@AllArgsConstructor
 @Order(ComponentOrder.LOGGING_FILTER)
+@AllArgsConstructor
 @Component
 public class LoggingFilter extends OncePerRequestFilter {
 
@@ -69,7 +69,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
 
     var headers = new ServletServerHttpRequest(request).getHeaders();
-    securityProperties.getMaskHeaderNames().forEach(maskHeaderName -> {
+    securityProperties.getMaskRequestHeaderNames().forEach(maskHeaderName -> {
       var header = headers.get(maskHeaderName);
       if (header == null) {
         return;

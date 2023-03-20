@@ -86,4 +86,5 @@ public class UserController {
   public DeleteUserResponse deleteUser(@Valid @UserID @PathVariable("userID") long userID) {
     return new DeleteUserResponse(userID);
   }
+
 }

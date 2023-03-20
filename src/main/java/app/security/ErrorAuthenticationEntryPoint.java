@@ -17,9 +17,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-@Component
-@AllArgsConstructor
 @Slf4j
+@AllArgsConstructor
+@Component
 public class ErrorAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
   private final MessageUtils messageUtils;
