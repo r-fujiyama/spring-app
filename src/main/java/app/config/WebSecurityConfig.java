@@ -38,7 +38,7 @@ public class WebSecurityConfig {
       TokenAuthenticationProvider tokenAuthenticationProvider,
       ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint) throws Exception {
     http.authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.GET, "/v1/user/**").permitAll()
+            .requestMatchers(HttpMethod.GET, "/v2/user/**").permitAll()
             .anyRequest().authenticated()
         )
         .securityMatcher("/v2/**")
