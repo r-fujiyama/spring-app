@@ -22,7 +22,7 @@ public class StringToCodeValueEnumConverterFactoryTest {
 
   @ParameterizedTest
   @MethodSource("testValueProvider")
-  public void convert(Class<CodeValue<?, ?>> codeValueClass, String value, CodeValue<?, ?> expected) {
+  public void convert(Class<CodeValue<?, String>> codeValueClass, String value, CodeValue<?, String> expected) {
     var actual = converterFactory.getConverter(codeValueClass).convert(value);
     assertThat(actual).isEqualTo(expected);
   }
@@ -30,7 +30,7 @@ public class StringToCodeValueEnumConverterFactoryTest {
   static Stream<Arguments> testValueProvider() {
     return Stream.of(
         arguments(TestEnum.class, null, null),
-        arguments(TestEnum.class, "", null),
+        arguments(TestEnum.class, "", TestEnum.UNKNOWN),
         arguments(TestEnum.class, "Enable", TestEnum.ENABLE),
         arguments(TestEnum.class, "Unknown", TestEnum.UNKNOWN),
         arguments(TestEnum.class, " ", TestEnum.UNKNOWN),

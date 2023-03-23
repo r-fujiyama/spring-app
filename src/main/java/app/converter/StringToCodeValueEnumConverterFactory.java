@@ -8,14 +8,14 @@ import java.lang.reflect.Method;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.convert.converter.ConverterFactory;
 
-public class StringToCodeValueEnumConverterFactory implements ConverterFactory<String, CodeValue<?, ?>> {
+public class StringToCodeValueEnumConverterFactory implements ConverterFactory<String, CodeValue<?, String>> {
 
   @Override
-  public <T extends CodeValue<?, ?>> Converter<String, T> getConverter(Class<T> targetType) {
+  public <T extends CodeValue<?, String>> Converter<String, T> getConverter(Class<T> targetType) {
     return new StringToCodeValueEnum<>(targetType);
   }
 
-  private static class StringToCodeValueEnum<T extends CodeValue<?, ?>> implements Converter<String, T> {
+  private static class StringToCodeValueEnum<T extends CodeValue<?, String>> implements Converter<String, T> {
 
     private final Class<T> enumType;
 
@@ -26,10 +26,6 @@ public class StringToCodeValueEnumConverterFactory implements ConverterFactory<S
     @Override
     @SuppressWarnings("unchecked")
     public T convert(String source) {
-      if (StringUtils.isEmpty(source)) {
-        return null;
-      }
-
       for (Method method : enumType.getMethods()) {
         if (method.getAnnotation(JsonCreator.class) != null) {
           try {
