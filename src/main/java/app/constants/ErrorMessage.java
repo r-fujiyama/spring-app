@@ -4,7 +4,6 @@ public class ErrorMessage {
 
   // 認証に失敗しました。
   public static final String AUTHENTICATION_FAILED = "app.error.message.authentication.failed";
-
   // サポートしていないContent-Typeが指定されています。
   public static final String UNSUPPORTED_MEDIA_TYPE = "app.error.message.unsupported.media.type";
   // JSONのパースに失敗しました。
