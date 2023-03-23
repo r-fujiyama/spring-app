@@ -21,7 +21,7 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
 
   @Override
   public ServletInputStream getInputStream() {
-    return new CachedBodyServletInputStream(this.cachedBody);
+    return new ByteArrayServletInputStream(this.cachedBody);
   }
 
   @Override
@@ -30,17 +30,17 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
     return new BufferedReader(new InputStreamReader(byteArrayInputStream));
   }
 
-  private static class CachedBodyServletInputStream extends ServletInputStream {
+  private static class ByteArrayServletInputStream extends ServletInputStream {
 
-    private final ByteArrayInputStream cachedBodyInputStream;
+    private final ByteArrayInputStream byteArrayInputStream;
 
-    public CachedBodyServletInputStream(byte[] cachedBody) {
-      this.cachedBodyInputStream = new ByteArrayInputStream(cachedBody);
+    public ByteArrayServletInputStream(byte[] cachedBody) {
+      this.byteArrayInputStream = new ByteArrayInputStream(cachedBody);
     }
 
     @Override
     public boolean isFinished() {
-      return cachedBodyInputStream.available() == 0;
+      return byteArrayInputStream.available() == 0;
     }
 
     @Override
@@ -50,12 +50,12 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
 
     @Override
     public void setReadListener(ReadListener listener) {
-      throw new UnsupportedOperationException();
+      throw new UnsupportedOperationException("Not implemented");
     }
 
     @Override
     public int read() {
-      return cachedBodyInputStream.read();
+      return byteArrayInputStream.read();
     }
   }
 
