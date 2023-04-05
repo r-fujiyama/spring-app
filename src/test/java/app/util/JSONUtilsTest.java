@@ -7,10 +7,7 @@ import app.controller.response.Error;
 import app.controller.response.Response;
 import app.enums.ErrorCode;
 import app.exception.InternalServerErrorException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.StringWriter;
-import java.nio.charset.Charset;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -71,9 +68,8 @@ public class JSONUtilsTest {
     }
 
     @Test
-    public void throwException() throws IOException {
+    public void throwException() {
       var writer = new StringWriter();
-      var writeObject = new Response(new Error(ErrorCode.BAD_REQUEST, "test"));
       assertThatThrownBy(() -> JSONUtils.writeValue(writer, new EmptyClass()))
           .isInstanceOf(InternalServerErrorException.class)
           .hasMessage(
@@ -81,7 +77,7 @@ public class JSONUtilsTest {
     }
   }
 
-  public class EmptyClass {
+  public static class EmptyClass {
 
   }
 
