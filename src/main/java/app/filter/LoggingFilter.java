@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import org.slf4j.MDC;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.server.ServletServerHttpRequest;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,7 +29,8 @@ public class LoggingFilter extends OncePerRequestFilter {
   private final SecurityProperties securityProperties;
 
   @Override
-  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+  protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+      FilterChain filterChain)
       throws ServletException, IOException {
     MDC.put("Trace-ID", UUID.randomUUID().toString());
     var requestWrapper = new CachedBodyHttpServletRequest(request);
