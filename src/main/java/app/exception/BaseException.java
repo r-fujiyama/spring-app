@@ -57,7 +57,7 @@ public abstract class BaseException extends RuntimeException {
   }
 
   private static String convertToErrorMessage(ErrorCode code, String message) {
-    return code.getValue() + ":" + message;
+    return "ErrorCode:" + code.getValue() + ", Message:" + message;
   }
 
   private static String convertToErrorMessage(Error error) {

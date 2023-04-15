@@ -29,7 +29,7 @@ public class JSONUtilsTest {
       assertThatThrownBy(() -> JSONUtils.convertToJSON(new EmptyClass()))
           .isInstanceOf(InternalServerErrorException.class)
           .hasMessage(
-              "InternalServerError:No serializer found for class app.util.JSONUtilsTest$EmptyClass and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS)");
+              "ErrorCode:InternalServerError, Message:No serializer found for class app.util.JSONUtilsTest$EmptyClass and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS)");
     }
 
   }
@@ -50,7 +50,7 @@ public class JSONUtilsTest {
       assertThatThrownBy(() -> JSONUtils.convertToObject("{error}", Response.class))
           .isInstanceOf(InternalServerErrorException.class)
           .hasMessage(
-              "InternalServerError:Unexpected character ('e' (code 101)): was expecting double-quote to start field name\n at [Source: (String)\"{error}\"; line: 1, column: 3]");
+              "ErrorCode:InternalServerError, Message:Unexpected character ('e' (code 101)): was expecting double-quote to start field name\n at [Source: (String)\"{error}\"; line: 1, column: 3]");
     }
   }
 
@@ -73,7 +73,7 @@ public class JSONUtilsTest {
       assertThatThrownBy(() -> JSONUtils.writeValue(writer, new EmptyClass()))
           .isInstanceOf(InternalServerErrorException.class)
           .hasMessage(
-              "InternalServerError:No serializer found for class app.util.JSONUtilsTest$EmptyClass and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS)");
+              "ErrorCode:InternalServerError, Message:No serializer found for class app.util.JSONUtilsTest$EmptyClass and no properties discovered to create BeanSerializer (to avoid exception, disable SerializationFeature.FAIL_ON_EMPTY_BEANS)");
     }
   }
 
