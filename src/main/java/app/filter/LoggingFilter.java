@@ -1,7 +1,7 @@
 package app.filter;
 
 import app.config.properties.SecurityProperties;
-import app.constants.ComponentOrder;
+import app.constants.DIOrder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
-@Order(ComponentOrder.LOGGING_FILTER)
+@Order(DIOrder.LOGGING_FILTER)
 @AllArgsConstructor
 @Component
 public class LoggingFilter extends OncePerRequestFilter {
@@ -46,7 +46,7 @@ public class LoggingFilter extends OncePerRequestFilter {
   }
 
   private String createRequestLog(CachedBodyHttpServletRequest request) {
-    var msg = new StringBuilder("STARE, ");
+    var msg = new StringBuilder("START, ");
     msg.append(request.getMethod()).append(' ');
     msg.append(request.getRequestURI());
 
