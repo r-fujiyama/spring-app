@@ -81,7 +81,7 @@ public class GetUserTest extends ControllerTest {
         arguments("1", null, "taro", "nihon", "20",
             new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに値が入力されていません。")),
         arguments("1", "", "taro", "nihon", "20",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに値が入力されていません。")),
+            new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")),
         arguments("1", "　", "taro", "nihon", "20",
             new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")),
         arguments("1", UserType.UNKNOWN.getValue(), "taro", "nihon", "20",
