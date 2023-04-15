@@ -20,11 +20,12 @@ public class WebSecurityConfig {
   public SecurityFilterChain v1APISecurityFilterChain(HttpSecurity http,
       UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider,
       ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint) throws Exception {
-    http.authorizeHttpRequests(authorize -> authorize
+    http.securityMatcher("/v1/**")
+        .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.GET, "/v1/user/**").permitAll()
             .anyRequest().authenticated()
         )
-        .securityMatcher("/v1/**")
+        .cors().and()
         .csrf().disable()
         .httpBasic().and()
         .authenticationProvider(usernamePasswordAuthenticationProvider)
@@ -37,11 +38,12 @@ public class WebSecurityConfig {
   public SecurityFilterChain v2APISsecurityFilterChain(HttpSecurity http,
       TokenAuthenticationProvider tokenAuthenticationProvider,
       ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint) throws Exception {
-    http.authorizeHttpRequests(authorize -> authorize
+    http.securityMatcher("/v2/**")
+        .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.GET, "/v2/user/**").permitAll()
             .anyRequest().authenticated()
         )
-        .securityMatcher("/v2/**")
+        .cors().and()
         .csrf().disable()
         .httpBasic().and()
         .authenticationProvider(tokenAuthenticationProvider)
