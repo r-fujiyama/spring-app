@@ -26,20 +26,52 @@ public class StringToCodeValueEnumConverterFactory implements ConverterFactory<S
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public T convert(@Nullable String source) {
+      if (source == null) {
+        return null;
+      }
+
       for (Method method : enumType.getMethods()) {
         if (method.getAnnotation(JsonCreator.class) != null) {
-          try {
-            return (T) method.invoke(enumType, source);
-          } catch (Exception e) {
-            throw new InternalServerErrorException(
-                "Failed to execute method: " + enumType.getName() + "#" + method.getName(), e);
-          }
+          checkMethodParameterCount(method);
+          var arg = stringToArgType(source, method.getParameterTypes()[0]);
+          return enumType.cast(methodInvoke(method, arg));
         }
       }
-      throw new IllegalArgumentException(
+      throw new UnsupportedOperationException(
           "Method with @JsonCreator implemented in " + enumType.getName() + " does not exist");
     }
+
+    private void checkMethodParameterCount(Method method) {
+      if (method.getParameterCount() != 1) {
+        throw new IllegalArgumentException(enumType.getName() + "#" + method.getName() + " must have one argument");
+      }
+    }
+
+    private Object stringToArgType(String source, Class<?> argType) {
+      try {
+        if (argType == String.class) {
+          return source;
+        }
+        if (argType == Integer.class) {
+          return Integer.valueOf(source);
+        }
+      } catch (Exception e) {
+        throw new IllegalArgumentException(source.getClass().getName() + " cannot be convert to " + argType.getName(),
+            e);
+      }
+      throw new UnsupportedOperationException("Unsupported " + argType.getName());
+    }
+
+    private Object methodInvoke(Method method, Object source) {
+      try {
+        return method.invoke(enumType, source);
+      } catch (Exception e) {
+        throw new InternalServerErrorException(
+            "Failed to execute method: " + enumType.getName() + "#" + method.getName(), e);
+      }
+    }
+
   }
+
 }

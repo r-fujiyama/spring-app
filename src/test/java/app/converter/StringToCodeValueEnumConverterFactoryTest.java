@@ -29,33 +29,20 @@ public class StringToCodeValueEnumConverterFactoryTest {
 
   static Stream<Arguments> testValueProvider() {
     return Stream.of(
-        arguments(TestEnum.class, null, null),
-        arguments(TestEnum.class, "", TestEnum.UNKNOWN),
-        arguments(TestEnum.class, "Enable", TestEnum.ENABLE),
-        arguments(TestEnum.class, "Unknown", TestEnum.UNKNOWN),
-        arguments(TestEnum.class, " ", TestEnum.UNKNOWN),
-        arguments(TestEnum.class, "illegal-value", TestEnum.UNKNOWN)
+        arguments(StringEnum.class, null, null),
+        arguments(StringEnum.class, "", StringEnum.UNKNOWN),
+        arguments(StringEnum.class, "Unknown", StringEnum.UNKNOWN),
+        arguments(StringEnum.class, "Enable", StringEnum.ENABLE),
+        arguments(IntegerEnum.class, null, null),
+        arguments(IntegerEnum.class, "0", IntegerEnum.UNKNOWN),
+        arguments(IntegerEnum.class, "1", IntegerEnum.ENABLE),
+        arguments(StringEnum.class, " ", StringEnum.UNKNOWN),
+        arguments(StringEnum.class, "illegal-value", StringEnum.UNKNOWN)
     );
   }
 
-  @Test
-  public void internalErrorException() {
-    assertThatThrownBy(() -> converterFactory.getConverter(InternalErrorExceptionEnum.class).convert("Enable"))
-        .isInstanceOf(InternalServerErrorException.class)
-        .hasMessage(
-            "InternalServerError:Failed to execute method: app.converter.StringToCodeValueEnumConverterFactoryTest$InternalErrorExceptionEnum#fromValue");
-  }
-
-  @Test
-  public void illegalArgumentException() {
-    assertThatThrownBy(() -> converterFactory.getConverter(IllegalArgumentExceptionEnum.class).convert("Enable"))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage(
-            "Method with @JsonCreator implemented in app.converter.StringToCodeValueEnumConverterFactoryTest$IllegalArgumentExceptionEnum does not exist");
-  }
-
   @AllArgsConstructor
-  public enum TestEnum implements CodeValue<String, String> {
+  public enum StringEnum implements CodeValue<String, String> {
 
     UNKNOWN("Unknown", "Unknown"),
     ENABLE("1", "Enable");
@@ -75,13 +62,47 @@ public class StringToCodeValueEnumConverterFactoryTest {
     }
 
     @JsonCreator
-    public static TestEnum fromValue(String value) {
+    public static StringEnum fromValue(String value) {
       return CodeValue.fromValue(Arrays.asList(values()), value, UNKNOWN);
     }
   }
 
   @AllArgsConstructor
-  public enum InternalErrorExceptionEnum implements CodeValue<String, String> {
+  public enum IntegerEnum implements CodeValue<String, Integer> {
+
+    UNKNOWN("Unknown", 0),
+    ENABLE("1", 1);
+
+    private final String code;
+    private final Integer value;
+
+    @Override
+    public String getCode() {
+      return this.code;
+    }
+
+    @JsonValue
+    @Override
+    public Integer getValue() {
+      return this.value;
+    }
+
+    @JsonCreator
+    public static IntegerEnum fromValue(Integer value) {
+      return CodeValue.fromValue(Arrays.asList(values()), value, UNKNOWN);
+    }
+  }
+
+  @Test
+  public void unmatchedMethodParameterCount() {
+    assertThatThrownBy(() -> converterFactory.getConverter(UnmatchedMethodParameterCount.class).convert("Enable"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(
+            "app.converter.StringToCodeValueEnumConverterFactoryTest$UnmatchedMethodParameterCount#fromValue must have one argument");
+  }
+
+  @AllArgsConstructor
+  public enum UnmatchedMethodParameterCount implements CodeValue<String, String> {
 
     UNKNOWN("Unknown", "Unknown"),
     ENABLE("1", "Enable");
@@ -101,14 +122,87 @@ public class StringToCodeValueEnumConverterFactoryTest {
     }
 
     @JsonCreator
-    public static InternalErrorExceptionEnum fromValue(String value1, String value2) {
+    public static UnmatchedMethodParameterCount fromValue(String value1, String value2) {
       return CodeValue.fromValue(Arrays.asList(values()), value1, UNKNOWN);
     }
+  }
 
+  @Test
+  public void failedToConvertToArgumentType() {
+    assertThatThrownBy(() -> converterFactory.getConverter(IntegerEnum.class).convert("integer"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("java.lang.String cannot be convert to java.lang.Integer");
+  }
+
+  @Test
+  public void unsupportedArgumentType() {
+    assertThatThrownBy(() -> converterFactory.getConverter(ObjectEnum.class).convert("Enable"))
+        .isInstanceOf(UnsupportedOperationException.class)
+        .hasMessage("Unsupported java.lang.Object");
   }
 
   @AllArgsConstructor
-  public enum IllegalArgumentExceptionEnum implements CodeValue<String, String> {
+  public enum ObjectEnum implements CodeValue<String, Object> {
+
+    UNKNOWN("Unknown", "Unknown"),
+    ENABLE("1", "Enable");
+
+    private final String code;
+    private final Object value;
+
+    @Override
+    public String getCode() {
+      return this.code;
+    }
+
+    @JsonValue
+    @Override
+    public Object getValue() {
+      return this.value;
+    }
+
+    @JsonCreator
+    public static ObjectEnum fromValue(Object value) {
+      return CodeValue.fromValue(Arrays.asList(values()), value, UNKNOWN);
+    }
+  }
+
+  @Test
+  public void jsonCreatorIsNotImplemented() {
+    assertThatThrownBy(() -> converterFactory.getConverter(JsonCreatorIsNotImplemented.class).convert("Enable"))
+        .isInstanceOf(UnsupportedOperationException.class)
+        .hasMessage(
+            "Method with @JsonCreator implemented in app.converter.StringToCodeValueEnumConverterFactoryTest$JsonCreatorIsNotImplemented does not exist");
+  }
+
+  @AllArgsConstructor
+  public enum JsonCreatorIsNotImplemented implements CodeValue<String, String> {
+    ;
+    private final String code;
+    private final String value;
+
+    @Override
+    public String getCode() {
+      return this.code;
+    }
+
+    @JsonValue
+    @Override
+    public String getValue() {
+      return this.value;
+    }
+  }
+
+  @Test
+  public void failedToExecuteMethod() {
+    assertThatThrownBy(() -> converterFactory.getConverter(FailedToExecuteMethod.class).convert("Enable"))
+        .isInstanceOf(InternalServerErrorException.class)
+        .hasMessage(
+            "ErrorCode:InternalServerError, Message:Failed to execute method: app.converter.StringToCodeValueEnumConverterFactoryTest$FailedToExecuteMethod#fromValue");
+  }
+
+  @AllArgsConstructor
+  public enum FailedToExecuteMethod implements CodeValue<String, String> {
     ;
     private final String code;
     private final String value;
@@ -124,6 +218,10 @@ public class StringToCodeValueEnumConverterFactoryTest {
       return this.value;
     }
 
+    @JsonCreator
+    public static FailedToExecuteMethod fromValue(String value) {
+      throw new RuntimeException();
+    }
   }
 
 }
