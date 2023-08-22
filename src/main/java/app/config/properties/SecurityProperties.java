@@ -12,7 +12,7 @@ public class SecurityProperties {
 
   private String username;
   private String password;
-  private String token;
+  private String apiKey;
   private String[] allowedOrigins;
   private String[] allowedMethods;
   private String[] allowedHeaders;

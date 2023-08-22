@@ -11,7 +11,7 @@ logging:
 security:
   username: username
   password: password
-  token: b7e59712-906a-1ab2-f606-d5e8c60b381b
+  apiKey: b7e59712-906a-1ab2-f606-d5e8c60b381b
   allowedOrigins:
     - "*"
   allowedMethods:
@@ -20,6 +20,7 @@ security:
     - PUT
     - DELETE
   allowedHeaders:
-    - Authorization
+    - API-Key
   maskRequestHeaderNames:
     - Authorization
+    - API-Key

@@ -1,25 +1,28 @@
 package app.config;
 
+import app.security.APIKeyAuthenticationFilterConfig;
+import app.security.APIKeyAuthenticationProvider;
 import app.security.ErrorAuthenticationEntryPoint;
-import app.security.TokenAuthenticationProvider;
 import app.security.UsernamePasswordAuthenticationProvider;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 
+@AllArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+  private final ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint;
+
   @Bean
   public SecurityFilterChain v1APISecurityFilterChain(HttpSecurity http,
-      UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider,
-      ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint) throws Exception {
+      UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider) throws Exception {
     http.securityMatcher("/v1/**")
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.GET, "/v1/user/**").permitAll()
@@ -27,6 +30,7 @@ public class WebSecurityConfig {
         )
         .cors().and()
         .csrf().disable()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .httpBasic().and()
         .authenticationProvider(usernamePasswordAuthenticationProvider)
         .exceptionHandling()
@@ -36,8 +40,7 @@ public class WebSecurityConfig {
 
   @Bean
   public SecurityFilterChain v2APISsecurityFilterChain(HttpSecurity http,
-      TokenAuthenticationProvider tokenAuthenticationProvider,
-      ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint) throws Exception {
+      APIKeyAuthenticationProvider apiKeyAuthenticationProvider) throws Exception {
     http.securityMatcher("/v2/**")
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers(HttpMethod.GET, "/v2/user/**").permitAll()
@@ -45,17 +48,12 @@ public class WebSecurityConfig {
         )
         .cors().and()
         .csrf().disable()
-        .httpBasic().and()
-        .authenticationProvider(tokenAuthenticationProvider)
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        .apply(new APIKeyAuthenticationFilterConfig()).and()
+        .authenticationProvider(apiKeyAuthenticationProvider)
         .exceptionHandling()
         .authenticationEntryPoint(errorAuthenticationEntryPoint);
     return http.build();
-  }
-
-  @Bean
-  public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-    var authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-    return authenticationManagerBuilder.build();
   }
 
 }
