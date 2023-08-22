@@ -9,7 +9,7 @@ import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
 import app.controller.user.UserController;
-import app.controller.user.request.UpdateUserRequest;
+import app.controller.user.request.v1.UpdateUserRequest;
 import app.controller.user.response.UpdateUserResponse;
 import app.controller.user.response.User;
 import app.enums.ErrorCode;

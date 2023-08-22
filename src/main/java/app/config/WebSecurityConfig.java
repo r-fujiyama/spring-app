@@ -30,7 +30,9 @@ public class WebSecurityConfig {
         )
         .cors().and()
         .csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        .sessionManagement((session) -> session
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
         .httpBasic().and()
         .authenticationProvider(usernamePasswordAuthenticationProvider)
         .exceptionHandling()
@@ -48,7 +50,9 @@ public class WebSecurityConfig {
         )
         .cors().and()
         .csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        .sessionManagement((session) -> session
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        )
         .apply(new APIKeyAuthenticationFilterConfig()).and()
         .authenticationProvider(apiKeyAuthenticationProvider)
         .exceptionHandling()
