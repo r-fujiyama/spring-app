@@ -34,7 +34,7 @@ public class StringToCodeValueEnumConverterFactory implements ConverterFactory<S
       for (Method method : enumType.getMethods()) {
         if (method.getAnnotation(JsonCreator.class) != null) {
           checkMethodParameterCount(method);
-          var arg = stringToArgType(source, method.getParameterTypes()[0]);
+          var arg = toTargetType(source, method.getParameterTypes()[0]);
           return enumType.cast(methodInvoke(method, arg));
         }
       }
@@ -48,19 +48,19 @@ public class StringToCodeValueEnumConverterFactory implements ConverterFactory<S
       }
     }
 
-    private Object stringToArgType(String source, Class<?> argType) {
+    private Object toTargetType(String source, Class<?> targetType) {
       try {
-        if (argType == String.class) {
+        if (targetType == String.class) {
           return source;
         }
-        if (argType == Integer.class) {
+        if (targetType == Integer.class) {
           return Integer.valueOf(source);
         }
       } catch (Exception e) {
-        throw new IllegalArgumentException(source.getClass().getName() + " cannot be convert to " + argType.getName(),
+        throw new IllegalArgumentException(source.getClass().getName() + " cannot be convert to " + targetType.getName(),
             e);
       }
-      throw new UnsupportedOperationException("Unsupported " + argType.getName());
+      throw new UnsupportedOperationException("Unsupported " + targetType.getName());
     }
 
     private Object methodInvoke(Method method, Object source) {
