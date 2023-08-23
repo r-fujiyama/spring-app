@@ -8,9 +8,6 @@ spring:
 logging:
   level:
     root: INFO
-    org:
-      springframework:
-        security: TRACE
 security:
   username: username
   password: password
