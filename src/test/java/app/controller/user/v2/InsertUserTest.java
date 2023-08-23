@@ -8,8 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
-import app.controller.user.UserControllerV2;
-import app.controller.user.request.v2.InsertUserRequest;
+import app.controller.user.v2.request.InsertUserRequest;
 import app.enums.ErrorCode;
 import app.enums.UserType;
 import app.util.JSONUtils;
@@ -22,7 +21,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 
-@WebMvcTest(controllers = UserControllerV2.class)
+@WebMvcTest(controllers = UserController.class)
 public class InsertUserTest extends ControllerTest {
 
   @Test

@@ -1,4 +1,4 @@
-package app.controller.user.response;
+package app.controller.user.v1.response;
 
 import app.controller.response.Response;
 import lombok.EqualsAndHashCode;
@@ -6,8 +6,8 @@ import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
-public class GetUserResponse extends Response {
+public class DeleteUserResponse extends Response {
 
-  User user;
+  long userID;
 
 }

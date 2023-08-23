@@ -8,9 +8,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
-import app.controller.user.UserControllerV2;
-import app.controller.user.response.GetUserResponse;
 import app.controller.user.response.User;
+import app.controller.user.v2.response.GetUserResponse;
 import app.enums.ErrorCode;
 import app.enums.UserStatus;
 import app.enums.UserType;
@@ -23,7 +22,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-@WebMvcTest(controllers = UserControllerV2.class)
+@WebMvcTest(controllers = UserController.class)
 public class GetUserTest extends ControllerTest {
 
   @Test

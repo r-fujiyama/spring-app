@@ -1,4 +1,4 @@
-package app.controller.user.request.v2;
+package app.controller.user.v2.request;
 
 
 import app.constants.RegExp;
@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Value;
 
 @Value
-public class InsertUserRequest {
+public class GetUserRequest {
 
   @NotNull
   @NotUnknown

@@ -8,10 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
-import app.controller.user.UserController;
-import app.controller.user.request.v1.InsertUserRequest;
-import app.controller.user.response.InsertUserResponse;
 import app.controller.user.response.User;
+import app.controller.user.v1.request.InsertUserRequest;
+import app.controller.user.v1.response.InsertUserResponse;
 import app.enums.ErrorCode;
 import app.enums.UserStatus;
 import app.enums.UserType;

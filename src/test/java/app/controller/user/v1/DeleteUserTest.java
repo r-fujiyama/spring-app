@@ -8,8 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
-import app.controller.user.UserController;
-import app.controller.user.response.DeleteUserResponse;
+import app.controller.user.v1.response.DeleteUserResponse;
 import app.enums.ErrorCode;
 import app.util.JSONUtils;
 import java.nio.charset.StandardCharsets;

@@ -1,17 +1,17 @@
-package app.controller.user;
+package app.controller.user.v1;
 
 import app.constants.RegExp;
 import app.constraints.Age;
 import app.constraints.NotUnknown;
 import app.constraints.Pattern;
 import app.constraints.UserID;
-import app.controller.user.request.v1.InsertUserRequest;
-import app.controller.user.request.v1.UpdateUserRequest;
-import app.controller.user.response.DeleteUserResponse;
-import app.controller.user.response.GetUserResponse;
-import app.controller.user.response.InsertUserResponse;
-import app.controller.user.response.UpdateUserResponse;
 import app.controller.user.response.User;
+import app.controller.user.v1.request.InsertUserRequest;
+import app.controller.user.v1.request.UpdateUserRequest;
+import app.controller.user.v1.response.DeleteUserResponse;
+import app.controller.user.v1.response.GetUserResponse;
+import app.controller.user.v1.response.InsertUserResponse;
+import app.controller.user.v1.response.UpdateUserResponse;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import jakarta.validation.Valid;
