@@ -1,1 +1,8 @@
+// TODO springのversionをリリース版に戻したら削除する。"build.gradle"からも関連設定を削除する。
+pluginManagement {
+    repositories {
+        maven { url 'https://repo.spring.io/milestone' }
+        gradlePluginPortal()
+    }
+}
 rootProject.name = 'app'
