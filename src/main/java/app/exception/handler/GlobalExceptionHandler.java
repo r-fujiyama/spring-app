@@ -39,7 +39,7 @@ public class GlobalExceptionHandler {
    * @return Failure {@link Response}
    */
   @ExceptionHandler(BaseException.class)
-  public ResponseEntity<Response> handleMyException(BaseException ex) {
+  public ResponseEntity<Response> handleBaseException(BaseException ex) {
     log.info(ex.getMessage(), ex);
     return new ResponseEntity<>(new Response(ex.getErrors()), ex.getHttpStatus());
   }

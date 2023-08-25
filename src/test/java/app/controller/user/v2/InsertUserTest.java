@@ -21,20 +21,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 
-@WebMvcTest(controllers = UserController.class)
+@WebMvcTest(controllers = UserV2Controller.class)
 public class InsertUserTest extends ControllerTest {
 
   @Test
   public void OK200() throws Exception {
     var req = new InsertUserRequest(UserType.PRIVATE, "taro", "nihon", 20);
-    var json = mockMvc.perform(post("/v2/user/{userID}", 1)
+    var actual = mockMvc.perform(post("/v2/user/{userID}", 1)
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.convertToJSON(req)))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, Response.class);
-    var expected = new Response();
+    var expected = JSONUtils.convertToJSON(new Response());
     assertThat(actual).isEqualTo(expected);
   }
 
@@ -43,14 +42,13 @@ public class InsertUserTest extends ControllerTest {
   public void validationErrorTest(String userID, UserType userType, String firstName, String lastName,
       Integer age, Error error) throws Exception {
     var req = new InsertUserRequest(userType, firstName, lastName, age);
-    var json = mockMvc.perform(post("/v2/user/{userID}", userID)
+    var actual = mockMvc.perform(post("/v2/user/{userID}", userID)
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.convertToJSON(req)))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, Response.class);
-    var expected = new Response(error);
+    var expected = JSONUtils.convertToJSON(new Response(error));
     assertThat(actual).isEqualTo(expected);
   }
 
@@ -99,14 +97,14 @@ public class InsertUserTest extends ControllerTest {
   @Test
   public void unsupportedMediaTypesTest() throws Exception {
     var req = new InsertUserRequest(UserType.PRIVATE, "taro", "nihon", 20);
-    var json = mockMvc.perform(post("/v2/user/{userID}", 1)
+    var actual = mockMvc.perform(post("/v2/user/{userID}", 1)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .content(JSONUtils.convertToJSON(req)))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, Response.class);
-    var expected = new Response(new Error(ErrorCode.BAD_REQUEST, "サポートしていないContent-Typeが指定されています。"));
+    var expected = JSONUtils.convertToJSON(
+        new Response(new Error(ErrorCode.BAD_REQUEST, "サポートしていないContent-Typeが指定されています。")));
     assertThat(actual).isEqualTo(expected);
   }
 

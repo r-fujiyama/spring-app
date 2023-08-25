@@ -19,29 +19,27 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-@WebMvcTest(controllers = UserController.class)
+@WebMvcTest(controllers = UserV1Controller.class)
 public class DeleteUserTest extends ControllerTest {
 
   @Test
   public void OK200() throws Exception {
-    var json = mockMvc.perform(delete("/v1/user/{userID}", 1))
+    var actual = mockMvc.perform(delete("/v1/user/{userID}", 1))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, DeleteUserResponse.class);
-    var expected = new DeleteUserResponse(1L);
+    var expected = JSONUtils.convertToJSON(new DeleteUserResponse(1L));
     assertThat(actual).isEqualTo(expected);
   }
 
   @ParameterizedTest
   @MethodSource("validationErrorProvider")
   public void validationErrorTest(String userID, Error error) throws Exception {
-    var json = mockMvc.perform(delete("/v1/user/{userID}", userID))
+    var actual = mockMvc.perform(delete("/v1/user/{userID}", userID))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, Response.class);
-    var expected = new Response(error);
+    var expected = JSONUtils.convertToJSON(new Response(error));
     assertThat(actual).isEqualTo(expected);
   }
 

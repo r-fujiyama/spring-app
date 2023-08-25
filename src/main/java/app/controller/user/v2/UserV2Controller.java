@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequestMapping(path = "v2/user")
-public class UserController {
+public class UserV2Controller {
 
   @GetMapping(path = "{userID}")
   public GetUserResponse getUserV2(@Valid @UserID @PathVariable("userID") long userID,

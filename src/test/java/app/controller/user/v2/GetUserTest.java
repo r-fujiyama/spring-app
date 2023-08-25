@@ -22,12 +22,12 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 
-@WebMvcTest(controllers = UserController.class)
+@WebMvcTest(controllers = UserV2Controller.class)
 public class GetUserTest extends ControllerTest {
 
   @Test
   public void OK200() throws Exception {
-    var json = mockMvc.perform(get("/v2/user/{userID}", 1)
+    var actual = mockMvc.perform(get("/v2/user/{userID}", 1)
             .param("userType", UserType.PRIVATE.getValue())
             .param("firstName", "taro")
             .param("lastName", "nihon")
@@ -35,8 +35,7 @@ public class GetUserTest extends ControllerTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, GetUserResponse.class);
-    var expected = new GetUserResponse(
+    var expected = JSONUtils.convertToJSON(new GetUserResponse(
         User.builder()
             .id(1L)
             .type(UserType.PRIVATE)
@@ -45,16 +44,15 @@ public class GetUserTest extends ControllerTest {
             .lastName("nihon")
             .age(20)
             .build()
-    );
+    ));
     assertThat(actual).isEqualTo(expected);
   }
 
   @ParameterizedTest
   @MethodSource("validationErrorProvider")
   public void validationErrorTest(String userID, String userType, String firstName, String lastName,
-      String age, Error error)
-      throws Exception {
-    var json = mockMvc.perform(get("/v2/user/{userID}", userID)
+      String age, Error error) throws Exception {
+    var actual = mockMvc.perform(get("/v2/user/{userID}", userID)
             .param("userType", userType)
             .param("firstName", firstName)
             .param("lastName", lastName)
@@ -62,8 +60,7 @@ public class GetUserTest extends ControllerTest {
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, Response.class);
-    var expected = new Response(error);
+    var expected = JSONUtils.convertToJSON(new Response(error));
     assertThat(actual).isEqualTo(expected);
   }
 

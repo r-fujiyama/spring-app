@@ -24,20 +24,19 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 
-@WebMvcTest(controllers = UserController.class)
+@WebMvcTest(controllers = UserV1Controller.class)
 public class UpdateUserTest extends ControllerTest {
 
   @Test
   public void OK200() throws Exception {
     var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "nihon", 20);
-    var json = mockMvc.perform(put("/v1/user/{userID}", 1)
+    var actual = mockMvc.perform(put("/v1/user/{userID}", 1)
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.convertToJSON(req)))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, UpdateUserResponse.class);
-    var expected = new UpdateUserResponse(
+    var expected = JSONUtils.convertToJSON(new UpdateUserResponse(
         User.builder()
             .id(1L)
             .type(UserType.PRIVATE)
@@ -46,7 +45,7 @@ public class UpdateUserTest extends ControllerTest {
             .lastName("nihon")
             .age(20)
             .build()
-    );
+    ));
     assertThat(actual).isEqualTo(expected);
   }
 
@@ -55,14 +54,13 @@ public class UpdateUserTest extends ControllerTest {
   public void validationErrorTest(String userID, UserType userType, String firstName, String lastName,
       Integer age, Error error) throws Exception {
     var req = new UpdateUserRequest(userType, firstName, lastName, age);
-    var json = mockMvc.perform(put("/v1/user/{userID}", userID)
+    var actual = mockMvc.perform(put("/v1/user/{userID}", userID)
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.convertToJSON(req)))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, Response.class);
-    var expected = new Response(error);
+    var expected = JSONUtils.convertToJSON(new Response(error));
     assertThat(actual).isEqualTo(expected);
   }
 
@@ -111,14 +109,14 @@ public class UpdateUserTest extends ControllerTest {
   @Test
   public void unsupportedMediaTypesTest() throws Exception {
     var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "nihon", 20);
-    var json = mockMvc.perform(put("/v1/user/{userID}", 1)
+    var actual = mockMvc.perform(put("/v1/user/{userID}", 1)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .content(JSONUtils.convertToJSON(req)))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(json, Response.class);
-    var expected = new Response(new Error(ErrorCode.BAD_REQUEST, "サポートしていないContent-Typeが指定されています。"));
+    var expected = JSONUtils.convertToJSON(
+        new Response(new Error(ErrorCode.BAD_REQUEST, "サポートしていないContent-Typeが指定されています。")));
     assertThat(actual).isEqualTo(expected);
   }
 

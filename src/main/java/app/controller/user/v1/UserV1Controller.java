@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequestMapping(path = "v1/user")
-public class UserController {
+public class UserV1Controller {
 
   @GetMapping(path = "{userID}")
   public GetUserResponse getUser(
