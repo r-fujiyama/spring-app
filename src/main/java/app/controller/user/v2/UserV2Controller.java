@@ -5,14 +5,17 @@ import app.controller.response.Response;
 import app.controller.user.response.User;
 import app.controller.user.v2.request.GetUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;
+import app.controller.user.v2.request.UpdateUserRequest;
 import app.controller.user.v2.response.GetUserResponse;
 import app.enums.UserStatus;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,6 +43,17 @@ public class UserV2Controller {
   @PostMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public Response insertUser(@Valid @UserID @PathVariable("userID") long userID,
       @Valid @RequestBody InsertUserRequest request) {
+    return new Response();
+  }
+
+  @PutMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public Response updateUser(@Valid @UserID @PathVariable("userID") long userID,
+      @Valid @RequestBody UpdateUserRequest request) {
+    return new Response();
+  }
+
+  @DeleteMapping(path = "{userID}")
+  public Response deleteUser(@Valid @UserID @PathVariable("userID") long userID) {
     return new Response();
   }
 
