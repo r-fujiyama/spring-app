@@ -1,4 +1,4 @@
-package app.constraints;
+package app.constraint;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -10,6 +10,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+import jakarta.validation.ReportAsSingleViolation;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -17,13 +20,15 @@ import java.lang.annotation.Target;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Repeatable(NotUnknown.List.class)
+@Repeatable(UserID.List.class)
 @Documented
 @Constraint(validatedBy = {})
-@DisableEnum(value = "Unknown")
-public @interface NotUnknown {
+@ReportAsSingleViolation
+@Min(value = 1)
+@Max(value = Long.MAX_VALUE)
+public @interface UserID {
 
-  String message() default "";
+  String message() default "{validation.constraints.UserID.message}";
 
   Class<?>[] groups() default {};
 
@@ -34,6 +39,6 @@ public @interface NotUnknown {
   @Documented
   @interface List {
 
-    NotUnknown[] value();
+    UserID[] value();
   }
 }

@@ -1,6 +1,6 @@
 package app.controller.user.v2;
 
-import app.constraints.UserID;
+import app.constraint.UserID;
 import app.controller.response.Response;
 import app.controller.user.v2.request.GetUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;

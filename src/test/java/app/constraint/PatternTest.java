@@ -1,10 +1,10 @@
-package app.constraints;
+package app.constraint;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import app.constants.RegExp;
-import app.constraints.Pattern.Flag;
+import app.constraint.Pattern.Flag;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

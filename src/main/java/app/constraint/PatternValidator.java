@@ -1,6 +1,6 @@
-package app.constraints;
+package app.constraint;
 
-import app.constraints.Pattern.Flag;
+import app.constraint.Pattern.Flag;
 import app.util.StringUtils;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

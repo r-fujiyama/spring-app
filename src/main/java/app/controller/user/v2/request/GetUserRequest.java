@@ -2,9 +2,9 @@ package app.controller.user.v2.request;
 
 
 import app.constants.RegExp;
-import app.constraints.Age;
-import app.constraints.NotUnknown;
-import app.constraints.Pattern;
+import app.constraint.Age;
+import app.constraint.NotUnknown;
+import app.constraint.Pattern;
 import app.enums.UserType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

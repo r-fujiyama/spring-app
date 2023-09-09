@@ -1,10 +1,10 @@
 package app.controller.user.v1;
 
 import app.constants.RegExp;
-import app.constraints.Age;
-import app.constraints.NotUnknown;
-import app.constraints.Pattern;
-import app.constraints.UserID;
+import app.constraint.Age;
+import app.constraint.NotUnknown;
+import app.constraint.Pattern;
+import app.constraint.UserID;
 import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;

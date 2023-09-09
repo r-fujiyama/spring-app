@@ -1,4 +1,4 @@
-package app.constraints;
+package app.constraint;
 
 import app.enums.CodeValue;
 import jakarta.validation.ConstraintValidator;

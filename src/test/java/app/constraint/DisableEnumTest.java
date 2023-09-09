@@ -1,4 +1,4 @@
-package app.constraints;
+package app.constraint;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -13,7 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class NotUnknownTest extends ConstraintsTest {
+public class DisableEnumTest extends ConstraintsTest {
 
   @ParameterizedTest
   @MethodSource("testValueProvider")
@@ -60,14 +60,9 @@ public class NotUnknownTest extends ConstraintsTest {
     public static TestEnum fromValue(String value) {
       return CodeValue.fromValue(Arrays.asList(values()), value, UNKNOWN);
     }
-
   }
 
-  private record EnumValue(@NotUnknown TestEnum value, boolean hasError) {
-
-  }
-
-  private record StringValue(@NotUnknown String value) {
+  private record EnumValue(@DisableEnum(value = "Unknown") TestEnum value, boolean hasError) {
 
   }
 

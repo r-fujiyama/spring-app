@@ -1,4 +1,4 @@
-package app.constraints;
+package app.constraint;
 
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;

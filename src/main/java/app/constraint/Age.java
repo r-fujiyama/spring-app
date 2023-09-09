@@ -1,4 +1,4 @@
-package app.constraints;
+package app.constraint;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -10,40 +10,35 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+import jakarta.validation.ReportAsSingleViolation;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import lombok.AllArgsConstructor;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Repeatable(Pattern.List.class)
+@Repeatable(Age.List.class)
 @Documented
-@Constraint(validatedBy = {PatternValidator.class})
-public @interface Pattern {
+@Constraint(validatedBy = {})
+@ReportAsSingleViolation
+@Min(value = 0)
+@Max(value = 999)
+public @interface Age {
 
-  String regexp();
-
-  Flag flag() default Flag.SKIP_BLANK;
-
-  String message() default "{validation.constraints.Pattern.message}";
+  String message() default "{validation.constraints.Age.message}";
 
   Class<?>[] groups() default {};
 
   Class<? extends Payload>[] payload() default {};
-
-  @AllArgsConstructor
-  enum Flag {
-    NORMAL,
-    SKIP_BLANK
-  }
 
   @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
   @Retention(RUNTIME)
   @Documented
   @interface List {
 
-    Pattern[] value();
+    Age[] value();
   }
 }
