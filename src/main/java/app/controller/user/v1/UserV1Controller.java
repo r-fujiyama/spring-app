@@ -5,17 +5,17 @@ import app.constraints.Age;
 import app.constraints.NotUnknown;
 import app.constraints.Pattern;
 import app.constraints.UserID;
-import app.controller.user.response.User;
 import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;
 import app.controller.user.v1.response.GetUserResponse;
 import app.controller.user.v1.response.InsertUserResponse;
 import app.controller.user.v1.response.UpdateUserResponse;
-import app.enums.UserStatus;
 import app.enums.UserType;
+import app.service.userV1.UserV1Service;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,10 +28,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Validated
+@AllArgsConstructor
 @RestController
 @RequestMapping(path = "v1/user")
+@Validated
 public class UserV1Controller {
+
+  private final UserV1Service userService;
 
   @GetMapping(path = "{userID}")
   public GetUserResponse getUser(
@@ -40,51 +43,24 @@ public class UserV1Controller {
       @Valid @NotBlank @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String firstName,
       @Valid @NotBlank @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String lastName,
       @Valid @Age @RequestParam Integer age) {
-    return new GetUserResponse(
-        User.builder()
-            .id(userID)
-            .type(userType)
-            .status(UserStatus.REGISTERED)
-            .firstName(firstName)
-            .lastName(lastName)
-            .age(age)
-            .build()
-    );
+    return userService.getUser(userID, userType, firstName, lastName, age);
   }
 
   @PostMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public InsertUserResponse insertUser(@Valid @UserID @PathVariable("userID") long userID,
       @Valid @RequestBody InsertUserRequest request) {
-    return new InsertUserResponse(
-        User.builder()
-            .id(userID)
-            .type(request.getUserType())
-            .status(UserStatus.REGISTERED)
-            .firstName(request.getFirstName())
-            .lastName(request.getLastName())
-            .age(request.getAge())
-            .build()
-    );
+    return userService.insertUser(userID, request);
   }
 
   @PutMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public UpdateUserResponse updateUser(@Valid @UserID @PathVariable("userID") long userID,
       @Valid @RequestBody UpdateUserRequest request) {
-    return new UpdateUserResponse(
-        User.builder()
-            .id(userID)
-            .type(request.getUserType())
-            .status(UserStatus.REGISTERED)
-            .firstName(request.getFirstName())
-            .lastName(request.getLastName())
-            .age(request.getAge())
-            .build()
-    );
+    return userService.updateUser(userID, request);
   }
 
   @DeleteMapping(path = "{userID}")
   public DeleteUserResponse deleteUser(@Valid @UserID @PathVariable("userID") long userID) {
-    return new DeleteUserResponse(userID);
+    return userService.deleteUser(userID);
   }
 
 }

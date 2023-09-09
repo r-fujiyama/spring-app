@@ -2,13 +2,13 @@ package app.controller.user.v2;
 
 import app.constraints.UserID;
 import app.controller.response.Response;
-import app.controller.user.response.User;
 import app.controller.user.v2.request.GetUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;
 import app.controller.user.v2.request.UpdateUserRequest;
 import app.controller.user.v2.response.GetUserResponse;
-import app.enums.UserStatus;
+import app.service.userV2.UserV2Service;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,41 +20,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Validated
+@AllArgsConstructor
 @RestController
 @RequestMapping(path = "v2/user")
+@Validated
 public class UserV2Controller {
+
+  private final UserV2Service userService;
 
   @GetMapping(path = "{userID}")
   public GetUserResponse getUserV2(@Valid @UserID @PathVariable("userID") long userID,
       @Valid GetUserRequest request) {
-    return new GetUserResponse(
-        User.builder()
-            .id(userID)
-            .type(request.getUserType())
-            .status(UserStatus.REGISTERED)
-            .firstName(request.getFirstName())
-            .lastName(request.getLastName())
-            .age(request.getAge())
-            .build()
-    );
+    return userService.getUser(request);
   }
 
   @PostMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public Response insertUser(@Valid @UserID @PathVariable("userID") long userID,
       @Valid @RequestBody InsertUserRequest request) {
-    return new Response();
+    return userService.insertUser(userID, request);
   }
 
   @PutMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public Response updateUser(@Valid @UserID @PathVariable("userID") long userID,
       @Valid @RequestBody UpdateUserRequest request) {
-    return new Response();
+    return userService.updateUser(userID, request);
   }
 
   @DeleteMapping(path = "{userID}")
   public Response deleteUser(@Valid @UserID @PathVariable("userID") long userID) {
-    return new Response();
+    return userService.deleteUser(userID);
   }
 
 }

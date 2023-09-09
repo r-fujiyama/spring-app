@@ -19,8 +19,8 @@ public abstract class ControllerTest {
   protected MockMvc mockMvc;
 
   @BeforeAll
-  public void beforeAll() {
-    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  public void setupMockMvc() {
+    mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
   }
 
 }
