@@ -27,7 +27,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
-@WebMvcTest(controllers = UserV2Controller.class)
+@WebMvcTest(UserV2Controller.class)
 public class InsertUserTest extends ControllerTest {
 
   @MockBean

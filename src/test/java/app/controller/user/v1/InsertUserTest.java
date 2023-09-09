@@ -30,7 +30,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 
-@WebMvcTest(controllers = UserV1Controller.class)
+@WebMvcTest(UserV1Controller.class)
 public class InsertUserTest extends ControllerTest {
 
   @MockBean
