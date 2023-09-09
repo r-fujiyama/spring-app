@@ -38,7 +38,7 @@ public class TransactionInfoFilter extends OncePerRequestFilter {
       response.setContentType(MediaType.APPLICATION_JSON_VALUE);
       response.setCharacterEncoding(StandardCharsets.UTF_8.name());
       var res = new Response(
-          new Error(ErrorCode.UNAUTHORIZED, messageUtils.getMessage(ErrorMessage.DOSE_NOT_EXIST_HEADER_USER_TYPE)));
+          new Error(ErrorCode.BAD_REQUEST, messageUtils.getMessage(ErrorMessage.DOSE_NOT_EXIST_HEADER_USER_TYPE)));
       JSONUtils.writeValue(response.getWriter(), res);
       return;
     }

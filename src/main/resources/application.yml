@@ -21,6 +21,7 @@ security:
     - DELETE
   allowedHeaders:
     - API-Key
+    - User-Type
   maskRequestHeaderNames:
     - Authorization
     - API-Key
