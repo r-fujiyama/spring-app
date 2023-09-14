@@ -1,9 +1,9 @@
 package app.config;
 
 import app.TransactionInfo;
-import app.annotation.Corporate;
-import app.annotation.Freelance;
-import app.annotation.Private;
+import app.annotation.service.Corporate;
+import app.annotation.service.Freelance;
+import app.annotation.service.Private;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
 import app.service.userV2.UserV2Service;

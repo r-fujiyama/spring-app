@@ -1,6 +1,6 @@
 package app.service.userV2;
 
-import app.annotation.Freelance;
+import app.annotation.service.Freelance;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package app.annotation;
+package app.annotation.service;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

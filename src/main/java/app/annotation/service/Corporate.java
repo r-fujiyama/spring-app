@@ -1,4 +1,4 @@
-package app.annotation;
+package app.annotation.service;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
@@ -8,6 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 @Qualifier
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Private {
+public @interface Corporate {
 
 }
