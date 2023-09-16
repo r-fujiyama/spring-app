@@ -8,8 +8,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum APIResult implements CodeValue<String, String> {
 
-  UNKNOWN("Unknown", "Unknown"),
-  SUCCESS("0", "Success"),
+  UNKNOWN("0", "Unknown"),
+  SUCCESS("1", "Success"),
   FAILURE("9", "Failure");
 
   private final String code;

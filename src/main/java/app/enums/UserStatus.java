@@ -8,10 +8,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum UserStatus implements CodeValue<String, String> {
 
-  UNKNOWN("Unknown", "Unknown"),
-  UNREGISTERED("0", "Unregistered"),
-  REGISTERED("1", "Registered"),
-  BLOCKED("2", "blocked"),
+  UNKNOWN("0", "Unknown"),
+  UNREGISTERED("1", "Unregistered"),
+  REGISTERED("2", "Registered"),
+  BLOCKED("3", "blocked"),
   DELETED("9", "deleted");
 
   private final String code;

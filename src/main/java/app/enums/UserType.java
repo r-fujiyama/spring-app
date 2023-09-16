@@ -8,10 +8,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public enum UserType implements CodeValue<String, String> {
 
-  UNKNOWN("Unknown", "Unknown"),
-  PRIVATE("0", "Private"),
-  FREELANCE("1", "Freelance"),
-  CORPORATE("2", "Corporate");
+  UNKNOWN("0", "Unknown"),
+  PRIVATE("1", "Private"),
+  FREELANCE("2", "Freelance"),
+  CORPORATE("3", "Corporate");
 
   private final String code;
   private final String value;
