@@ -44,6 +44,8 @@ public class WebSecurityConfig {
   }
 
   @Bean
+  // TODO springを3.2系にバージョンアップしたら以下のアノテーションは削除する。
+  @SuppressWarnings("removal")
   public SecurityFilterChain v2APISsecurityFilterChain(HttpSecurity http,
       APIKeyAuthenticationProvider apiKeyAuthenticationProvider) throws Exception {
     http.securityMatcher("/v2/**")
@@ -56,7 +58,7 @@ public class WebSecurityConfig {
         .sessionManagement(session -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
-        // TODO springの3.2系にバージョンアップしたら"with()"が追加されるので以下の実装に修正する。
+        // TODO springを3.2系にバージョンアップしたら"with()"が追加されるので以下の実装に修正する。
         // .with(new APIKeyAuthenticationFilterConfig(), Customizer.withDefaults())
         .apply(new APIKeyAuthenticationFilterConfig()).and()
         .authenticationProvider(apiKeyAuthenticationProvider)
