@@ -1,6 +1,6 @@
 USE app;
 
-CREATE TABLE user(
+CREATE TABLE user (
     id BIGINT auto_increment PRIMARY KEY COMMENT 'ID'
     , type TINYINT NOT NULL COMMENT 'ユーザータイプ\n1:Private, 2:Freelance, 3:Corporate'
     , last_name VARCHAR (256) NOT NULL COMMENT '名前(性)'
@@ -12,4 +12,4 @@ CREATE TABLE user(
     , created_by VARCHAR (256) NOT NULL COMMENT '登録者'
     , created_at TIMESTAMP NOT NULL COMMENT '登録日時'
     , INDEX index01(type)
-) engine = innodb DEFAULT charset = utf8mb4 COLLATE=utf8mb4_bin;
+) engine = innodb DEFAULT charset = utf8mb4 COLLATE = utf8mb4_bin;
