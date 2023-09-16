@@ -6,7 +6,12 @@ while ($loop) {
     ({ $_ -eq "Yes" -or $_ -eq "yes" -or $_ -eq "y" }) {
       $loop = $false
       $userName = $env:UserName
-      cd "\\wsl$\Ubuntu-22.04\home\${userName}\develop\spring-app\docker"
+      $targetFolder = "\\wsl$\Ubuntu-22.04\home\${userName}\develop\spring-app\docker"
+      if (-not (Test-Path $targetFolder)) {
+        echo "The target folder does not exist."
+        break
+      }
+      cd $targetFolder
       wsl.exe -d Ubuntu-22.04 docker compose down
       cd ..
       wsl.exe -d Ubuntu-22.04 sudo rm -r docker
