@@ -2,21 +2,20 @@ package app.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Arrays;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum APIResult implements CodeValue<String, String> {
+public enum APIResult implements CodeValueEnum {
 
-  UNKNOWN("0", "Unknown"),
-  SUCCESS("1", "Success"),
-  FAILURE("9", "Failure");
+  UNKNOWN(Integer.MIN_VALUE, "Unknown"),
+  SUCCESS(1, "Success"),
+  FAILURE(9, "Failure");
 
-  private final String code;
+  private final int code;
   private final String value;
 
   @Override
-  public String getCode() {
+  public int getCode() {
     return this.code;
   }
 
@@ -26,13 +25,13 @@ public enum APIResult implements CodeValue<String, String> {
     return this.value;
   }
 
-  public static APIResult fromCode(String code) {
-    return CodeValue.fromCode(Arrays.asList(values()), code, UNKNOWN);
+  public static APIResult fromCode(Integer code) {
+    return CodeValueEnum.fromCode(APIResult.class, code);
   }
 
   @JsonCreator
   public static APIResult fromValue(String value) {
-    return CodeValue.fromValue(Arrays.asList(values()), value, UNKNOWN);
+    return CodeValueEnum.fromValue(APIResult.class, value);
   }
 
 }

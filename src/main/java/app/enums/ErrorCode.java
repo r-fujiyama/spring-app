@@ -2,22 +2,21 @@ package app.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Arrays;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum ErrorCode implements CodeValue<String, String> {
+public enum ErrorCode implements CodeValueEnum {
 
-  UNKNOWN("Unknown", "Unknown"),
-  BAD_REQUEST("400", "BadRequest"),
-  UNAUTHORIZED("401", "Unauthorized"),
-  INTERNAL_SERVER_ERROR("500", "InternalServerError");
+  UNKNOWN(Integer.MIN_VALUE, "Unknown"),
+  BAD_REQUEST(400, "BadRequest"),
+  UNAUTHORIZED(401, "Unauthorized"),
+  INTERNAL_SERVER_ERROR(500, "InternalServerError");
 
-  private final String code;
+  private final int code;
   private final String value;
 
   @Override
-  public String getCode() {
+  public int getCode() {
     return this.code;
   }
 
@@ -27,13 +26,13 @@ public enum ErrorCode implements CodeValue<String, String> {
     return this.value;
   }
 
-  public static ErrorCode fromCode(String code) {
-    return CodeValue.fromCode(Arrays.asList(values()), code, UNKNOWN);
+  public static ErrorCode fromCode(Integer code) {
+    return CodeValueEnum.fromCode(ErrorCode.class, code);
   }
 
   @JsonCreator
   public static ErrorCode fromValue(String value) {
-    return CodeValue.fromValue(Arrays.asList(values()), value, UNKNOWN);
+    return CodeValueEnum.fromValue(ErrorCode.class, value);
   }
 
 }

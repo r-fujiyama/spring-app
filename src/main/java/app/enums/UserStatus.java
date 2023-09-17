@@ -2,23 +2,22 @@ package app.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Arrays;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum UserStatus implements CodeValue<String, String> {
+public enum UserStatus implements CodeValueEnum {
 
-  UNKNOWN("0", "Unknown"),
-  UNREGISTERED("1", "Unregistered"),
-  REGISTERED("2", "Registered"),
-  BLOCKED("3", "blocked"),
-  DELETED("9", "deleted");
+  UNKNOWN(Integer.MIN_VALUE, "Unknown"),
+  UNREGISTERED(0, "Unregistered"),
+  REGISTERED(1, "Registered"),
+  BLOCKED(2, "blocked"),
+  DELETED(3, "deleted");
 
-  private final String code;
+  private final int code;
   private final String value;
 
   @Override
-  public String getCode() {
+  public int getCode() {
     return this.code;
   }
 
@@ -28,13 +27,13 @@ public enum UserStatus implements CodeValue<String, String> {
     return this.value;
   }
 
-  public static UserStatus fromCode(String code) {
-    return CodeValue.fromCode(Arrays.asList(values()), code, UNKNOWN);
+  public static UserStatus fromCode(Integer code) {
+    return CodeValueEnum.fromCode(UserStatus.class, code);
   }
 
   @JsonCreator
   public static UserStatus fromValue(String value) {
-    return CodeValue.fromValue(Arrays.asList(values()), value, UNKNOWN);
+    return CodeValueEnum.fromValue(UserStatus.class, value);
   }
 
 }

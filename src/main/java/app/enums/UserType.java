@@ -2,22 +2,21 @@ package app.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.util.Arrays;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum UserType implements CodeValue<String, String> {
+public enum UserType implements CodeValueEnum {
 
-  UNKNOWN("0", "Unknown"),
-  PRIVATE("1", "Private"),
-  FREELANCE("2", "Freelance"),
-  CORPORATE("3", "Corporate");
+  UNKNOWN(Integer.MIN_VALUE, "Unknown"),
+  PRIVATE(1, "Private"),
+  FREELANCE(2, "Freelance"),
+  CORPORATE(3, "Corporate");
 
-  private final String code;
+  private final int code;
   private final String value;
 
   @Override
-  public String getCode() {
+  public int getCode() {
     return this.code;
   }
 
@@ -27,13 +26,13 @@ public enum UserType implements CodeValue<String, String> {
     return this.value;
   }
 
-  public static UserType fromCode(String code) {
-    return CodeValue.fromCode(Arrays.asList(values()), code, UNKNOWN);
+  public static UserType fromCode(Integer code) {
+    return CodeValueEnum.fromCode(UserType.class, code);
   }
 
   @JsonCreator
   public static UserType fromValue(String value) {
-    return CodeValue.fromValue(Arrays.asList(values()), value, UNKNOWN);
+    return CodeValueEnum.fromValue(UserType.class, value);
   }
 
 }

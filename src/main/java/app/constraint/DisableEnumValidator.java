@@ -1,12 +1,12 @@
 package app.constraint;
 
-import app.enums.CodeValue;
+import app.enums.CodeValueEnum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 import java.util.List;
 
-public class DisableEnumValidator implements ConstraintValidator<DisableEnum, CodeValue<?, ?>> {
+public class DisableEnumValidator implements ConstraintValidator<DisableEnum, CodeValueEnum> {
 
   private List<String> disableEnums;
 
@@ -15,7 +15,7 @@ public class DisableEnumValidator implements ConstraintValidator<DisableEnum, Co
   }
 
   @Override
-  public boolean isValid(CodeValue<?, ?> value, ConstraintValidatorContext context) {
+  public boolean isValid(CodeValueEnum value, ConstraintValidatorContext context) {
     if (value == null) {
       return true;
     }
