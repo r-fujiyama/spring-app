@@ -28,14 +28,12 @@ public interface CodeValueEnum {
         .orElse(getUnknown(clazz));
   }
 
-  static <T extends Enum<T> & CodeValueEnum> T getUnknown(Class<T> clazz) {
-    if (clazz == null) {
-      return null;
-    }
+  private static <T extends Enum<T> & CodeValueEnum> T getUnknown(Class<T> clazz) {
     return Arrays.stream(clazz.getEnumConstants())
         .filter(e -> e.name().equals("UNKNOWN"))
         .findFirst()
-        .orElse(null);
+        .orElseThrow(
+            () -> new IllegalArgumentException("The 'UNKNOWN' constant is not implemented in the " + clazz.getName()));
   }
 
 }
