@@ -11,22 +11,23 @@ public class StringToCodeValueEnumConverterFactory<T extends Enum<T> & CodeValue
 
   @Override
   @NonNull
-  @SuppressWarnings({"unchecked", "rawtypes"})
   public <S extends T> Converter<String, S> getConverter(@NonNull Class<S> targetType) {
-    return new StringToCodeValueEnum(targetType);
+    return new StringToCodeValueEnum<>(targetType);
   }
 
-  private final class StringToCodeValueEnum<S extends Enum<S> & CodeValueEnum> implements Converter<String, S> {
+  private static class StringToCodeValueEnum<S extends Enum<S> & CodeValueEnum, U extends S> implements
+      Converter<String, U> {
 
-    private final Class<S> targetType;
+    private final Class<U> targetType;
 
-    public StringToCodeValueEnum(Class<S> targetType) {
+    public StringToCodeValueEnum(Class<U> targetType) {
       this.targetType = targetType;
     }
 
     @Override
-    public S convert(@Nullable String source) {
-      return CodeValueEnum.fromValue(targetType, source);
+    @SuppressWarnings({"unchecked"})
+    public U convert(@Nullable String source) {
+      return (U) CodeValueEnum.fromValue((Class<S>) targetType, source);
     }
 
   }
