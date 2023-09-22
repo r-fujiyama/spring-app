@@ -5,6 +5,15 @@ server:
 spring:
   messages:
     basename: error-messages, parameter-name
+  datasource:
+    url: "jdbc:mysql://localhost:3306/app"
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-enum-type-handler: app.dao.handler.CodeValueEnumTypeHandler
 logging:
   level:
     root: INFO
