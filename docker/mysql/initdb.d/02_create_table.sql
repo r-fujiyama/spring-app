@@ -1,9 +1,10 @@
 USE app;
 
 CREATE TABLE user (
-    id BIGINT auto_increment PRIMARY KEY COMMENT 'ID'
+    user_id VARCHAR (256) PRIMARY KEY COMMENT 'ユーザーID'
+    , password VARCHAR (256) NOT NULL COMMENT 'パスワード'
     , user_type TINYINT NOT NULL COMMENT 'ユーザータイプ\n1:Private, 2:Freelance, 3:Corporate'
-    , user_status TINYINT NOT NULL COMMENT 'ユーザーステータス\n1:Unregistered, 2:Registered, 3:blocked, 4:deleted'
+    , user_status TINYINT NOT NULL COMMENT 'ユーザーステータス\n0:Unregistered, 1:Registered, 2:blocked, 3:deleted'
     , last_name VARCHAR (256) NOT NULL COMMENT '名前(性)'
     , first_name VARCHAR (256) NOT NULL COMMENT '名前(名)'
     , age SMALLINT NOT NULL COMMENT '年齢'

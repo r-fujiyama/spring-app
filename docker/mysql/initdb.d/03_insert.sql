@@ -1,7 +1,8 @@
 USE app;
 
 INSERT INTO user (
-  id
+  user_id
+  , password
   , user_type
   , user_status
   , last_name
@@ -14,9 +15,10 @@ INSERT INTO user (
   , created_at
 )
 VALUES (
-  1
+  'private_user'
+  , 'password'
   , 1
-  , 2
+  , 1
   , 'private'
   , 'user'
   , 20
@@ -27,9 +29,10 @@ VALUES (
   , '2023-01-01 00:00:00'
 )
 , (
-  2
+  'freelance_user'
+  , 'password'
   , 2
-  , 2
+  , 1
   , 'freelance'
   , 'user'
   , 21
@@ -40,9 +43,10 @@ VALUES (
   , '2023-01-01 00:00:00'
 )
 , (
-  3
+  'corporate_user'
+  , 'password'
   , 3
-  , 2
+  , 1
   , 'corporate'
   , 'user'
   , 22
