@@ -1,5 +1,8 @@
 package app.controller.user.v1;
 
+import app.annotation.role.RoleCreate;
+import app.annotation.role.RoleDelete;
+import app.annotation.role.RoleUpdate;
 import app.constants.RegExp;
 import app.constraint.Age;
 import app.constraint.NotUnknown;
@@ -46,18 +49,21 @@ public class UserV1Controller {
     return userService.getUser(userID, userType, firstName, lastName, age);
   }
 
+  @RoleCreate
   @PostMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public InsertUserResponse insertUser(@Valid @UserID @PathVariable("userID") long userID,
       @Valid @RequestBody InsertUserRequest request) {
     return userService.insertUser(userID, request);
   }
 
+  @RoleUpdate
   @PutMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public UpdateUserResponse updateUser(@Valid @UserID @PathVariable("userID") long userID,
       @Valid @RequestBody UpdateUserRequest request) {
     return userService.updateUser(userID, request);
   }
 
+  @RoleDelete
   @DeleteMapping(path = "{userID}")
   public DeleteUserResponse deleteUser(@Valid @UserID @PathVariable("userID") long userID) {
     return userService.deleteUser(userID);

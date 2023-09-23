@@ -11,6 +11,7 @@ spring:
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis:
+  mapper-locations: classpath*:/dao/*.xml
   configuration:
     map-underscore-to-camel-case: true
     default-enum-type-handler: app.dao.handler.CodeValueEnumTypeHandler
@@ -18,8 +19,6 @@ logging:
   level:
     root: INFO
 security:
-  username: username
-  password: password
   apiKey: b7e59712-906a-1ab2-f606-d5e8c60b381b
   allowedOrigins:
     - "*"
