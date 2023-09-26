@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAuthority('Read')")
+@PreAuthorize("hasAuthority('READ')")
 public @interface RoleRead {
 
 }

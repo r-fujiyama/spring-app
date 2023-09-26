@@ -1,20 +1,20 @@
 package app.dao;
 
-import app.entity.User;
+import app.entity.Role;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 @Mapper
-public interface UserDao {
+public interface RoleDao {
 
   @Select({"<script>", """
       SELECT
         *
       FROM
-        user
+        role
       WHERE
         user_id = #{userID}
       """, "</script>"})
-  User findByUserID(String userID);
+  Role findByUserID(String userID);
 
 }

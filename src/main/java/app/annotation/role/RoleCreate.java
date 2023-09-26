@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAuthority('Create')")
+@PreAuthorize("hasAuthority('CREATE')")
 public @interface RoleCreate {
 
 }

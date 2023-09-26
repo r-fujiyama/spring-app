@@ -1,14 +1,11 @@
 USE app;
 
-INSERT INTO user (
+INSERT INTO role (
   user_id
-  , password
-  , user_type
-  , user_status
-  , last_name
-  , first_name
-  , age
-  , role
+  , allow_create
+  , allow_read
+  , allow_update
+  , allow_delete
   , updated_by
   , updated_at
   , created_by
@@ -16,13 +13,10 @@ INSERT INTO user (
 )
 VALUES (
   'private_user'
-  , 'password'
-  , 1
-  , 1
-  , 'private'
-  , 'user'
-  , 20
-  , 15
+  , true
+  , true
+  , true
+  , true
   , 'test user'
   , '2023-01-01 00:00:00'
   , 'test user'
@@ -30,13 +24,10 @@ VALUES (
 )
 , (
   'freelance_user'
-  , 'password'
-  , 2
-  , 1
-  , 'freelance'
-  , 'user'
-  , 21
-  , 15
+  , true
+  , true
+  , true
+  , true
   , 'test user'
   , '2023-01-01 00:00:00'
   , 'test user'
@@ -44,13 +35,10 @@ VALUES (
 )
 , (
   'corporate_user'
-  , 'password'
-  , 3
-  , 1
-  , 'corporate'
-  , 'user'
-  , 22
-  , 15
+  , true
+  , true
+  , true
+  , true
   , 'test user'
   , '2023-01-01 00:00:00'
   , 'test user'

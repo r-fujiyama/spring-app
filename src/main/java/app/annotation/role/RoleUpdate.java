@@ -7,7 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasAuthority('Update')")
+@PreAuthorize("hasAuthority('UPDATE')")
 public @interface RoleUpdate {
 
 }
