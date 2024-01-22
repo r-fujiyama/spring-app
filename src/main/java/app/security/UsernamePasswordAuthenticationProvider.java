@@ -1,17 +1,12 @@
 package app.security;
 
-import app.constants.RoleName;
 import app.dao.RoleDao;
 import app.dao.UserDao;
-import app.entity.Role;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 @AllArgsConstructor
@@ -35,7 +30,7 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
       return null;
     }
 
-    return new UsernamePasswordAuthenticationToken(userID, password, toRoleList(role));
+    return new UsernamePasswordAuthenticationToken(userID, password, role.getGrantList());
   }
 
   private boolean userExists(String userID, String password) {
@@ -44,23 +39,6 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
       return false;
     }
     return user.getPassword().equals(password);
-  }
-
-  private List<SimpleGrantedAuthority> toRoleList(Role role) {
-    var roleList = new ArrayList<SimpleGrantedAuthority>();
-    if (role.isAllowCreate()) {
-      roleList.add(new SimpleGrantedAuthority(RoleName.CREATE));
-    }
-    if (role.isAllowRead()) {
-      roleList.add(new SimpleGrantedAuthority(RoleName.READ));
-    }
-    if (role.isAllowUpdate()) {
-      roleList.add(new SimpleGrantedAuthority(RoleName.UPDATE));
-    }
-    if (role.isAllowDelete()) {
-      roleList.add(new SimpleGrantedAuthority(RoleName.DELETE));
-    }
-    return roleList;
   }
 
   @Override
