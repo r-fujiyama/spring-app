@@ -25,7 +25,7 @@ public class StringToCodeValueEnumConverterFactory<T extends Enum<T> & CodeValue
     }
 
     @Override
-    @SuppressWarnings({"unchecked"})
+    @SuppressWarnings("unchecked")
     public U convert(@Nullable String source) {
       return (U) CodeValueEnum.fromValue((Class<S>) targetType, source);
     }

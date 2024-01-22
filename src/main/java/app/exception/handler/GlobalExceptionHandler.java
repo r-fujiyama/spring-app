@@ -95,7 +95,7 @@ public class GlobalExceptionHandler {
   }
 
   /**
-   * パスパラメーター、クエリパラメーターで引数を直接指定し、バリデーションエラーが発生した時のハンドリング
+   * パスパラメーター、クエリパラメーターを引数で直接指定し、バリデーションエラーが発生した時のハンドリング
    *
    * @param ex {@link ConstraintViolationException}
    * @return Failure {@link Response}
