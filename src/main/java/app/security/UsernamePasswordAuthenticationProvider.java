@@ -18,8 +18,8 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    String userID = authentication.getName();
-    String password = authentication.getCredentials().toString();
+    var userID = authentication.getName();
+    var password = authentication.getCredentials().toString();
 
     if (!userExists(userID, password)) {
       return null;
