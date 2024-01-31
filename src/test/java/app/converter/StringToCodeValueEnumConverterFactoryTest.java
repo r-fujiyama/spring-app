@@ -1,6 +1,7 @@
 package app.converter;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import app.enums.CodeValueEnum;
@@ -50,8 +51,10 @@ public class StringToCodeValueEnumConverterFactoryTest {
   @Test
   public void noUnknownConvertTest() {
     var converterFactory = new StringToCodeValueEnumConverterFactory<NoUnknown>();
-    var actual = converterFactory.getConverter(NoUnknown.class).convert("illegal-value");
-    assertThat(actual).isEqualTo(null);
+    assertThatThrownBy(() -> converterFactory.getConverter(NoUnknown.class).convert("illegal-value"))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage(
+            "The 'UNKNOWN' constant is not implemented in the app.converter.StringToCodeValueEnumConverterFactoryTest$NoUnknown");
   }
 
   @AllArgsConstructor
