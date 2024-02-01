@@ -33,7 +33,7 @@ public class WebSecurityConfig {
             .anyRequest().authenticated()
         )
         .cors(Customizer.withDefaults())
-        .csrf(AbstractHttpConfigurer::disable)
+        .csrf((csrf) -> csrf.disable())
         .sessionManagement(session -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
@@ -52,7 +52,7 @@ public class WebSecurityConfig {
             .anyRequest().authenticated()
         )
         .cors(Customizer.withDefaults())
-        .csrf(AbstractHttpConfigurer::disable)
+        .csrf((csrf) -> csrf.disable())
         .sessionManagement(session -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         )
