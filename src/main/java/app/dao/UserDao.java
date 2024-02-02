@@ -36,6 +36,30 @@ public interface UserDao {
         , r.created_at AS role_created_at
       FROM
         user u JOIN role r
+          ON u.user_id = r.user_id
+      WHERE
+        u.user_id = #{userID}
+      """, "</script>"})
+  @Results(value = {
+      @Result(property = "user", one = @One(resultMap = "userResultMap")),
+      @Result(property = "role", one = @One(resultMap = "roleResultMap", columnPrefix = "role_"))
+  })
+  UserInfo findUserAndRoleByUserID(String userID);
+
+  @Select({"<script>", """
+      SELECT
+        u.*
+        , r.user_id AS role_user_id
+        , r.allow_create AS role_allow_create
+        , r.allow_read AS role_allow_read
+        , r.allow_update AS role_allow_update
+        , r.allow_delete AS role_allow_delete
+        , r.updated_by AS role_updated_by
+        , r.updated_at AS role_updated_at
+        , r.created_by AS role_created_by
+        , r.created_at AS role_created_at
+      FROM
+        user u JOIN role r
           ON u.user_id = r.user_id JOIN api_key a
           ON u.user_id = a.user_id
       WHERE

@@ -1,6 +1,5 @@
 package app.security;
 
-import app.dao.RoleDao;
 import app.dao.UserDao;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,8 +21,7 @@ public class APIKeyAuthenticationProvider implements AuthenticationProvider {
     if (userInfo == null) {
       return null;
     }
-    return new PreAuthenticatedAuthenticationToken("", userInfo.getUser().getUserID(),
-        userInfo.getRole().getGrantList());
+    return new AuthenticationToken(userInfo.getUser().getUserID(), apiKey, userInfo.getRole().getGrantList());
   }
 
   @Override

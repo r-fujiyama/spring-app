@@ -1,7 +1,7 @@
 package app.security;
 
-import app.dao.RoleDao;
 import app.dao.UserDao;
+import app.entity.join.UserInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,31 +14,25 @@ import org.springframework.stereotype.Component;
 public class UsernamePasswordAuthenticationProvider implements AuthenticationProvider {
 
   private final UserDao userDao;
-  private final RoleDao roleDao;
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     var userID = authentication.getName();
     var password = authentication.getCredentials().toString();
 
-    if (!userExists(userID, password)) {
+    var userInfo = userDao.findUserAndRoleByUserID(userID);
+    if (!userExists(userInfo, password)) {
       return null;
     }
 
-    var role = roleDao.findByUserID(userID);
-    if (role == null) {
-      return null;
-    }
-
-    return new UsernamePasswordAuthenticationToken(userID, password, role.getGrantList());
+    return new AuthenticationToken(userID, password, userInfo.getRole().getGrantList());
   }
 
-  private boolean userExists(String userID, String password) {
-    var user = userDao.findByUserID(userID);
-    if (user == null) {
+  private boolean userExists(UserInfo userInfo, String password) {
+    if (userInfo == null) {
       return false;
     }
-    return user.getPassword().equals(password);
+    return userInfo.getUser().getPassword().equals(password);
   }
 
   @Override
