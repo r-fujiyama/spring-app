@@ -17,4 +17,15 @@ public interface UserDao {
       """, "</script>"})
   User findByUserID(String userID);
 
+  @Select({"<script>", """
+      SELECT
+        u.*
+      FROM
+        user u JOIN api_key a
+          ON u.user_id = a.user_id
+      WHERE
+        a.api_key = #{apiKey}
+      """, "</script>"})
+  User findByAPIKey(String apiKey);
+
 }

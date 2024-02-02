@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "security")
 public class SecurityProperties {
 
-  private String apiKey;
   private String[] allowedOrigins;
   private String[] allowedMethods;
   private String[] allowedHeaders;
