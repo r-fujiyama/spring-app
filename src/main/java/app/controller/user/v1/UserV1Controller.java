@@ -39,6 +39,7 @@ public class UserV1Controller {
 
   private final UserV1Service userService;
 
+  @RoleCreate
   @GetMapping(path = "{userID}")
   public GetUserResponse getUser(
       @Valid @UserID @PathVariable("userID") long userID,
