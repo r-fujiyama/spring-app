@@ -26,3 +26,12 @@ CREATE TABLE role (
     , created_by VARCHAR (256) NOT NULL COMMENT '登録者'
     , created_at TIMESTAMP NOT NULL COMMENT '登録日時'
 ) engine = innodb DEFAULT charset = utf8mb4 COLLATE = utf8mb4_bin;
+
+CREATE TABLE api_key (
+    user_id VARCHAR (256) PRIMARY KEY COMMENT 'ユーザーID'
+    , api_key VARCHAR (36) UNIQUE NOT NULL COMMENT 'APIKey'
+    , updated_by VARCHAR (256) NOT NULL COMMENT '更新者'
+    , updated_at TIMESTAMP NOT NULL COMMENT '更新日時'
+    , created_by VARCHAR (256) NOT NULL COMMENT '登録者'
+    , created_at TIMESTAMP NOT NULL COMMENT '登録日時'
+) engine = innodb DEFAULT charset = utf8mb4 COLLATE = utf8mb4_bin;

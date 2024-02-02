@@ -1,0 +1,34 @@
+USE app;
+
+INSERT INTO api_key (
+  user_id
+  , api_key
+  , updated_by
+  , updated_at
+  , created_by
+  , created_at
+)
+VALUES (
+  'private_user'
+  , '234b282f-91d3-e7aa-2539-6ac2c26f6ed7'
+  , 'test user'
+  , '2023-01-01 00:00:00'
+  , 'test user'
+  , '2023-01-01 00:00:00'
+)
+, (
+  'freelance_user'
+  , '77488f19-e6e7-0870-81ae-73c946d76935'
+  , 'test user'
+  , '2023-01-01 00:00:00'
+  , 'test user'
+  , '2023-01-01 00:00:00'
+)
+, (
+  'corporate_user'
+  , '9581fea3-5f95-60cd-71db-42fdfcb111e6'
+  , 'test user'
+  , '2023-01-01 00:00:00'
+  , 'test user'
+  , '2023-01-01 00:00:00'
+)
