@@ -34,10 +34,8 @@ public class TransactionInfoFilter extends OncePerRequestFilter {
         throw new RuntimeException();
       }
       TransactionInfo.init(user.getUserType());
-      filterChain.doFilter(request, response);
-    } else {
-      throw new RuntimeException();
     }
+    filterChain.doFilter(request, response);
   }
 
 }
