@@ -14,21 +14,16 @@ import org.springframework.stereotype.Component;
 public class APIKeyAuthenticationProvider implements AuthenticationProvider {
 
   private final UserDao userDao;
-  private final RoleDao roleDao;
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     String apiKey = authentication.getCredentials().toString();
-    var user = userDao.findByAPIKey(apiKey);
-    if (user == null) {
+    var userInfo = userDao.findUserAndRoleByAPIKey(apiKey);
+    if (userInfo == null) {
       return null;
     }
-
-    var role = roleDao.findByUserID(user.getUserID());
-    if (role == null) {
-      return null;
-    }
-    return new PreAuthenticatedAuthenticationToken("", user.getUserID(), role.getGrantList());
+    return new PreAuthenticatedAuthenticationToken("", userInfo.getUser().getUserID(),
+        userInfo.getRole().getGrantList());
   }
 
   @Override
