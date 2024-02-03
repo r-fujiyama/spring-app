@@ -14,5 +14,7 @@ public class SecurityProperties {
   private String[] allowedMethods;
   private String[] allowedHeaders;
   private List<String> maskRequestHeaderNames;
+  private boolean v1APISessionEnable;
+  private boolean v2APISessionEnable;
 
 }

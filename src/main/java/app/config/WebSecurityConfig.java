@@ -1,5 +1,7 @@
 package app.config;
 
+import app.config.properties.SecurityProperties;
+import app.security.APIKeyAuthenticationFilter;
 import app.security.APIKeyAuthenticationFilterConfig;
 import app.security.APIKeyAuthenticationProvider;
 import app.security.ErrorAuthenticationEntryPoint;
@@ -9,11 +11,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.NullSecurityContextRepository;
 
 @AllArgsConstructor
 @Configuration
@@ -22,6 +28,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
 
   private final ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint;
+  private final SecurityProperties securityProperties;
 
   @Bean
   public SecurityFilterChain v1APISecurityFilterChain(HttpSecurity http,
@@ -34,9 +41,19 @@ public class WebSecurityConfig {
         .cors(Customizer.withDefaults())
         .csrf((csrf) -> csrf.disable())
         .sessionManagement(session -> session
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionCreationPolicy(securityProperties.isV1APISessionEnable() ?
+                SessionCreationPolicy.NEVER :
+                SessionCreationPolicy.STATELESS)
         )
-        .httpBasic(Customizer.withDefaults())
+        .httpBasic((basic) -> basic.addObjectPostProcessor(new ObjectPostProcessor<BasicAuthenticationFilter>() {
+          @Override
+          public <O extends BasicAuthenticationFilter> O postProcess(O filter) {
+            filter.setSecurityContextRepository(securityProperties.isV1APISessionEnable()
+                ? new HttpSessionSecurityContextRepository()
+                : new NullSecurityContextRepository());
+            return filter;
+          }
+        }))
         .authenticationProvider(usernamePasswordAuthenticationProvider)
         .exceptionHandling(handling -> handling.authenticationEntryPoint(errorAuthenticationEntryPoint));
     return http.build();
@@ -53,9 +70,20 @@ public class WebSecurityConfig {
         .cors(Customizer.withDefaults())
         .csrf((csrf) -> csrf.disable())
         .sessionManagement(session -> session
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionCreationPolicy(securityProperties.isV2APISessionEnable() ?
+                SessionCreationPolicy.NEVER :
+                SessionCreationPolicy.STATELESS)
         )
-        .with(new APIKeyAuthenticationFilterConfig(), Customizer.withDefaults())
+        .with(new APIKeyAuthenticationFilterConfig(),
+            (apiKey) -> apiKey.addObjectPostProcessor(new ObjectPostProcessor<APIKeyAuthenticationFilter>() {
+              @Override
+              public <O extends APIKeyAuthenticationFilter> O postProcess(O filter) {
+                filter.setSecurityContextRepository(securityProperties.isV2APISessionEnable()
+                    ? new HttpSessionSecurityContextRepository()
+                    : new NullSecurityContextRepository());
+                return filter;
+              }
+            }))
         .authenticationProvider(apiKeyAuthenticationProvider)
         .exceptionHandling(handling -> handling.authenticationEntryPoint(errorAuthenticationEntryPoint));
     return http.build();

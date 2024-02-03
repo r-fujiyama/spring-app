@@ -7,3 +7,5 @@ security:
   allowedOrigins:
     - "*"
   maskRequestHeaderNames: []
+  v1APISessionEnable: false
+  v2APISessionEnable: false
