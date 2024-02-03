@@ -1,11 +1,11 @@
 package app.config;
 
 import app.config.properties.SecurityProperties;
-import app.security.APIKeyAuthenticationFilter;
-import app.security.APIKeyAuthenticationFilterConfig;
-import app.security.APIKeyAuthenticationProvider;
-import app.security.ErrorAuthenticationEntryPoint;
-import app.security.UsernamePasswordAuthenticationProvider;
+import app.security.api_key.APIKeyAuthenticationFilter;
+import app.security.api_key.APIKeyAuthenticationFilterConfig;
+import app.security.api_key.APIKeyAuthenticationProvider;
+import app.security.basic.UsernamePasswordAuthenticationProvider.ErrorAuthenticationEntryPoint;
+import app.security.basic.UsernamePasswordAuthenticationProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

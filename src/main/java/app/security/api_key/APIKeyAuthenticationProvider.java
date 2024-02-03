@@ -1,4 +1,4 @@
-package app.security;
+package app.security.api_key;
 
 import app.dao.UserDao;
 import lombok.AllArgsConstructor;

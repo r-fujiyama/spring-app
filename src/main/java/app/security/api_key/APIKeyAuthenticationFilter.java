@@ -1,18 +1,17 @@
-package app.security;
+package app.security.api_key;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
-import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.context.NullSecurityContextRepository;
 
 public class APIKeyAuthenticationFilter extends AbstractPreAuthenticatedProcessingFilter {
 
   private static final String API_KEY = "API-Key";
 
-  public APIKeyAuthenticationFilter(AuthenticationManager authenticationManager,
-      SecurityContextRepository securityContextRepository) {
+  public APIKeyAuthenticationFilter(AuthenticationManager authenticationManager) {
     setAuthenticationManager(authenticationManager);
-    setSecurityContextRepository(securityContextRepository);
+    setSecurityContextRepository(new NullSecurityContextRepository());
   }
 
   @Override
