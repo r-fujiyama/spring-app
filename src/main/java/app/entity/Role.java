@@ -1,6 +1,5 @@
 package app.entity;
 
-import app.constants.RoleName;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,16 +22,16 @@ public class Role {
   public List<SimpleGrantedAuthority> getGrantList() {
     var grantList = new ArrayList<SimpleGrantedAuthority>();
     if (allowCreate) {
-      grantList.add(new SimpleGrantedAuthority(RoleName.CREATE));
+      grantList.add(new SimpleGrantedAuthority(app.constants.Role.CREATE));
     }
     if (allowRead) {
-      grantList.add(new SimpleGrantedAuthority(RoleName.READ));
+      grantList.add(new SimpleGrantedAuthority(app.constants.Role.READ));
     }
     if (allowUpdate) {
-      grantList.add(new SimpleGrantedAuthority(RoleName.UPDATE));
+      grantList.add(new SimpleGrantedAuthority(app.constants.Role.UPDATE));
     }
     if (allowDelete) {
-      grantList.add(new SimpleGrantedAuthority(RoleName.DELETE));
+      grantList.add(new SimpleGrantedAuthority(app.constants.Role.DELETE));
     }
     return grantList;
   }

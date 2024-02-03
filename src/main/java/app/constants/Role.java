@@ -1,6 +1,6 @@
 package app.constants;
 
-public class RoleName {
+public class Role {
 
   public static final String CREATE = "CREATE";
   public static final String READ = "READ";
