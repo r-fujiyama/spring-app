@@ -21,7 +21,8 @@ public class APIKeyAuthenticationProvider implements AuthenticationProvider {
     if (userInfo == null) {
       return null;
     }
-    return new AuthenticationToken(userInfo.getUser().getUserID(), apiKey, userInfo.getRole().getGrantList());
+    return new PreAuthenticatedAuthenticationToken(userInfo.getUser().getUserID(), apiKey,
+        userInfo.getRole().getGrantList());
   }
 
   @Override

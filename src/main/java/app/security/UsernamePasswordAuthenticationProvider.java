@@ -25,7 +25,7 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
       return null;
     }
 
-    return new AuthenticationToken(userID, password, userInfo.getRole().getGrantList());
+    return new UsernamePasswordAuthenticationToken(userID, password, userInfo.getRole().getGrantList());
   }
 
   private boolean userExists(UserInfo userInfo, String password) {

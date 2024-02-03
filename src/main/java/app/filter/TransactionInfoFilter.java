@@ -3,8 +3,6 @@ package app.filter;
 import app.TransactionInfo;
 import app.constants.DIOrder;
 import app.dao.UserDao;
-import app.entity.User;
-import app.security.AuthenticationToken;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,12 +25,9 @@ public class TransactionInfoFilter extends OncePerRequestFilter {
   @Override
   protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
       @NonNull FilterChain filterChain) throws ServletException, IOException {
-    User user;
-    if (SecurityContextHolder.getContext().getAuthentication() instanceof AuthenticationToken authenticationToken) {
-      user = UserDao.findByUserID((String) authenticationToken.getPrincipal());
-      if (user == null) {
-        throw new RuntimeException();
-      }
+    var userID = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    var user = UserDao.findByUserID(userID);
+    if (user != null) {
       TransactionInfo.init(user.getUserType());
     }
     filterChain.doFilter(request, response);
