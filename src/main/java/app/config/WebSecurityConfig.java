@@ -4,8 +4,8 @@ import app.config.properties.SecurityProperties;
 import app.security.api_key.APIKeyAuthenticationFilter;
 import app.security.api_key.APIKeyAuthenticationFilterConfig;
 import app.security.api_key.APIKeyAuthenticationProvider;
-import app.security.basic.UsernamePasswordAuthenticationProvider.ErrorAuthenticationEntryPoint;
 import app.security.basic.UsernamePasswordAuthenticationProvider;
+import app.security.basic.UsernamePasswordAuthenticationProvider.ErrorAuthenticationEntryPoint;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,8 +27,8 @@ import org.springframework.security.web.context.NullSecurityContextRepository;
 @EnableMethodSecurity
 public class WebSecurityConfig {
 
-  private final ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint;
   private final SecurityProperties securityProperties;
+  private final ErrorAuthenticationEntryPoint errorAuthenticationEntryPoint;
 
   @Bean
   public SecurityFilterChain v1APISecurityFilterChain(HttpSecurity http,
@@ -41,9 +41,9 @@ public class WebSecurityConfig {
         .cors(Customizer.withDefaults())
         .csrf((csrf) -> csrf.disable())
         .sessionManagement(session -> session
-            .sessionCreationPolicy(securityProperties.isV1APISessionEnable() ?
-                SessionCreationPolicy.NEVER :
-                SessionCreationPolicy.STATELESS)
+            .sessionCreationPolicy(securityProperties.isV1APISessionEnable()
+                ? SessionCreationPolicy.NEVER
+                : SessionCreationPolicy.STATELESS)
         )
         .httpBasic((basic) -> basic.addObjectPostProcessor(new ObjectPostProcessor<BasicAuthenticationFilter>() {
           @Override
@@ -70,9 +70,9 @@ public class WebSecurityConfig {
         .cors(Customizer.withDefaults())
         .csrf((csrf) -> csrf.disable())
         .sessionManagement(session -> session
-            .sessionCreationPolicy(securityProperties.isV2APISessionEnable() ?
-                SessionCreationPolicy.NEVER :
-                SessionCreationPolicy.STATELESS)
+            .sessionCreationPolicy(securityProperties.isV2APISessionEnable()
+                ? SessionCreationPolicy.NEVER
+                : SessionCreationPolicy.STATELESS)
         )
         .with(new APIKeyAuthenticationFilterConfig(),
             (apiKey) -> apiKey.addObjectPostProcessor(new ObjectPostProcessor<APIKeyAuthenticationFilter>() {
