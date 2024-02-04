@@ -10,22 +10,22 @@ import org.springframework.stereotype.Service;
 public class PrivateUserV1Service extends AbstractUserV1Service {
 
   @Override
-  void getUserDetailProcess() {
+  protected void getUserDetailProcess() {
     log.info("v1 getUserDetailProcess for private");
   }
 
   @Override
-  void insertUserDetailProcess() {
+  protected void insertUserDetailProcess() {
     log.info("v1 insertUserDetailProcess for private");
   }
 
   @Override
-  void updateUserDetailProcess() {
+  protected void updateUserDetailProcess() {
     log.info("v1 updateUserDetailProcess for private");
   }
 
   @Override
-  void deleteUserDetailProcess() {
+  protected void deleteUserDetailProcess() {
     log.info("v1 deleteUserDetailProcess for private");
   }
 

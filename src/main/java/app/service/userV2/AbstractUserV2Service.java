@@ -26,7 +26,7 @@ public abstract class AbstractUserV2Service implements UserV2Service {
     );
   }
 
-  abstract void getUserDetailProcess();
+  protected abstract void getUserDetailProcess();
 
   @Override
   public Response insertUser(long userID, InsertUserRequest request) {
@@ -34,7 +34,7 @@ public abstract class AbstractUserV2Service implements UserV2Service {
     return new Response();
   }
 
-  abstract void insertUserDetailProcess();
+  protected abstract void insertUserDetailProcess();
 
   @Override
   public Response updateUser(long userID, UpdateUserRequest request) {
@@ -42,7 +42,7 @@ public abstract class AbstractUserV2Service implements UserV2Service {
     return new Response();
   }
 
-  abstract void updateUserDetailProcess();
+  protected abstract void updateUserDetailProcess();
 
   @Override
   public Response deleteUser(long userID) {
@@ -50,6 +50,6 @@ public abstract class AbstractUserV2Service implements UserV2Service {
     return new Response();
   }
 
-  abstract void deleteUserDetailProcess();
+  protected abstract void deleteUserDetailProcess();
 
 }
