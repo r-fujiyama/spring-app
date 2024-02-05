@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -163,6 +164,20 @@ public class GlobalExceptionHandler {
   public Response handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException ex) {
     log.info(ex.getMessage(), ex);
     var error = new Error(ErrorCode.BAD_REQUEST, messageUtils.getMessage(ErrorMessage.UNSUPPORTED_MEDIA_TYPE));
+    return new Response(error);
+  }
+
+  /**
+   * アクセス権限が存在しない場合のハンドリング
+   *
+   * @param ex {@link AccessDeniedException}
+   * @return Failure {@link Response}
+   */
+  @ExceptionHandler(AccessDeniedException.class)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  public Response handleAccessDeniedException(AccessDeniedException ex) {
+    log.info(ex.getMessage(), ex);
+    var error = new Error(ErrorCode.FORBIDDEN, messageUtils.getMessage(ErrorMessage.ACCESS_DENIED));
     return new Response(error);
   }
 

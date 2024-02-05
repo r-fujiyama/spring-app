@@ -5,7 +5,7 @@ public class ErrorMessage {
   // 認証に失敗しました。
   public static final String AUTHENTICATION_FAILED = "app.error.message.authentication.failed";
   // User-Typeヘッダーが指定されていません。
-  public static final String DOSE_NOT_EXIST_HEADER_USER_TYPE = "app.error.message.dose-not-exist-header.user-type";
+  public static final String ACCESS_DENIED = "app.error.message.access.denied";
   // サポートしていないContent-Typeが指定されています。
   public static final String UNSUPPORTED_MEDIA_TYPE = "app.error.message.unsupported.media.type";
   // JSONのパースに失敗しました。
