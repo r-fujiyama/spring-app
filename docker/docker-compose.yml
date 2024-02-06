@@ -1,7 +1,7 @@
 version: "3.8"
 services:
-  app-db:
-    container_name: "app-db"
+  mysql:
+    container_name: "mysql-app"
     build: ./mysql
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -13,8 +13,8 @@ services:
     ports:
       - "3306:3306"
     tty: true
-  app-redis:
-    container_name: "app-redis"
+  redis:
+    container_name: "redis-app"
     command: ["redis-server", "/etc/redis/redis.conf"]
     build: ./redis
     volumes:
