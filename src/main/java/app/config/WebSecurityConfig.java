@@ -1,7 +1,6 @@
 package app.config;
 
 import app.config.properties.SecurityProperties;
-import app.security.api_key.APIKeyAuthenticationFilter;
 import app.security.api_key.APIKeyAuthenticationFilterConfig;
 import app.security.api_key.APIKeyAuthenticationProvider;
 import app.security.basic.UsernamePasswordAuthenticationProvider;
@@ -61,6 +60,7 @@ public class WebSecurityConfig {
 
   @Bean
   public SecurityFilterChain v2APISsecurityFilterChain(HttpSecurity http,
+      APIKeyAuthenticationFilterConfig apiKeyAuthenticationFilterConfig,
       APIKeyAuthenticationProvider apiKeyAuthenticationProvider) throws Exception {
     http.securityMatcher("/v2/**")
         .authorizeHttpRequests(authorize -> authorize
@@ -74,16 +74,7 @@ public class WebSecurityConfig {
                 ? SessionCreationPolicy.NEVER
                 : SessionCreationPolicy.STATELESS)
         )
-        .with(new APIKeyAuthenticationFilterConfig(),
-            (apiKey) -> apiKey.addObjectPostProcessor(new ObjectPostProcessor<APIKeyAuthenticationFilter>() {
-              @Override
-              public <O extends APIKeyAuthenticationFilter> O postProcess(O filter) {
-                filter.setSecurityContextRepository(securityProperties.isV2APISessionEnable()
-                    ? new HttpSessionSecurityContextRepository()
-                    : new NullSecurityContextRepository());
-                return filter;
-              }
-            }))
+        .with(apiKeyAuthenticationFilterConfig, Customizer.withDefaults())
         .authenticationProvider(apiKeyAuthenticationProvider)
         .exceptionHandling(handling -> handling.authenticationEntryPoint(errorAuthenticationEntryPoint));
     return http.build();
