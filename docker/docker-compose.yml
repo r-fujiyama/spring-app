@@ -14,3 +14,14 @@ services:
       - ./mysql/conf.d:/etc/mysql/conf.d
       - ./mysql/data:/var/lib/mysql
     tty: true
+  app-redis:
+    container_name: "app-redis"
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    build: ./redis
+    volumes:
+      - ./redis/redis.conf:/etc/redis/redis.conf
+      - ./redis/users.acl:/etc/redis/users.acl
+      - ./redis/data:/data
+    ports:
+      - "6379:6379"
+    tty: true

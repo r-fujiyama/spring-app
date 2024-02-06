@@ -1,0 +1,2 @@
+user default on >password allkeys allchannels allcommands
+user admin on >password allkeys allchannels allcommands
