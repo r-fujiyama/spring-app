@@ -7,6 +7,8 @@ spring:
     basename: error-messages, parameter-name
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+  session:
+    store-type: redis
 mybatis:
   mapper-locations: classpath*:/dao/*.xml
   configuration:

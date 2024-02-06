@@ -21,25 +21,29 @@ repositories {
     mavenCentral()
 }
 
+def springSessionDataRedisVersion = '3.2.1'
+def mybatisSpringBootStarter = '3.0.3'
 def guavaVersion = '33.0.0-jre'
+def mysqlConnectorJVersion = '8.3.0'
 def lombokVersion = '1.18.30'
 def springSecurityTestVersion = '6.2.1'
-def mybatisSpringVersion = '3.0.3'
-def mysqlVersion = '8.3.0'
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: mybatisSpringVersion
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation group: 'org.springframework.session', name: 'spring-session-data-redis', version: springSessionDataRedisVersion
+    implementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: mybatisSpringBootStarter
     implementation group: 'com.google.guava', name: 'guava', version: guavaVersion
-    implementation group: 'com.mysql', name: 'mysql-connector-j', version: mysqlVersion
+    implementation group: 'com.mysql', name: 'mysql-connector-j', version: mysqlConnectorJVersion
     compileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     annotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.hamcrest', module: 'hamcrest'
     }
     testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: springSecurityTestVersion
-    testImplementation  group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter-test', version: mybatisSpringVersion
+    testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter-test', version: mybatisSpringBootStarter
     testCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
 }
