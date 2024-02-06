@@ -1,7 +1,7 @@
 $result = ""
 $loop = $true
 while ($loop) {
-  $result = Read-Host "Delete all DB data. Are you sure?`nYes(y) No(n)"
+  $result = Read-Host "Delete all Docker data. Are you sure?`nYes(y) No(n)"
   switch ($result) {
     ({ $_ -eq "Yes" -or $_ -eq "yes" -or $_ -eq "y" }) {
       $loop = $false
@@ -15,7 +15,7 @@ while ($loop) {
       wsl.exe -d Ubuntu-22.04 docker compose down
       cd ..
       wsl.exe -d Ubuntu-22.04 sudo rm -r docker
-      echo "All DB data has been deleted."
+      echo "All Docker data has been deleted."
     }
     ({ $_ -eq "No" -or $_ -eq "no" -or $_ -eq "n" }) {
       $loop = $false
