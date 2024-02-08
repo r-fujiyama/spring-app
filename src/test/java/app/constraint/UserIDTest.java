@@ -5,6 +5,8 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.math.BigDecimal;
 import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,7 +17,7 @@ public class UserIDTest extends ConstraintsTest {
   @MethodSource("testValueProvider")
   public void validationTest(Value value, String expectedMessage) {
     var violation = validator.validate(value);
-    if (!value.hasError()) {
+    if (!value.isError()) {
       assertThat(violation.isEmpty()).isTrue();
     } else {
       assertThat(violation).hasSize(1);
@@ -46,21 +48,36 @@ public class UserIDTest extends ConstraintsTest {
 
   }
 
-  private interface Value {
+  public interface Value {
 
-    boolean hasError();
+    boolean isError();
   }
 
-  private record LongValue(@UserID Long value, boolean hasError) implements Value {
+  @AllArgsConstructor
+  @Getter
+  public static class LongValue implements Value {
 
+    @UserID
+    private final Long value;
+    private final boolean error;
   }
 
-  private record BigDecimalValue(@UserID BigDecimal value, boolean hasError) implements Value {
+  @AllArgsConstructor
+  @Getter
+  public static class BigDecimalValue implements Value {
 
+    @UserID
+    private final BigDecimal value;
+    private final boolean error;
   }
 
-  private record StringValue(@UserID String value, boolean hasError) implements Value {
+  @AllArgsConstructor
+  @Getter
+  public static class StringValue implements Value {
 
+    @UserID
+    private final String value;
+    private final boolean error;
   }
 
 }

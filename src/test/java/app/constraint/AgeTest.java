@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -14,7 +16,7 @@ public class AgeTest extends ConstraintsTest {
   @MethodSource("testValueProvider")
   public void validationTest(Value value, String expectedMessage) {
     var violation = validator.validate(value);
-    if (!value.hasError()) {
+    if (!value.isError()) {
       assertThat(violation.isEmpty()).isTrue();
     } else {
       assertThat(violation).hasSize(1);
@@ -40,17 +42,27 @@ public class AgeTest extends ConstraintsTest {
 
   }
 
-  private interface Value {
+  public interface Value {
 
-    boolean hasError();
+    boolean isError();
   }
 
-  private record IntegerValue(@Age Integer value, boolean hasError) implements Value {
+  @AllArgsConstructor
+  @Getter
+  public static class IntegerValue implements Value {
 
+    @Age
+    private final Integer value;
+    private final boolean error;
   }
 
-  private record StringValue(@Age String value, boolean hasError) implements Value {
+  @AllArgsConstructor
+  @Getter
+  public static class StringValue implements Value {
 
+    @Age
+    private final String value;
+    private final boolean error;
   }
 
 }

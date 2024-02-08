@@ -6,6 +6,8 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import app.constants.RegExp;
 import app.constraint.Pattern.Flag;
 import java.util.stream.Stream;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -16,7 +18,7 @@ public class PatternTest extends ConstraintsTest {
   @MethodSource("testValueProvider")
   public void validationTest(Value value, String expectedMessage) {
     var violation = validator.validate(value);
-    if (!value.hasError()) {
+    if (!value.isError()) {
       assertThat(violation.isEmpty()).isTrue();
     } else {
       assertThat(violation).hasSize(1);
@@ -42,19 +44,27 @@ public class PatternTest extends ConstraintsTest {
 
   }
 
-  private interface Value {
+  public interface Value {
 
-    boolean hasError();
+    boolean isError();
   }
 
-  private record Normal(@Pattern(flag = Flag.NORMAL, regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String value,
-                        boolean hasError) implements Value {
+  @AllArgsConstructor
+  @Getter
+  public static class Normal implements Value {
 
+    @Pattern(flag = Flag.NORMAL, regexp = RegExp.ALL_HALF_WIDTH_ALPHABET)
+    private final String value;
+    private final boolean error;
   }
 
-  private record SkipBlank(@Pattern(flag = Flag.SKIP_BLANK, regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String value,
-                           boolean hasError) implements Value {
+  @AllArgsConstructor
+  @Getter
+  public static class SkipBlank implements Value {
 
+    @Pattern(flag = Flag.SKIP_BLANK, regexp = RegExp.ALL_HALF_WIDTH_ALPHABET)
+    private final String value;
+    private final boolean error;
   }
 
 }

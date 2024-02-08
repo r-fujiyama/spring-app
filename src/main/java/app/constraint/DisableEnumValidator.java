@@ -6,6 +6,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("rawtypes")
 public class DisableEnumValidator implements ConstraintValidator<DisableEnum, CodeValueEnum> {
 
   private List<String> disableEnums;
