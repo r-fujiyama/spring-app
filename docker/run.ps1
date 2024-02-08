@@ -1,3 +1,8 @@
+$status = wsl.exe -d Ubuntu-22.04 service docker status
+if ($status.Split(' ')[4] -eq 'not') {
+  wsl.exe -d Ubuntu-22.04 sudo service docker start
+}
+
 $userName = $env:UserName
 $targetFolder = "\\wsl$\Ubuntu-22.04\home\${userName}\develop\spring-app\docker"
 Copy-Item ".\" -Recurse $targetFolder -Exclude *.ps1  -Force
