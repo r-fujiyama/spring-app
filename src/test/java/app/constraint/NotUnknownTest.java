@@ -37,13 +37,13 @@ public class NotUnknownTest extends ConstraintsTest {
 
   @AllArgsConstructor
   @Getter
-  public enum TestEnum implements CodeValueEnum {
+  public enum TestEnum implements CodeValueEnum<Integer, String> {
 
     UNKNOWN(Integer.MIN_VALUE, "Unknown"),
     DISABLE(0, "Disable"),
     ENABLE(1, "Enable");
 
-    private final int code;
+    private final Integer code;
     private final String value;
 
   }

@@ -18,7 +18,7 @@ public class StringToCodeValueEnumConverterFactoryTest {
   @ParameterizedTest
   @MethodSource("testValueProvider")
   public void convertTest(Class<StringEnum> clazz, String value, StringEnum expected) {
-    var converterFactory = new StringToCodeValueEnumConverterFactory<StringEnum>();
+    var converterFactory = new StringToCodeValueEnumConverterFactory<Integer, String, StringEnum>();
     var actual = converterFactory.getConverter(clazz).convert(value);
     assertThat(actual).isEqualTo(expected);
   }
@@ -37,20 +37,20 @@ public class StringToCodeValueEnumConverterFactoryTest {
 
   @AllArgsConstructor
   @Getter
-  public enum StringEnum implements CodeValueEnum {
+  public enum StringEnum implements CodeValueEnum<Integer, String> {
 
     UNKNOWN(Integer.MIN_VALUE, "Unknown"),
     DISABLE(0, "Disable"),
     ENABLE(1, "Enable");
 
-    private final int code;
+    private final Integer code;
     private final String value;
 
   }
 
   @Test
   public void noUnknownConvertTest() {
-    var converterFactory = new StringToCodeValueEnumConverterFactory<NoUnknown>();
+    var converterFactory = new StringToCodeValueEnumConverterFactory<Integer, String, NoUnknown>();
     assertThatThrownBy(() -> converterFactory.getConverter(NoUnknown.class).convert("illegal-value"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage(
@@ -59,12 +59,12 @@ public class StringToCodeValueEnumConverterFactoryTest {
 
   @AllArgsConstructor
   @Getter
-  public enum NoUnknown implements CodeValueEnum {
+  public enum NoUnknown implements CodeValueEnum<Integer, String> {
 
     DISABLE(0, "Disable"),
     ENABLE(1, "Enable");
 
-    private final int code;
+    private final Integer code;
     private final String value;
 
   }

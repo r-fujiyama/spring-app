@@ -8,16 +8,16 @@ import java.sql.SQLException;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 
-public class CodeValueEnumTypeHandler<T extends Enum<T> & CodeValueEnum> extends BaseTypeHandler<T> {
+public class CodeValueEnumTypeHandler<T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> extends BaseTypeHandler<T3> {
 
-  private final Class<T> type;
+  private final Class<T3> type;
 
-  public CodeValueEnumTypeHandler(Class<T> type) {
+  public CodeValueEnumTypeHandler(Class<T3> type) {
     this.type = type;
   }
 
   @Override
-  public void setNonNullParameter(PreparedStatement ps, int i, T parameter, JdbcType jdbcType) throws SQLException {
+  public void setNonNullParameter(PreparedStatement ps, int i, T3 parameter, JdbcType jdbcType) throws SQLException {
     if (parameter == null) {
       ps.setObject(i, null);
     } else {
@@ -26,17 +26,17 @@ public class CodeValueEnumTypeHandler<T extends Enum<T> & CodeValueEnum> extends
   }
 
   @Override
-  public T getNullableResult(ResultSet rs, String columnName) throws SQLException {
+  public T3 getNullableResult(ResultSet rs, String columnName) throws SQLException {
     return CodeValueEnum.fromCode(type, rs.getInt(columnName));
   }
 
   @Override
-  public T getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+  public T3 getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
     return CodeValueEnum.fromCode(type, rs.getInt(columnIndex));
   }
 
   @Override
-  public T getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+  public T3 getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
     return CodeValueEnum.fromCode(type, cs.getInt(columnIndex));
   }
 

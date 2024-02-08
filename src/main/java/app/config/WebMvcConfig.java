@@ -15,6 +15,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
   private final SecurityProperties securityProperties;
 
   @Override
+  @SuppressWarnings("rawtypes")
   public void addFormatters(FormatterRegistry registry) {
     registry.addConverterFactory(new StringToCodeValueEnumConverterFactory());
   }

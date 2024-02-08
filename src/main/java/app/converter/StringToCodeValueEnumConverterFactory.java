@@ -6,28 +6,28 @@ import org.springframework.core.convert.converter.ConverterFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
-public class StringToCodeValueEnumConverterFactory<T extends Enum<T> & CodeValueEnum> implements
-    ConverterFactory<String, T> {
+public class StringToCodeValueEnumConverterFactory<T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> implements
+    ConverterFactory<String, T3> {
 
   @Override
   @NonNull
-  public <S extends T> Converter<String, S> getConverter(@NonNull Class<S> targetType) {
+  public <T4 extends T3> Converter<String, T4> getConverter(@NonNull Class<T4> targetType) {
     return new StringToCodeValueEnum<>(targetType);
   }
 
-  private static class StringToCodeValueEnum<S extends Enum<S> & CodeValueEnum, U extends S> implements
-      Converter<String, U> {
+  private static class StringToCodeValueEnum<T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>, T4 extends T3> implements
+      Converter<String, T4> {
 
-    private final Class<U> targetType;
+    private final Class<T4> targetType;
 
-    public StringToCodeValueEnum(Class<U> targetType) {
+    public StringToCodeValueEnum(Class<T4> targetType) {
       this.targetType = targetType;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public U convert(@Nullable String source) {
-      return (U) CodeValueEnum.fromValue((Class<S>) targetType, source);
+    public T4 convert(@Nullable String source) {
+      return (T4) CodeValueEnum.fromValue((Class<T3>) targetType, source);
     }
 
   }

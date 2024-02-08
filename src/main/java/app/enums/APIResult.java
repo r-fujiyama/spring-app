@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public enum APIResult implements CodeValueEnum {
+public enum APIResult implements CodeValueEnum<Integer, String> {
 
   UNKNOWN(Integer.MIN_VALUE, "Unknown"),
   SUCCESS(1, "Success"),
@@ -15,7 +15,7 @@ public enum APIResult implements CodeValueEnum {
   private final String value;
 
   @Override
-  public int getCode() {
+  public Integer getCode() {
     return this.code;
   }
 

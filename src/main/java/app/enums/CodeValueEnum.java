@@ -2,13 +2,13 @@ package app.enums;
 
 import java.util.Arrays;
 
-public interface CodeValueEnum {
+public interface CodeValueEnum<T1, T2> {
 
-  int getCode();
+  T1 getCode();
 
-  String getValue();
+  T2 getValue();
 
-  static <T extends Enum<T> & CodeValueEnum> T fromCode(Class<T> clazz, Integer code) {
+  static <T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> T3 fromCode(Class<T3> clazz, Integer code) {
     if (code == null) {
       return null;
     }
@@ -18,7 +18,7 @@ public interface CodeValueEnum {
         .orElse(getUnknown(clazz));
   }
 
-  static <T extends Enum<T> & CodeValueEnum> T fromValue(Class<T> clazz, String value) {
+  static <T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> T3 fromValue(Class<T3> clazz, String value) {
     if (value == null) {
       return null;
     }
@@ -28,7 +28,7 @@ public interface CodeValueEnum {
         .orElse(getUnknown(clazz));
   }
 
-  private static <T extends Enum<T> & CodeValueEnum> T getUnknown(Class<T> clazz) {
+  private static <T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> T3 getUnknown(Class<T3> clazz) {
     return Arrays.stream(clazz.getEnumConstants())
         .filter(e -> e.name().equals("UNKNOWN"))
         .findFirst()
