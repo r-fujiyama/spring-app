@@ -13,6 +13,9 @@ spring:
       database: 0
       username: admin
       password: password
+logging:
+  level:
+    root: INFO
 security:
   allowedOrigins:
     - "*"
