@@ -8,7 +8,7 @@ services:
       TZ: Asia/Tokyo
     volumes:
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
-      - ./mysql/config.cnf:/etc/mysql/conf.d/config.cnf
+      - ./mysql/conf.d/config.cnf:/etc/mysql/conf.d/config.cnf
       - ./mysql/data:/var/lib/mysql
     ports:
       - "3306:3306"
@@ -18,8 +18,7 @@ services:
     command: ["redis-server", "/etc/redis/redis.conf"]
     build: ./redis
     volumes:
-      - ./redis/redis.conf:/etc/redis/redis.conf
-      - ./redis/users.acl:/etc/redis/users.acl
+      - ./redis/conf:/etc/redis
       - ./redis/data:/data
     ports:
       - "6379:6379"
