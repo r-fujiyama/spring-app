@@ -13,16 +13,17 @@ import app.enums.UserType;
 public abstract class AbstractUserV1Service implements UserV1Service {
 
   @Override
-  public GetUserResponse getUser(long userID, UserType userType, String firstName, String lastName, Integer age) {
+  public GetUserResponse getUser(String userID, UserType userType, String firstName, String lastName, Integer age) {
     getUserDetailProcess();
     return new GetUserResponse(
         User.builder()
-            .id(null)
+            .id(1L)
+            .userID(null)
             .type(UserType.UNKNOWN)
             .status(UserStatus.UNKNOWN)
             .firstName(null)
             .lastName(null)
-            .age(null)
+            .age(0)
             .build()
     );
   }
@@ -30,16 +31,17 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   protected abstract void getUserDetailProcess();
 
   @Override
-  public InsertUserResponse insertUser(long userID, InsertUserRequest request) {
+  public InsertUserResponse insertUser(long id, InsertUserRequest request) {
     insertUserDetailProcess();
     return new InsertUserResponse(
         User.builder()
-            .id(null)
+            .id(1L)
+            .userID(null)
             .type(UserType.UNKNOWN)
             .status(UserStatus.UNKNOWN)
             .firstName(null)
             .lastName(null)
-            .age(null)
+            .age(0)
             .build()
     );
   }
@@ -47,16 +49,17 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   protected abstract void insertUserDetailProcess();
 
   @Override
-  public UpdateUserResponse updateUser(long userID, UpdateUserRequest request) {
+  public UpdateUserResponse updateUser(long id, UpdateUserRequest request) {
     updateUserDetailProcess();
     return new UpdateUserResponse(
         User.builder()
-            .id(null)
+            .id(1L)
+            .userID(null)
             .type(UserType.UNKNOWN)
             .status(UserStatus.UNKNOWN)
             .firstName(null)
             .lastName(null)
-            .age(null)
+            .age(0)
             .build()
     );
   }
@@ -64,9 +67,9 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   protected abstract void updateUserDetailProcess();
 
   @Override
-  public DeleteUserResponse deleteUser(long userID) {
+  public DeleteUserResponse deleteUser(long id) {
     deleteUserDetailProcess();
-    return new DeleteUserResponse(userID);
+    return new DeleteUserResponse(id);
   }
 
   protected abstract void deleteUserDetailProcess();

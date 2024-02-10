@@ -3,7 +3,7 @@ package app.controller.user.v2;
 import app.annotation.role.RoleCreate;
 import app.annotation.role.RoleDelete;
 import app.annotation.role.RoleUpdate;
-import app.constraint.UserID;
+import app.constraint.ID;
 import app.controller.response.Response;
 import app.controller.user.v2.request.GetUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;
@@ -32,30 +32,29 @@ public class UserV2Controller {
   private final UserV2Service userService;
 
   @RoleCreate
-  @GetMapping(path = "{userID}")
-  public GetUserResponse getUserV2(@Valid @UserID @PathVariable("userID") long userID,
-      @Valid GetUserRequest request) {
+  @GetMapping
+  public GetUserResponse getUserV2(@Valid GetUserRequest request) {
     return userService.getUser(request);
   }
 
   @RoleCreate
-  @PostMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public Response insertUser(@Valid @UserID @PathVariable("userID") long userID,
+  @PostMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public Response insertUser(@Valid @ID @PathVariable("id") long id,
       @Valid @RequestBody InsertUserRequest request) {
-    return userService.insertUser(userID, request);
+    return userService.insertUser(id, request);
   }
 
   @RoleUpdate
-  @PutMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public Response updateUser(@Valid @UserID @PathVariable("userID") long userID,
+  @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public Response updateUser(@Valid @ID @PathVariable("id") long id,
       @Valid @RequestBody UpdateUserRequest request) {
-    return userService.updateUser(userID, request);
+    return userService.updateUser(id, request);
   }
 
   @RoleDelete
-  @DeleteMapping(path = "{userID}")
-  public Response deleteUser(@Valid @UserID @PathVariable("userID") long userID) {
-    return userService.deleteUser(userID);
+  @DeleteMapping(path = "{id}")
+  public Response deleteUser(@Valid @ID @PathVariable("id") long id) {
+    return userService.deleteUser(id);
   }
 
 }

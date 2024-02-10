@@ -11,7 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-public class UserIDTest extends ConstraintsTest {
+public class IDTest extends ConstraintsTest {
 
   @ParameterizedTest
   @MethodSource("testValueProvider")
@@ -57,7 +57,7 @@ public class UserIDTest extends ConstraintsTest {
   @Getter
   public static class LongValue implements Value {
 
-    @UserID
+    @ID
     private final Long value;
     private final boolean error;
   }
@@ -66,7 +66,7 @@ public class UserIDTest extends ConstraintsTest {
   @Getter
   public static class BigDecimalValue implements Value {
 
-    @UserID
+    @ID
     private final BigDecimal value;
     private final boolean error;
   }
@@ -75,7 +75,7 @@ public class UserIDTest extends ConstraintsTest {
   @Getter
   public static class StringValue implements Value {
 
-    @UserID
+    @ID
     private final String value;
     private final boolean error;
   }

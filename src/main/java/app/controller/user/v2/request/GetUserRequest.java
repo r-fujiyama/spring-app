@@ -5,6 +5,7 @@ import app.constants.RegExp;
 import app.constraint.Age;
 import app.constraint.NotUnknown;
 import app.constraint.Pattern;
+import app.constraint.UserID;
 import app.enums.UserType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +13,9 @@ import lombok.Value;
 
 @Value
 public class GetUserRequest {
+
+  @UserID
+  String userID;
 
   @NotNull
   @NotUnknown

@@ -9,11 +9,12 @@ import lombok.Value;
 @Builder
 public class User {
 
-  Long id;
+  long id;
+  String userID;
   UserType type;
   UserStatus status;
   String firstName;
   String lastName;
-  Integer age;
+  int age;
 
 }

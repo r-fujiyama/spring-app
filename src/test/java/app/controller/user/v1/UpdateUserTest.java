@@ -41,10 +41,11 @@ public class UpdateUserTest extends ControllerTest {
     var res = new UpdateUserResponse(
         User.builder()
             .id(1L)
+            .userID("user-id")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")
-            .lastName("nihon")
+            .lastName("tokyo")
             .age(20)
             .build()
     );
@@ -53,8 +54,8 @@ public class UpdateUserTest extends ControllerTest {
 
   @Test
   public void OK200() throws Exception {
-    var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "nihon", 20);
-    var actual = mockMvc.perform(put("/v1/user/{userID}", 1)
+    var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);
+    var actual = mockMvc.perform(put("/v1/user/{id}", 1)
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.convertToJSON(req)))
         .andExpect(status().isOk())
@@ -63,10 +64,11 @@ public class UpdateUserTest extends ControllerTest {
     var expected = JSONUtils.convertToJSON(new UpdateUserResponse(
         User.builder()
             .id(1L)
+            .userID("user-id")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")
-            .lastName("nihon")
+            .lastName("tokyo")
             .age(20)
             .build()
     ));
@@ -75,10 +77,10 @@ public class UpdateUserTest extends ControllerTest {
 
   @ParameterizedTest
   @MethodSource("validationErrorProvider")
-  public void validationErrorTest(String userID, UserType userType, String firstName, String lastName,
+  public void validationErrorTest(String id, UserType userType, String firstName, String lastName,
       Integer age, Error error) throws Exception {
     var req = new UpdateUserRequest(userType, firstName, lastName, age);
-    var actual = mockMvc.perform(put("/v1/user/{userID}", userID)
+    var actual = mockMvc.perform(put("/v1/user/{id}", id)
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.convertToJSON(req)))
         .andExpect(status().isBadRequest())
@@ -91,25 +93,25 @@ public class UpdateUserTest extends ControllerTest {
   static Stream<Arguments> validationErrorProvider() {
     return Stream.of(
         // ユーザーID
-        arguments("a", UserType.PRIVATE, "taro", "nihon", "20",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDに指定された値の型に誤りがあります。")),
-        arguments("0", UserType.PRIVATE, "taro", "nihon", "20",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは1~9223372036854775807以内の値を入力してください。")),
-        arguments("9223372036854775808", UserType.PRIVATE, "taro", "nihon", "20",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDに指定された値の型に誤りがあります。")),
+        arguments("a", UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error(ErrorCode.BAD_REQUEST, "IDに指定された値の型に誤りがあります。")),
+        arguments("0", UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error(ErrorCode.BAD_REQUEST, "IDは1~9223372036854775807以内の値を入力してください。")),
+        arguments("9223372036854775808", UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error(ErrorCode.BAD_REQUEST, "IDに指定された値の型に誤りがあります。")),
         // ユーザタイプ
-        arguments("1", null, "taro", "nihon", "20",
+        arguments("1", null, "taro", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに値が入力されていません。")),
-        arguments("1", UserType.UNKNOWN, "taro", "nihon", "20",
+        arguments("1", UserType.UNKNOWN, "taro", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")),
         // 名前
-        arguments("1", UserType.PRIVATE, null, "nihon", "20",
+        arguments("1", UserType.PRIVATE, null, "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "名前にNULL、空文字、空白は許可されていません。")),
-        arguments("1", UserType.PRIVATE, "", "nihon", "20",
+        arguments("1", UserType.PRIVATE, "", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "名前にNULL、空文字、空白は許可されていません。")),
-        arguments("1", UserType.PRIVATE, " ", "nihon", "20",
+        arguments("1", UserType.PRIVATE, " ", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "名前にNULL、空文字、空白は許可されていません。")),
-        arguments("1", UserType.PRIVATE, "aaa!aaa", "nihon", "20",
+        arguments("1", UserType.PRIVATE, "aaa!aaa", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "名前は^[a-zA-Z]+$の形式で入力してください。")),
         // 苗字
         arguments("1", UserType.PRIVATE, "taro", null, "20",
@@ -121,19 +123,19 @@ public class UpdateUserTest extends ControllerTest {
         arguments("1", UserType.PRIVATE, "taro", "aaa!aaa", "20",
             new Error(ErrorCode.BAD_REQUEST, "苗字は^[a-zA-Z]+$の形式で入力してください。")),
         // 年齢
-        arguments("1", UserType.PRIVATE, "taro", "nihon", null,
+        arguments("1", UserType.PRIVATE, "taro", "tokyo", null,
             new Error(ErrorCode.BAD_REQUEST, "年齢に値が入力されていません。")),
-        arguments("1", UserType.PRIVATE, "taro", "nihon", "-1",
+        arguments("1", UserType.PRIVATE, "taro", "tokyo", "-1",
             new Error(ErrorCode.BAD_REQUEST, "年齢は0~999以内の値を入力してください。")),
-        arguments("1", UserType.PRIVATE, "taro", "nihon", "1000",
+        arguments("1", UserType.PRIVATE, "taro", "tokyo", "1000",
             new Error(ErrorCode.BAD_REQUEST, "年齢は0~999以内の値を入力してください。"))
     );
   }
 
   @Test
   public void unsupportedMediaTypesTest() throws Exception {
-    var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "nihon", 20);
-    var actual = mockMvc.perform(put("/v1/user/{userID}", 1)
+    var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);
+    var actual = mockMvc.perform(put("/v1/user/{id}", 1)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .content(JSONUtils.convertToJSON(req)))
         .andExpect(status().isBadRequest())

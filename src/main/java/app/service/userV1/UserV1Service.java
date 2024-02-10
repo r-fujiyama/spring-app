@@ -10,12 +10,12 @@ import app.enums.UserType;
 
 public interface UserV1Service {
 
-  GetUserResponse getUser(long userID, UserType userType, String firstName, String lastName, Integer age);
+  GetUserResponse getUser(String userID, UserType userType, String firstName, String lastName, Integer age);
 
-  InsertUserResponse insertUser(long userID, InsertUserRequest request);
+  InsertUserResponse insertUser(long id, InsertUserRequest request);
 
-  UpdateUserResponse updateUser(long userID, UpdateUserRequest request);
+  UpdateUserResponse updateUser(long id, UpdateUserRequest request);
 
-  DeleteUserResponse deleteUser(long userID);
+  DeleteUserResponse deleteUser(long id);
 
 }

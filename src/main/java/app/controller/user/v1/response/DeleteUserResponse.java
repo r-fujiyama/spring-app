@@ -8,6 +8,6 @@ import lombok.Value;
 @EqualsAndHashCode(callSuper = true)
 public class DeleteUserResponse extends Response {
 
-  long userID;
+  long id;
 
 }

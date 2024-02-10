@@ -11,7 +11,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import jakarta.validation.ReportAsSingleViolation;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -19,14 +20,15 @@ import java.lang.annotation.Target;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Repeatable(UserID.List.class)
+@Repeatable(ID.List.class)
 @Documented
 @Constraint(validatedBy = {})
 @ReportAsSingleViolation
-@Size(min = 1, max = 256)
-public @interface UserID {
+@Min(value = 1)
+@Max(value = Long.MAX_VALUE)
+public @interface ID {
 
-  String message() default "{validation.constraints.UserID.message}";
+  String message() default "{validation.constraints.ID.message}";
 
   Class<?>[] groups() default {};
 
@@ -37,6 +39,6 @@ public @interface UserID {
   @Documented
   @interface List {
 
-    UserID[] value();
+    ID[] value();
   }
 }

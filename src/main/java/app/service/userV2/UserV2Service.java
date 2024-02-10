@@ -10,10 +10,10 @@ public interface UserV2Service {
 
   GetUserResponse getUser(GetUserRequest request);
 
-  Response insertUser(long userID, InsertUserRequest request);
+  Response insertUser(long id, InsertUserRequest request);
 
-  Response updateUser(long userID, UpdateUserRequest request);
+  Response updateUser(long id, UpdateUserRequest request);
 
-  Response deleteUser(long userID);
+  Response deleteUser(long id);
 
 }

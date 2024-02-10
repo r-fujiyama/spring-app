@@ -73,7 +73,8 @@ public interface UserDao {
 
   @Select("SELECT 1")
   @Results(id = "userResultMap", value = {
-      @Result(id = true, column = "user_id", property = "userID"),
+      @Result(id = true, column = "id", property = "id"),
+      @Result(column = "user_id", property = "userID"),
       @Result(column = "password", property = "password"),
       @Result(column = "user_type", property = "userType"),
       @Result(column = "user_status", property = "userStatus"),

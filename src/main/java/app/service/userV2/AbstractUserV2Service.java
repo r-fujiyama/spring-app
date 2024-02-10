@@ -16,12 +16,13 @@ public abstract class AbstractUserV2Service implements UserV2Service {
     getUserDetailProcess();
     return new GetUserResponse(
         User.builder()
-            .id(null)
+            .id(1L)
+            .userID(null)
             .type(UserType.UNKNOWN)
             .status(UserStatus.UNKNOWN)
             .firstName(null)
             .lastName(null)
-            .age(null)
+            .age(0)
             .build()
     );
   }
@@ -29,7 +30,7 @@ public abstract class AbstractUserV2Service implements UserV2Service {
   protected abstract void getUserDetailProcess();
 
   @Override
-  public Response insertUser(long userID, InsertUserRequest request) {
+  public Response insertUser(long id, InsertUserRequest request) {
     insertUserDetailProcess();
     return new Response();
   }
@@ -37,7 +38,7 @@ public abstract class AbstractUserV2Service implements UserV2Service {
   protected abstract void insertUserDetailProcess();
 
   @Override
-  public Response updateUser(long userID, UpdateUserRequest request) {
+  public Response updateUser(long id, UpdateUserRequest request) {
     updateUserDetailProcess();
     return new Response();
   }
@@ -45,7 +46,7 @@ public abstract class AbstractUserV2Service implements UserV2Service {
   protected abstract void updateUserDetailProcess();
 
   @Override
-  public Response deleteUser(long userID) {
+  public Response deleteUser(long id) {
     deleteUserDetailProcess();
     return new Response();
   }

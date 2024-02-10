@@ -37,7 +37,7 @@ public class DeleteUserTest extends ControllerTest {
 
   @Test
   public void OK200() throws Exception {
-    var actual = mockMvc.perform(delete("/v2/user/{userID}", 1))
+    var actual = mockMvc.perform(delete("/v2/user/{id}", 1))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
@@ -47,8 +47,8 @@ public class DeleteUserTest extends ControllerTest {
 
   @ParameterizedTest
   @MethodSource("validationErrorProvider")
-  public void validationErrorTest(String userID, Error error) throws Exception {
-    var actual = mockMvc.perform(delete("/v2/user/{userID}", userID))
+  public void validationErrorTest(String id, Error error) throws Exception {
+    var actual = mockMvc.perform(delete("/v2/user/{id}", id))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
@@ -59,11 +59,11 @@ public class DeleteUserTest extends ControllerTest {
   static Stream<Arguments> validationErrorProvider() {
     return Stream.of(
         // ユーザーID
-        arguments("a", new Error(ErrorCode.BAD_REQUEST, "ユーザーIDに指定された値の型に誤りがあります。")),
+        arguments("a", new Error(ErrorCode.BAD_REQUEST, "IDに指定された値の型に誤りがあります。")),
         arguments("0",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは1~9223372036854775807以内の値を入力してください。")),
+            new Error(ErrorCode.BAD_REQUEST, "IDは1~9223372036854775807以内の値を入力してください。")),
         arguments("9223372036854775808",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDに指定された値の型に誤りがあります。"))
+            new Error(ErrorCode.BAD_REQUEST, "IDに指定された値の型に誤りがあります。"))
     );
   }
 

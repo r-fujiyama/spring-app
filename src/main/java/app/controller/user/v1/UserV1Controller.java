@@ -5,6 +5,7 @@ import app.annotation.role.RoleDelete;
 import app.annotation.role.RoleUpdate;
 import app.constants.RegExp;
 import app.constraint.Age;
+import app.constraint.ID;
 import app.constraint.NotUnknown;
 import app.constraint.Pattern;
 import app.constraint.UserID;
@@ -40,9 +41,9 @@ public class UserV1Controller {
   private final UserV1Service userService;
 
   @RoleCreate
-  @GetMapping(path = "{userID}")
+  @GetMapping
   public GetUserResponse getUser(
-      @Valid @UserID @PathVariable("userID") long userID,
+      @Valid @UserID String userID,
       @Valid @NotUnknown @RequestParam UserType userType,
       @Valid @NotBlank @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String firstName,
       @Valid @NotBlank @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String lastName,
@@ -51,23 +52,23 @@ public class UserV1Controller {
   }
 
   @RoleCreate
-  @PostMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public InsertUserResponse insertUser(@Valid @UserID @PathVariable("userID") long userID,
+  @PostMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public InsertUserResponse insertUser(@Valid @ID @PathVariable("id") long id,
       @Valid @RequestBody InsertUserRequest request) {
-    return userService.insertUser(userID, request);
+    return userService.insertUser(id, request);
   }
 
   @RoleUpdate
-  @PutMapping(path = "{userID}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public UpdateUserResponse updateUser(@Valid @UserID @PathVariable("userID") long userID,
+  @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+  public UpdateUserResponse updateUser(@Valid @ID @PathVariable("id") long id,
       @Valid @RequestBody UpdateUserRequest request) {
-    return userService.updateUser(userID, request);
+    return userService.updateUser(id, request);
   }
 
   @RoleDelete
-  @DeleteMapping(path = "{userID}")
-  public DeleteUserResponse deleteUser(@Valid @UserID @PathVariable("userID") long userID) {
-    return userService.deleteUser(userID);
+  @DeleteMapping(path = "{id}")
+  public DeleteUserResponse deleteUser(@Valid @ID @PathVariable("id") long id) {
+    return userService.deleteUser(id);
   }
 
 }

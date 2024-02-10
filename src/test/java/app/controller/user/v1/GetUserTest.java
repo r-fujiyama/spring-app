@@ -3,7 +3,6 @@ package app.controller.user.v1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,22 +38,24 @@ public class GetUserTest extends ControllerTest {
     var res = new GetUserResponse(
         User.builder()
             .id(1L)
+            .userID("user-id")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")
-            .lastName("nihon")
+            .lastName("tokyo")
             .age(20)
             .build()
     );
-    when(userService.getUser(anyLong(), any(), any(), any(), any())).thenReturn(res);
+    when(userService.getUser(any(), any(), any(), any(), any())).thenReturn(res);
   }
 
   @Test
   public void OK200() throws Exception {
-    var actual = mockMvc.perform(get("/v1/user/{userID}", 1)
+    var actual = mockMvc.perform(get("/v1/user")
+            .param("userID", "user-id")
             .param("userType", UserType.PRIVATE.getValue())
             .param("firstName", "taro")
-            .param("lastName", "nihon")
+            .param("lastName", "tokyo")
             .param("age", "20"))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
@@ -62,10 +63,11 @@ public class GetUserTest extends ControllerTest {
     var expected = JSONUtils.convertToJSON(new GetUserResponse(
         User.builder()
             .id(1L)
+            .userID("user-id")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")
-            .lastName("nihon")
+            .lastName("tokyo")
             .age(20)
             .build()
     ));
@@ -77,7 +79,8 @@ public class GetUserTest extends ControllerTest {
   public void validationErrorTest(String userID, String userType, String firstName, String lastName,
       String age, Error error)
       throws Exception {
-    var actual = mockMvc.perform(get("/v1/user/{userID}", userID)
+    var actual = mockMvc.perform(get("/v1/user")
+            .param("userID", userID)
             .param("userType", userType)
             .param("firstName", firstName)
             .param("lastName", lastName)
@@ -92,31 +95,29 @@ public class GetUserTest extends ControllerTest {
   static Stream<Arguments> validationErrorProvider() {
     return Stream.of(
         // ユーザーID
-        arguments("a", UserType.PRIVATE.getValue(), "taro", "nihon", "20",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDに指定された値の型に誤りがあります。")),
-        arguments("0", UserType.PRIVATE.getValue(), "taro", "nihon", "20",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは1~9223372036854775807以内の値を入力してください。")),
-        arguments("9223372036854775808", UserType.PRIVATE.getValue(), "taro", "nihon", "20",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDに指定された値の型に誤りがあります。")),
+        arguments("", UserType.PRIVATE.getValue(), "taro", "tokyo", "20",
+            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは1~256文字以内で入力してください。")),
+        arguments("a".repeat(257), UserType.PRIVATE.getValue(), "taro", "tokyo", "20",
+            new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは1~256文字以内で入力してください。")),
         // ユーザタイプ
-        arguments("1", null, "taro", "nihon", "20",
+        arguments("1", null, "taro", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに値が入力されていません。")),
-        arguments("1", "", "taro", "nihon", "20",
+        arguments("1", "", "taro", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")),
-        arguments("1", "　", "taro", "nihon", "20",
+        arguments("1", "　", "taro", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")),
-        arguments("1", UserType.UNKNOWN.getValue(), "taro", "nihon", "20",
+        arguments("1", UserType.UNKNOWN.getValue(), "taro", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")),
-        arguments("1", "aaa", "taro", "nihon", "20",
+        arguments("1", "aaa", "taro", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")),
         // 名前
-        arguments("1", UserType.PRIVATE.getValue(), null, "nihon", "20",
+        arguments("1", UserType.PRIVATE.getValue(), null, "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "名前に値が入力されていません。")),
-        arguments("1", UserType.PRIVATE.getValue(), "", "nihon", "20",
+        arguments("1", UserType.PRIVATE.getValue(), "", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "名前にNULL、空文字、空白は許可されていません。")),
-        arguments("1", UserType.PRIVATE.getValue(), " ", "nihon", "20",
+        arguments("1", UserType.PRIVATE.getValue(), " ", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "名前にNULL、空文字、空白は許可されていません。")),
-        arguments("1", UserType.PRIVATE.getValue(), "aaa!aaa", "nihon", "20",
+        arguments("1", UserType.PRIVATE.getValue(), "aaa!aaa", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "名前は^[a-zA-Z]+$の形式で入力してください。")),
         // 苗字
         arguments("1", UserType.PRIVATE.getValue(), "taro", null, "20",
@@ -128,15 +129,15 @@ public class GetUserTest extends ControllerTest {
         arguments("1", UserType.PRIVATE.getValue(), "taro", "aaa!aaa", "20",
             new Error(ErrorCode.BAD_REQUEST, "苗字は^[a-zA-Z]+$の形式で入力してください。")),
         // 年齢
-        arguments("1", UserType.PRIVATE.getValue(), "taro", "nihon", null,
+        arguments("1", UserType.PRIVATE.getValue(), "taro", "tokyo", null,
             new Error(ErrorCode.BAD_REQUEST, "年齢に値が入力されていません。")),
-        arguments("1", UserType.PRIVATE.getValue(), "taro", "nihon", "",
+        arguments("1", UserType.PRIVATE.getValue(), "taro", "tokyo", "",
             new Error(ErrorCode.BAD_REQUEST, "年齢に値が入力されていません。")),
-        arguments("1", UserType.PRIVATE.getValue(), "taro", "nihon", "aaa",
+        arguments("1", UserType.PRIVATE.getValue(), "taro", "tokyo", "aaa",
             new Error(ErrorCode.BAD_REQUEST, "年齢に指定された値の型に誤りがあります。")),
-        arguments("1", UserType.PRIVATE.getValue(), "taro", "nihon", "-1",
+        arguments("1", UserType.PRIVATE.getValue(), "taro", "tokyo", "-1",
             new Error(ErrorCode.BAD_REQUEST, "年齢は0~999以内の値を入力してください。")),
-        arguments("1", UserType.PRIVATE.getValue(), "taro", "nihon", "1000",
+        arguments("1", UserType.PRIVATE.getValue(), "taro", "tokyo", "1000",
             new Error(ErrorCode.BAD_REQUEST, "年齢は0~999以内の値を入力してください。"))
     );
   }

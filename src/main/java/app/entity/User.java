@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 public class User {
 
+  private long id;
   private String userID;
   private String password;
   private UserType userType;
