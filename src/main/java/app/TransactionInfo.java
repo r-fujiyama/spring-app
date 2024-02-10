@@ -27,7 +27,7 @@ public class TransactionInfo {
 
   private static void checkInitialized() {
     if (!isInitialized()) {
-      throw new IllegalThreadStateException();
+      throw new IllegalThreadStateException("ThreadLocal is not initialized.");
     }
   }
 
