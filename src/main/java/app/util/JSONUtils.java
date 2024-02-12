@@ -21,7 +21,7 @@ public final class JSONUtils {
     }
   }
 
-  public static <T> Object toObject(String s, Class<T> clazz) {
+  public static <T> T toObject(String s, Class<T> clazz) {
     try {
       return mapper.readValue(s, clazz);
     } catch (JsonProcessingException e) {
