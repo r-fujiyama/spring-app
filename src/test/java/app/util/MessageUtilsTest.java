@@ -29,7 +29,7 @@ public class MessageUtilsTest {
     @Test
     public void getMessage() {
       var actual = messageUtils.getMessage(ErrorMessage.MISSING_REQUEST_PARAMETER, "test", "default message");
-      assertThat(actual).isEqualTo("testに値が入力されていません。");
+      assertThat(actual).isEqualTo("testにNULLは許可されていません。");
     }
 
   }
@@ -40,14 +40,14 @@ public class MessageUtilsTest {
     @Test
     public void getMessage() {
       var actual = messageUtils.getMessage(ErrorMessage.MISSING_REQUEST_PARAMETER, null, "default message");
-      assertThat(actual).isEqualTo("{0}に値が入力されていません。");
+      assertThat(actual).isEqualTo("{0}にNULLは許可されていません。");
     }
 
     @Test
     public void getReplacedMessage() {
       var actual = messageUtils.getMessage(ErrorMessage.MISSING_REQUEST_PARAMETER, new String[]{"test"},
           "default message");
-      assertThat(actual).isEqualTo("testに値が入力されていません。");
+      assertThat(actual).isEqualTo("testにNULLは許可されていません。");
     }
 
     @Test
@@ -63,13 +63,13 @@ public class MessageUtilsTest {
     @Test
     public void getMessage() {
       var actual = messageUtils.getMessage(ErrorMessage.MISSING_REQUEST_PARAMETER);
-      assertThat(actual).isEqualTo("{0}に値が入力されていません。");
+      assertThat(actual).isEqualTo("{0}にNULLは許可されていません。");
     }
 
     @Test
     public void getReplacedMessage() {
       var actual = messageUtils.getMessage(ErrorMessage.MISSING_REQUEST_PARAMETER, "test");
-      assertThat(actual).isEqualTo("testに値が入力されていません。");
+      assertThat(actual).isEqualTo("testにNULLは許可されていません。");
     }
 
     @Test
@@ -102,7 +102,7 @@ public class MessageUtilsTest {
         }
       };
       var actual = messageUtils.getMessage(resolvable);
-      assertThat(actual).isEqualTo("{0}に値が入力されていません。");
+      assertThat(actual).isEqualTo("{0}にNULLは許可されていません。");
     }
 
     @Test
@@ -124,7 +124,7 @@ public class MessageUtilsTest {
         }
       };
       var actual = messageUtils.getMessage(resolvable);
-      assertThat(actual).isEqualTo("testに値が入力されていません。");
+      assertThat(actual).isEqualTo("testにNULLは許可されていません。");
     }
 
     @Test
