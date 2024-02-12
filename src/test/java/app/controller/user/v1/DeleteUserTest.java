@@ -49,12 +49,14 @@ public class DeleteUserTest extends ControllerTest {
   @ParameterizedTest
   @MethodSource("validationErrorProvider")
   public void validationErrorTest(String id, Error error) throws Exception {
-    var actual = mockMvc.perform(delete("/v1/user/{id}", id))
+    var res = mockMvc.perform(delete("/v1/user/{id}", id))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.toJSON(new Response(error));
-    assertThat(actual).isEqualTo(expected);
+    var actual = JSONUtils.toObject(res, Response.class);
+    var expected = new Response(error);
+    assertThat(actual.getStatus()).isEqualTo(expected.getStatus());
+    assertThat(actual.getErrors()).containsExactlyInAnyOrder(expected.getErrors().toArray(new Error[0]));
   }
 
   static Stream<Arguments> validationErrorProvider() {

@@ -80,14 +80,16 @@ public class UpdateUserTest extends ControllerTest {
   public void validationErrorTest(String id, UserType userType, String firstName, String lastName,
       Integer age, Error error) throws Exception {
     var req = new UpdateUserRequest(userType, firstName, lastName, age);
-    var actual = mockMvc.perform(put("/v1/user/{id}", id)
+    var res = mockMvc.perform(put("/v1/user/{id}", id)
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.toJSON(req)))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.toJSON(new Response(error));
-    assertThat(actual).isEqualTo(expected);
+    var actual = JSONUtils.toObject(res, Response.class);
+    var expected = new Response(error);
+    assertThat(actual.getStatus()).isEqualTo(expected.getStatus());
+    assertThat(actual.getErrors()).containsExactlyInAnyOrder(expected.getErrors().toArray(new Error[0]));
   }
 
   static Stream<Arguments> validationErrorProvider() {

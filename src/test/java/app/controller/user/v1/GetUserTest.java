@@ -90,8 +90,8 @@ public class GetUserTest extends ControllerTest {
 
     var actual = JSONUtils.toObject(res, Response.class);
     var expected = new Response(errors);
-    assertThat(actual).isEqualTo(expected);
-    assertThat(actual).isEqualTo(expected);
+    assertThat(actual.getStatus()).isEqualTo(expected.getStatus());
+    assertThat(actual.getErrors()).containsExactlyInAnyOrder(expected.getErrors().toArray(new Error[0]));
   }
 
   static Stream<Arguments> validationErrorProvider() {
