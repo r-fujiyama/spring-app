@@ -57,11 +57,11 @@ public class InsertUserTest extends ControllerTest {
     var req = new InsertUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);
     var actual = mockMvc.perform(post("/v1/user/{id}", 1)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(JSONUtils.convertToJSON(req)))
+            .content(JSONUtils.toJSON(req)))
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.convertToJSON(new InsertUserResponse(
+    var expected = JSONUtils.toJSON(new InsertUserResponse(
         User.builder()
             .id(1L)
             .userID("user-id")
@@ -82,11 +82,11 @@ public class InsertUserTest extends ControllerTest {
     var req = new InsertUserRequest(userType, firstName, lastName, age);
     var actual = mockMvc.perform(post("/v1/user/{id}", id)
             .contentType(MediaType.APPLICATION_JSON)
-            .content(JSONUtils.convertToJSON(req)))
+            .content(JSONUtils.toJSON(req)))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.convertToJSON(new Response(error));
+    var expected = JSONUtils.toJSON(new Response(error));
     assertThat(actual).isEqualTo(expected);
   }
 
@@ -137,11 +137,11 @@ public class InsertUserTest extends ControllerTest {
     var req = new InsertUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);
     var actual = mockMvc.perform(post("/v1/user/{id}", 1)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-            .content(JSONUtils.convertToJSON(req)))
+            .content(JSONUtils.toJSON(req)))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.convertToJSON(
+    var expected = JSONUtils.toJSON(
         new Response(new Error(ErrorCode.BAD_REQUEST, "サポートしていないContent-Typeが指定されています。")));
     assertThat(actual).isEqualTo(expected);
   }

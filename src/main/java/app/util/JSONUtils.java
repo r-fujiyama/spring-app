@@ -13,7 +13,7 @@ public final class JSONUtils {
 
   private static final ObjectMapper mapper = new ObjectMapper();
 
-  public static String convertToJSON(Object o) {
+  public static String toJSON(Object o) {
     try {
       return mapper.writeValueAsString(o);
     } catch (JsonProcessingException e) {
@@ -21,7 +21,7 @@ public final class JSONUtils {
     }
   }
 
-  public static <T> Object convertToObject(String s, Class<T> clazz) {
+  public static <T> Object toObject(String s, Class<T> clazz) {
     try {
       return mapper.readValue(s, clazz);
     } catch (JsonProcessingException e) {

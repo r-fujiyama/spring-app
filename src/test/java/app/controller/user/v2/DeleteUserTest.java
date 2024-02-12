@@ -41,7 +41,7 @@ public class DeleteUserTest extends ControllerTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.convertToJSON(new Response());
+    var expected = JSONUtils.toJSON(new Response());
     assertThat(actual).isEqualTo(expected);
   }
 
@@ -52,7 +52,7 @@ public class DeleteUserTest extends ControllerTest {
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.convertToJSON(new Response(error));
+    var expected = JSONUtils.toJSON(new Response(error));
     assertThat(actual).isEqualTo(expected);
   }
 

@@ -60,7 +60,7 @@ public class GetUserTest extends ControllerTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.convertToJSON(new GetUserResponse(
+    var expected = JSONUtils.toJSON(new GetUserResponse(
         User.builder()
             .id(1L)
             .userID("user-id")
@@ -88,7 +88,7 @@ public class GetUserTest extends ControllerTest {
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var actual = JSONUtils.convertToObject(res, Response.class);
+    var actual = JSONUtils.toObject(res, Response.class);
     var expected = new Response(errors);
     assertThat(actual).isEqualTo(expected);
     assertThat(actual).isEqualTo(expected);
