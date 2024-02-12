@@ -7,7 +7,6 @@ import app.constants.RegExp;
 import app.constraint.Age;
 import app.constraint.ID;
 import app.constraint.NotUnknown;
-import app.constraint.Pattern;
 import app.constraint.UserID;
 import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
@@ -18,7 +17,8 @@ import app.controller.user.v1.response.UpdateUserResponse;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -45,8 +45,8 @@ public class UserV1Controller {
   public GetUserResponse getUser(
       @Valid @UserID String userID,
       @Valid @NotUnknown @RequestParam UserType userType,
-      @Valid @NotBlank @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String firstName,
-      @Valid @NotBlank @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String lastName,
+      @Valid @NotNull @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String firstName,
+      @Valid @NotNull @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String lastName,
       @Valid @Age @RequestParam Integer age) {
     return userService.getUser(userID, userType, firstName, lastName, age);
   }
