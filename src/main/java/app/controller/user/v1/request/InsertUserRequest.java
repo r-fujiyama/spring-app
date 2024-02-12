@@ -5,7 +5,6 @@ import app.constants.RegExp;
 import app.constraint.Age;
 import app.constraint.NotUnknown;
 import app.enums.UserType;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Value;

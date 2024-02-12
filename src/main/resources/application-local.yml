@@ -25,6 +25,6 @@ logging:
 security:
   allowedOrigins:
     - "*"
-  maskRequestHeaderNames: []
+  maskRequestHeaderNames: [ ]
   v1APISessionEnable: true
   v2APISessionEnable: true

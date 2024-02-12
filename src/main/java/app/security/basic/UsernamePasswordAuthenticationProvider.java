@@ -61,7 +61,8 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
     private final MessageUtils messageUtils;
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)
+    public void commence(HttpServletRequest request, HttpServletResponse response,
+        AuthenticationException authException)
         throws IOException {
       log.info(authException.getMessage(), authException);
       response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
