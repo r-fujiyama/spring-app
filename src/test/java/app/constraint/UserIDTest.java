@@ -3,6 +3,7 @@ package app.constraint;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import jakarta.validation.ConstraintViolation;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,22 +15,25 @@ public class UserIDTest extends ConstraintsTest {
 
   @ParameterizedTest
   @MethodSource("testValueProvider")
-  public void validationTest(Value value, String expectedMessage) {
+  public void validationTest(Value value, String[] expectedMessage) {
     var violation = validator.validate(value);
     if (!value.isError()) {
       assertThat(violation.isEmpty()).isTrue();
     } else {
-      assertThat(violation).hasSize(1);
-      var actualMessage = violation.stream().toList().get(0).getMessage();
-      assertThat(actualMessage).isEqualTo(expectedMessage);
+      assertThat(violation).hasSize(expectedMessage.length);
+      var actualMessage = violation.stream().map(ConstraintViolation::getMessage).toList();
+      assertThat(actualMessage).containsExactlyInAnyOrder(expectedMessage);
     }
   }
 
   static Stream<Arguments> testValueProvider() {
     return Stream.of(
         arguments(new StringValue("user-id", false), null),
-        arguments(new StringValue("", true), "{param_name}は1~256文字以内で入力してください。"),
-        arguments(new StringValue("a".repeat(257), true), "{param_name}は1~256文字以内で入力してください。"));
+        arguments(new StringValue(null, true), new String[]{"{param_name}にNULLは許可されていません。"}),
+        arguments(new StringValue("", true), new String[]{"{param_name}は^.*[1-9a-z-]$の形式で入力してください。",
+            "{param_name}は1~256文字以内で入力してください。"}),
+        arguments(new StringValue(" ", true), new String[]{"{param_name}は^.*[1-9a-z-]$の形式で入力してください。"}),
+        arguments(new StringValue("!", true), new String[]{"{param_name}は^.*[1-9a-z-]$の形式で入力してください。"}));
 
   }
 
