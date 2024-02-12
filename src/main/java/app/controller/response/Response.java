@@ -1,6 +1,7 @@
 package app.controller.response;
 
 import app.enums.APIResult;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import lombok.EqualsAndHashCode;
@@ -20,9 +21,9 @@ public class Response {
     this.errors = Collections.emptyList();
   }
 
-  public Response(Error error) {
+  public Response(Error... errors) {
     this.status = APIResult.FAILURE;
-    this.errors = Collections.singletonList(error);
+    this.errors = Arrays.asList(errors);
   }
 
   public Response(List<Error> errors) {
