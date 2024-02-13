@@ -69,7 +69,17 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   @Override
   public DeleteUserResponse deleteUser(long id) {
     deleteUserDetailProcess();
-    return new DeleteUserResponse(id);
+    return new DeleteUserResponse(
+        User.builder()
+            .id(1L)
+            .userID(null)
+            .type(UserType.UNKNOWN)
+            .status(UserStatus.UNKNOWN)
+            .firstName(null)
+            .lastName(null)
+            .age(0)
+            .build()
+    );
   }
 
   protected abstract void deleteUserDetailProcess();

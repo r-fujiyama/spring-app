@@ -2,6 +2,7 @@ package app.controller.user.v1;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -10,8 +11,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
+import app.controller.user.response.User;
 import app.controller.user.v1.response.DeleteUserResponse;
+import app.controller.user.v1.response.InsertUserResponse;
 import app.enums.ErrorCode;
+import app.enums.UserStatus;
+import app.enums.UserType;
 import app.service.userV1.UserV1Service;
 import app.util.JSONUtils;
 import java.nio.charset.StandardCharsets;
@@ -32,7 +37,17 @@ public class DeleteUserTest extends ControllerTest {
 
   @BeforeEach
   public void beforeEach() {
-    var res = new DeleteUserResponse(1L);
+    var res = new DeleteUserResponse(
+        User.builder()
+            .id(1L)
+            .userID("user-id")
+            .type(UserType.PRIVATE)
+            .status(UserStatus.REGISTERED)
+            .firstName("taro")
+            .lastName("tokyo")
+            .age(20)
+            .build()
+    );
     when(userService.deleteUser(anyLong())).thenReturn(res);
   }
 
@@ -42,7 +57,17 @@ public class DeleteUserTest extends ControllerTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.toJSON(new DeleteUserResponse(1L));
+    var expected = JSONUtils.toJSON(new DeleteUserResponse(
+        User.builder()
+            .id(1L)
+            .userID("user-id")
+            .type(UserType.PRIVATE)
+            .status(UserStatus.REGISTERED)
+            .firstName("taro")
+            .lastName("tokyo")
+            .age(20)
+            .build()
+    ));
     assertThat(actual).isEqualTo(expected);
   }
 
