@@ -1,6 +1,5 @@
 package app.service.userV2;
 
-import app.controller.response.Response;
 import app.controller.user.response.User;
 import app.controller.user.v2.request.GetUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;
