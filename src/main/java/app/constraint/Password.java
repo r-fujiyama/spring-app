@@ -11,7 +11,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import app.constants.RegExp;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.lang.annotation.Documented;
@@ -24,7 +23,6 @@ import java.lang.annotation.Target;
 @Repeatable(Password.List.class)
 @Documented
 @Constraint(validatedBy = {})
-@NotNull
 @Size(min = 8, max = 64, message = "{validation.constraints.Password.size.message}")
 @Pattern(regexp = RegExp.PASSWORD)
 public @interface Password {

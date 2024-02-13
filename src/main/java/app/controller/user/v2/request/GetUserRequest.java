@@ -13,6 +13,7 @@ import lombok.Value;
 @Value
 public class GetUserRequest {
 
+  @NotNull
   @UserID
   String userID;
 

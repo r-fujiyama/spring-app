@@ -43,7 +43,7 @@ public class UserV1Controller {
   @RoleCreate
   @GetMapping
   public GetUserResponse getUser(
-      @Valid @UserID String userID,
+      @Valid @NotNull @UserID String userID,
       @Valid @NotUnknown @RequestParam UserType userType,
       @Valid @NotNull @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String firstName,
       @Valid @NotNull @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String lastName,
