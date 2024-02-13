@@ -38,16 +38,14 @@ public class UserV2Controller {
   }
 
   @RoleCreate
-  @PostMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public Response insertUser(@Valid @ID @PathVariable("id") long id,
-      @Valid @RequestBody InsertUserRequest request) {
-    return userService.insertUser(id, request);
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+  public Response insertUser(@Valid @RequestBody InsertUserRequest request) {
+    return userService.insertUser(request);
   }
 
   @RoleUpdate
   @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public Response updateUser(@Valid @ID @PathVariable("id") long id,
-      @Valid @RequestBody UpdateUserRequest request) {
+  public Response updateUser(@Valid @ID @PathVariable("id") long id, @Valid @RequestBody UpdateUserRequest request) {
     return userService.updateUser(id, request);
   }
 

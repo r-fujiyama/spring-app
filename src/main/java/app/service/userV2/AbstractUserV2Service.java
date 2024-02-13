@@ -30,7 +30,7 @@ public abstract class AbstractUserV2Service implements UserV2Service {
   protected abstract void getUserDetailProcess();
 
   @Override
-  public Response insertUser(long id, InsertUserRequest request) {
+  public Response insertUser(InsertUserRequest request) {
     insertUserDetailProcess();
     return new Response();
   }
