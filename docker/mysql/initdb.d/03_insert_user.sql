@@ -18,8 +18,8 @@ VALUES (
   , 'password'
   , 1
   , 1
-  , 'private'
-  , 'user'
+  , 'tokyo'
+  , 'taro'
   , 20
   , 'test user'
   , '2023-01-01 00:00:00'
@@ -31,8 +31,8 @@ VALUES (
   , 'password'
   , 2
   , 1
-  , 'freelance'
-  , 'user'
+  , 'chiba'
+  , 'taro'
   , 21
   , 'test user'
   , '2023-01-01 00:00:00'
@@ -44,8 +44,8 @@ VALUES (
   , 'password'
   , 3
   , 1
-  , 'corporate'
-  , 'user'
+  , 'saitama'
+  , 'taro'
   , 22
   , 'test user'
   , '2023-01-01 00:00:00'
