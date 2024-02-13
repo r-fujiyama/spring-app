@@ -32,12 +32,6 @@ public class InsertUserTest extends ControllerTest {
   @MockBean
   UserV2Service userService;
 
-  @BeforeEach
-  public void beforeEach() {
-    var res = new Response();
-    when(userService.insertUser(any())).thenReturn(res);
-  }
-
   @Test
   public void OK200() throws Exception {
     var req = new InsertUserRequest("user-id", "password123!#$%&@", UserType.PRIVATE, "taro", "tokyo", 20);

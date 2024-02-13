@@ -40,19 +40,22 @@ public class UserV2Controller {
   @RoleCreate
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   public Response insertUser(@Valid @RequestBody InsertUserRequest request) {
-    return userService.insertUser(request);
+    userService.insertUser(request);
+    return new Response();
   }
 
   @RoleUpdate
   @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public Response updateUser(@Valid @ID @PathVariable("id") long id, @Valid @RequestBody UpdateUserRequest request) {
-    return userService.updateUser(id, request);
+    userService.updateUser(id, request);
+    return new Response();
   }
 
   @RoleDelete
   @DeleteMapping(path = "{id}")
   public Response deleteUser(@Valid @ID @PathVariable("id") long id) {
-    return userService.deleteUser(id);
+    userService.deleteUser(id);
+    return new Response();
   }
 
 }

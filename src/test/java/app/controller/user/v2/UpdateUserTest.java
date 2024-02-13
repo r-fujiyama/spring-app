@@ -34,12 +34,6 @@ public class UpdateUserTest extends ControllerTest {
   @MockBean
   UserV2Service userService;
 
-  @BeforeEach
-  public void beforeEach() {
-    var res = new Response();
-    when(userService.updateUser(anyLong(), any())).thenReturn(res);
-  }
-
   @Test
   public void OK200() throws Exception {
     var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);

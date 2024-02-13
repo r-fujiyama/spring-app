@@ -30,25 +30,22 @@ public abstract class AbstractUserV2Service implements UserV2Service {
   protected abstract void getUserDetailProcess();
 
   @Override
-  public Response insertUser(InsertUserRequest request) {
+  public void insertUser(InsertUserRequest request) {
     insertUserDetailProcess();
-    return new Response();
   }
 
   protected abstract void insertUserDetailProcess();
 
   @Override
-  public Response updateUser(long id, UpdateUserRequest request) {
+  public void updateUser(long id, UpdateUserRequest request) {
     updateUserDetailProcess();
-    return new Response();
   }
 
   protected abstract void updateUserDetailProcess();
 
   @Override
-  public Response deleteUser(long id) {
+  public void deleteUser(long id) {
     deleteUserDetailProcess();
-    return new Response();
   }
 
   protected abstract void deleteUserDetailProcess();

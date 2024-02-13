@@ -29,12 +29,6 @@ public class DeleteUserTest extends ControllerTest {
   @MockBean
   UserV2Service userService;
 
-  @BeforeEach
-  public void beforeEach() {
-    var res = new Response();
-    when(userService.deleteUser(anyLong())).thenReturn(res);
-  }
-
   @Test
   public void OK200() throws Exception {
     var actual = mockMvc.perform(delete("/v2/user/{id}", 1))
