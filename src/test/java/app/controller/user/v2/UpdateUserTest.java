@@ -115,7 +115,7 @@ public class UpdateUserTest extends ControllerTest {
   @Test
   public void unsupportedMediaTypesTest() throws Exception {
     var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);
-    var actual = mockMvc.perform(post("/v2/user/{id}", 1)
+    var actual = mockMvc.perform(put("/v2/user/{id}", 1)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .content(JSONUtils.toJSON(req)))
         .andExpect(status().isBadRequest())
