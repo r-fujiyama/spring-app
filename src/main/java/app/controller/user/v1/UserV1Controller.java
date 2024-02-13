@@ -2,6 +2,7 @@ package app.controller.user.v1;
 
 import app.annotation.role.RoleCreate;
 import app.annotation.role.RoleDelete;
+import app.annotation.role.RoleRead;
 import app.annotation.role.RoleUpdate;
 import app.constants.RegExp;
 import app.constraint.Age;
@@ -40,7 +41,7 @@ public class UserV1Controller {
 
   private final UserV1Service userService;
 
-  @RoleCreate
+  @RoleRead
   @GetMapping
   public GetUserResponse getUser(
       @Valid @NotNull @UserID String userID,
