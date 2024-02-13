@@ -3,7 +3,6 @@ package app.controller.user.v1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,13 +48,13 @@ public class InsertUserTest extends ControllerTest {
             .age(20)
             .build()
     );
-    when(userService.insertUser(anyLong(), any())).thenReturn(res);
+    when(userService.insertUser(any())).thenReturn(res);
   }
 
   @Test
   public void OK200() throws Exception {
-    var req = new InsertUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);
-    var actual = mockMvc.perform(post("/v1/user/{id}", 1)
+    var req = new InsertUserRequest("user-id", "password123!#$%&@", UserType.PRIVATE, "taro", "tokyo", 20);
+    var actual = mockMvc.perform(post("/v1/user")
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.toJSON(req)))
         .andExpect(status().isOk())
@@ -77,67 +76,85 @@ public class InsertUserTest extends ControllerTest {
 
   @ParameterizedTest
   @MethodSource("validationErrorProvider")
-  public void validationErrorTest(String id, UserType userType, String firstName, String lastName,
-      Integer age, Error error) throws Exception {
-    var req = new InsertUserRequest(userType, firstName, lastName, age);
-    var res = mockMvc.perform(post("/v1/user/{id}", id)
+  public void validationErrorTest(String userID, String password, UserType userType, String firstName, String lastName,
+      Integer age, Error[] errors) throws Exception {
+    var req = new InsertUserRequest(userID, password, userType, firstName, lastName, age);
+    var res = mockMvc.perform(post("/v1/user")
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.toJSON(req)))
         .andExpect(status().isBadRequest())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
     var actual = JSONUtils.toObject(res, Response.class);
-    var expected = new Response(error);
+    var expected = new Response(errors);
     assertThat(actual.getStatus()).isEqualTo(expected.getStatus());
     assertThat(actual.getErrors()).containsExactlyInAnyOrder(expected.getErrors().toArray(new Error[0]));
   }
 
   static Stream<Arguments> validationErrorProvider() {
     return Stream.of(
-        // ID
-        arguments("a", UserType.PRIVATE, "taro", "tokyo", "20",
-            new Error(ErrorCode.BAD_REQUEST, "IDに指定された値の型に誤りがあります。")),
-        arguments("0", UserType.PRIVATE, "taro", "tokyo", "20",
-            new Error(ErrorCode.BAD_REQUEST, "IDは1~9223372036854775807以内の値を入力してください。")),
-        arguments("9223372036854775808", UserType.PRIVATE, "taro", "tokyo", "20",
-            new Error(ErrorCode.BAD_REQUEST, "IDに指定された値の型に誤りがあります。")),
+        // ユーザーID
+        arguments(null, "password", UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザーIDにNULLは許可されていません。")}),
+        arguments("", "password", UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは1~256文字以内で入力してください。"),
+                new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは^.*[1-9a-z-]$の形式で入力してください。")}),
+        arguments("a".repeat(257), "password", UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは1~256文字以内で入力してください。")}),
+        arguments(">".repeat(8), "password", UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは^.*[1-9a-z-]$の形式で入力してください。")}),
+        // パスワード
+        arguments("user-id", null, UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "パスワードにNULLは許可されていません。")}),
+        arguments("user-id", "", UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "パスワードは8~64文字以内で入力してください。"),
+                new Error(ErrorCode.BAD_REQUEST, "パスワードは^.*[1-9a-z!#$%&@]$の形式で入力してください。")}),
+        arguments("user-id", "a".repeat(7), UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "パスワードは8~64文字以内で入力してください。")}),
+        arguments("user-id", "a".repeat(65), UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "パスワードは8~64文字以内で入力してください。")}),
+        arguments("user-id", "<", UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "パスワードは8~64文字以内で入力してください。"),
+                new Error(ErrorCode.BAD_REQUEST, "パスワードは^.*[1-9a-z!#$%&@]$の形式で入力してください。")}),
+        arguments("user-id", "<".repeat(8), UserType.PRIVATE, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "パスワードは^.*[1-9a-z!#$%&@]$の形式で入力してください。")}),
         // ユーザタイプ
-        arguments("1", null, "taro", "tokyo", "20",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザータイプにNULLは許可されていません。")),
-        arguments("1", UserType.UNKNOWN, "taro", "tokyo", "20",
-            new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")),
+        arguments("user-id", "password", null, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザータイプにNULLは許可されていません。")}),
+        arguments("user-id", "password", UserType.UNKNOWN, "taro", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")}),
         // 名前
-        arguments("1", UserType.PRIVATE, null, "tokyo", "20",
-            new Error(ErrorCode.BAD_REQUEST, "名前にNULLは許可されていません。")),
-        arguments("1", UserType.PRIVATE, "", "tokyo", "20",
-            new Error(ErrorCode.BAD_REQUEST, "名前は^[a-zA-Z]+$の形式で入力してください。")),
-        arguments("1", UserType.PRIVATE, " ", "tokyo", "20",
-            new Error(ErrorCode.BAD_REQUEST, "名前は^[a-zA-Z]+$の形式で入力してください。")),
-        arguments("1", UserType.PRIVATE, "aaa!aaa", "tokyo", "20",
-            new Error(ErrorCode.BAD_REQUEST, "名前は^[a-zA-Z]+$の形式で入力してください。")),
+        arguments("user-id", "password", UserType.PRIVATE, null, "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "名前にNULLは許可されていません。")}),
+        arguments("user-id", "password", UserType.PRIVATE, "", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "名前は^[a-zA-Z]+$の形式で入力してください。")}),
+        arguments("user-id", "password", UserType.PRIVATE, " ", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "名前は^[a-zA-Z]+$の形式で入力してください。")}),
+        arguments("user-id", "password", UserType.PRIVATE, "aaa!aaa", "tokyo", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "名前は^[a-zA-Z]+$の形式で入力してください。")}),
         // 苗字
-        arguments("1", UserType.PRIVATE, "taro", null, "20",
-            new Error(ErrorCode.BAD_REQUEST, "苗字にNULLは許可されていません。")),
-        arguments("1", UserType.PRIVATE, "taro", "", "20",
-            new Error(ErrorCode.BAD_REQUEST, "苗字は^[a-zA-Z]+$の形式で入力してください。")),
-        arguments("1", UserType.PRIVATE, "taro", " ", "20",
-            new Error(ErrorCode.BAD_REQUEST, "苗字は^[a-zA-Z]+$の形式で入力してください。")),
-        arguments("1", UserType.PRIVATE, "taro", "aaa!aaa", "20",
-            new Error(ErrorCode.BAD_REQUEST, "苗字は^[a-zA-Z]+$の形式で入力してください。")),
+        arguments("user-id", "password", UserType.PRIVATE, "taro", null, "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "苗字にNULLは許可されていません。")}),
+        arguments("user-id", "password", UserType.PRIVATE, "taro", "", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "苗字は^[a-zA-Z]+$の形式で入力してください。")}),
+        arguments("user-id", "password", UserType.PRIVATE, "taro", " ", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "苗字は^[a-zA-Z]+$の形式で入力してください。")}),
+        arguments("user-id", "password", UserType.PRIVATE, "taro", "aaa!aaa", "20",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "苗字は^[a-zA-Z]+$の形式で入力してください。")}),
         // 年齢
-        arguments("1", UserType.PRIVATE, "taro", "tokyo", null,
-            new Error(ErrorCode.BAD_REQUEST, "年齢にNULLは許可されていません。")),
-        arguments("1", UserType.PRIVATE, "taro", "tokyo", "-1",
-            new Error(ErrorCode.BAD_REQUEST, "年齢は0~999以内の値を入力してください。")),
-        arguments("1", UserType.PRIVATE, "taro", "tokyo", "1000",
-            new Error(ErrorCode.BAD_REQUEST, "年齢は0~999以内の値を入力してください。"))
+        arguments("user-id", "password", UserType.PRIVATE, "taro", "tokyo", null,
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "年齢にNULLは許可されていません。")}),
+        arguments("user-id", "password", UserType.PRIVATE, "taro", "tokyo", "-1",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "年齢は0~999以内の値を入力してください。")}),
+        arguments("user-id", "password", UserType.PRIVATE, "taro", "tokyo", "1000",
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "年齢は0~999以内の値を入力してください。")})
     );
   }
 
   @Test
   public void unsupportedMediaTypesTest() throws Exception {
-    var req = new InsertUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);
-    var actual = mockMvc.perform(post("/v1/user/{id}", 1)
+    var req = new InsertUserRequest("user-id", "password", UserType.PRIVATE, "taro", "tokyo", 20);
+    var actual = mockMvc.perform(post("/v1/user")
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .content(JSONUtils.toJSON(req)))
         .andExpect(status().isBadRequest())

@@ -52,10 +52,9 @@ public class UserV1Controller {
   }
 
   @RoleCreate
-  @PostMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-  public InsertUserResponse insertUser(@Valid @ID @PathVariable("id") long id,
-      @Valid @RequestBody InsertUserRequest request) {
-    return userService.insertUser(id, request);
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+  public InsertUserResponse insertUser(@Valid @RequestBody InsertUserRequest request) {
+    return userService.insertUser(request);
   }
 
   @RoleUpdate

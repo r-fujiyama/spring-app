@@ -31,7 +31,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   protected abstract void getUserDetailProcess();
 
   @Override
-  public InsertUserResponse insertUser(long id, InsertUserRequest request) {
+  public InsertUserResponse insertUser(InsertUserRequest request) {
     insertUserDetailProcess();
     return new InsertUserResponse(
         User.builder()

@@ -4,6 +4,8 @@ package app.controller.user.v1.request;
 import app.constants.RegExp;
 import app.constraint.Age;
 import app.constraint.NotUnknown;
+import app.constraint.Password;
+import app.constraint.UserID;
 import app.enums.UserType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -11,6 +13,14 @@ import lombok.Value;
 
 @Value
 public class InsertUserRequest {
+
+  @NotNull
+  @UserID
+  String userID;
+
+  @NotNull
+  @Password
+  String password;
 
   @NotNull
   @NotUnknown

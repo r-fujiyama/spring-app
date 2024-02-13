@@ -12,7 +12,7 @@ public interface UserV1Service {
 
   GetUserResponse getUser(String userID, UserType userType, String firstName, String lastName, Integer age);
 
-  InsertUserResponse insertUser(long id, InsertUserRequest request);
+  InsertUserResponse insertUser(InsertUserRequest request);
 
   UpdateUserResponse updateUser(long id, UpdateUserRequest request);
 
