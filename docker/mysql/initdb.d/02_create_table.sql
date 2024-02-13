@@ -26,6 +26,7 @@ CREATE TABLE role (
     , updated_at TIMESTAMP NOT NULL COMMENT '更新日時'
     , created_by VARCHAR (256) NOT NULL COMMENT '登録者'
     , created_at TIMESTAMP NOT NULL COMMENT '登録日時'
+    , FOREIGN KEY fk_user_id(user_id) REFERENCES user(user_id) ON DELETE RESTRICT
 ) engine = innodb DEFAULT charset = utf8mb4 COLLATE = utf8mb4_bin;
 
 CREATE TABLE api_key (
