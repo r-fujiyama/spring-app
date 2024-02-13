@@ -14,10 +14,10 @@ import org.junit.jupiter.api.Test;
 public class JSONUtilsTest {
 
   @Nested
-  public class ConvertToJSON {
+  public class ToJSON {
 
     @Test
-    public void convertToJSONTest() {
+    public void toJSONTest() {
       var obj = new Response(new Error(ErrorCode.BAD_REQUEST, "test"));
       var actual = JSONUtils.toJSON(obj);
       var expected = "{\"status\":\"Failure\",\"errors\":[{\"code\":\"BadRequest\",\"message\":\"test\"}]}";
@@ -35,10 +35,10 @@ public class JSONUtilsTest {
   }
 
   @Nested
-  public class ConvertToObject {
+  public class ToObject {
 
     @Test
-    public void convertToObject() {
+    public void toObject() {
       var json = "{\"status\":\"Failure\",\"errors\":[{\"code\":\"BadRequest\",\"message\":\"test\"}]}";
       var actual = JSONUtils.toObject(json, Response.class);
       var expected = new Response(new Error(ErrorCode.BAD_REQUEST, "test"));
