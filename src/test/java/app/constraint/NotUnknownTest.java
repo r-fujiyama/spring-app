@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import app.enums.CodeValueEnum;
+import jakarta.validation.ConstraintViolation;
 import java.util.stream.Stream;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,14 +16,14 @@ public class NotUnknownTest extends ConstraintsTest {
 
   @ParameterizedTest
   @MethodSource("testValueProvider")
-  public void validationTest(EnumValue value, String expectedMessage) {
+  public void validationTest(EnumValue value, String[] expectedMessages) {
     var violation = validator.validate(value);
     if (!value.hasError()) {
       assertThat(violation.isEmpty()).isTrue();
     } else {
-      assertThat(violation).hasSize(1);
-      var actualMessage = violation.stream().toList().get(0).getMessage();
-      assertThat(actualMessage).isEqualTo(expectedMessage);
+      assertThat(violation).hasSize(expectedMessages.length);
+      var actualMessage = violation.stream().map(ConstraintViolation::getMessage).toList();
+      assertThat(actualMessage).containsExactlyInAnyOrder(expectedMessages);
     }
   }
 
@@ -31,7 +32,8 @@ public class NotUnknownTest extends ConstraintsTest {
         arguments(new EnumValue(null, false), null),
         arguments(new EnumValue(TestEnum.ENABLE, false), null),
         arguments(new EnumValue(TestEnum.DISABLE, false), null),
-        arguments(new EnumValue(TestEnum.UNKNOWN, true), "{param_name}に指定された値は許可されていません。"));
+        arguments(new EnumValue(TestEnum.UNKNOWN, true),
+            new String[]{"{param_name}に指定された値は許可されていません。"}));
 
   }
 
