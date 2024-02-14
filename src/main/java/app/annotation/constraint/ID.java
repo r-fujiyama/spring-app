@@ -1,4 +1,4 @@
-package app.constraint;
+package app.annotation.constraint;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -10,6 +10,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
+import jakarta.validation.ReportAsSingleViolation;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -17,14 +20,15 @@ import java.lang.annotation.Target;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Repeatable(DisableEnum.List.class)
+@Repeatable(ID.List.class)
 @Documented
-@Constraint(validatedBy = {DisableEnumValidator.class})
-public @interface DisableEnum {
+@Constraint(validatedBy = {})
+@ReportAsSingleViolation
+@Min(value = 1)
+@Max(value = Long.MAX_VALUE)
+public @interface ID {
 
-  String[] value();
-
-  String message() default "{validation.constraints.DisableEnum.message}";
+  String message() default "{validation.constraints.ID.message}";
 
   Class<?>[] groups() default {};
 
@@ -35,6 +39,6 @@ public @interface DisableEnum {
   @Documented
   @interface List {
 
-    DisableEnum[] value();
+    ID[] value();
   }
 }

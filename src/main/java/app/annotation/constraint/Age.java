@@ -1,4 +1,4 @@
-package app.constraint;
+package app.annotation.constraint;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -8,11 +8,11 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import app.constants.RegExp;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.ReportAsSingleViolation;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
@@ -20,14 +20,15 @@ import java.lang.annotation.Target;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Repeatable(Password.List.class)
+@Repeatable(Age.List.class)
 @Documented
 @Constraint(validatedBy = {})
-@Size(min = 8, max = 64, message = "{validation.constraints.Password.size.message}")
-@Pattern(regexp = RegExp.PASSWORD)
-public @interface Password {
+@ReportAsSingleViolation
+@Min(value = 0)
+@Max(value = 999)
+public @interface Age {
 
-  String message() default "";
+  String message() default "{validation.constraints.Age.message}";
 
   Class<?>[] groups() default {};
 
@@ -38,6 +39,6 @@ public @interface Password {
   @Documented
   @interface List {
 
-    Password[] value();
+    Age[] value();
   }
 }

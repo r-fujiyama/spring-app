@@ -1,4 +1,4 @@
-package app.constraint;
+package app.annotation.constraint;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;
@@ -20,12 +20,12 @@ import java.lang.annotation.Target;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Repeatable(UserName.List.class)
+@Repeatable(Password.List.class)
 @Documented
 @Constraint(validatedBy = {})
-@Size(min = 1, max = 256, message = "{validation.constraints.UserName.message}")
-@Pattern(regexp = RegExp.USER_ID)
-public @interface UserName {
+@Size(min = 8, max = 64, message = "{validation.constraints.Password.size.message}")
+@Pattern(regexp = RegExp.PASSWORD)
+public @interface Password {
 
   String message() default "";
 
@@ -38,6 +38,6 @@ public @interface UserName {
   @Documented
   @interface List {
 
-    UserName[] value();
+    Password[] value();
   }
 }

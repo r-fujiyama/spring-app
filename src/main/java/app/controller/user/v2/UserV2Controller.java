@@ -4,7 +4,7 @@ import app.annotation.role.RoleCreate;
 import app.annotation.role.RoleDelete;
 import app.annotation.role.RoleRead;
 import app.annotation.role.RoleUpdate;
-import app.constraint.ID;
+import app.annotation.constraint.ID;
 import app.controller.response.Response;
 import app.controller.user.v2.request.GetUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;

@@ -3,6 +3,7 @@ package app.constraint;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+import app.annotation.constraint.ID;
 import jakarta.validation.ConstraintViolation;
 import java.math.BigDecimal;
 import java.util.stream.Stream;

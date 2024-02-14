@@ -2,10 +2,10 @@ package app.controller.user.v1.request;
 
 
 import app.constants.RegExp;
-import app.constraint.Age;
-import app.constraint.NotUnknown;
-import app.constraint.Password;
-import app.constraint.UserName;
+import app.annotation.constraint.Age;
+import app.annotation.constraint.NotUnknown;
+import app.annotation.constraint.Password;
+import app.annotation.constraint.UserName;
 import app.enums.UserType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
