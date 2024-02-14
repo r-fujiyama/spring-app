@@ -27,11 +27,11 @@ public class InsertUserRequest {
   UserType userType;
 
   @NotNull
-  @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET)
+  @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET)
   String firstName;
 
   @NotNull
-  @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET)
+  @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET)
   String lastName;
 
   @NotNull

@@ -49,8 +49,8 @@ public class UserV1Controller {
       @RequestParam(required = false) @Valid @UserName String userName,
       @RequestParam(required = false) @Valid @NotUnknown UserType userType,
       @RequestParam(required = false) @Valid @NotUnknown UserStatus userStatus,
-      @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String firstName,
-      @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String lastName,
+      @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET) String firstName,
+      @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET) String lastName,
       @RequestParam(required = false) @Valid @Age Integer age) {
     return userService.searchUser(SearchUserParam.builder()
         .id(id)
