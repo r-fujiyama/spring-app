@@ -12,13 +12,14 @@ import app.constraint.UserID;
 import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;
-import app.controller.user.v1.response.GetUserResponse;
 import app.controller.user.v1.response.InsertUserResponse;
+import app.controller.user.v1.response.SearchUserResponse;
 import app.controller.user.v1.response.UpdateUserResponse;
+import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
+import app.service.userV1.dto.SearchUserParam;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
@@ -42,14 +43,16 @@ public class UserV1Controller {
   private final UserV1Service userService;
 
   @RoleRead
-  @GetMapping
-  public GetUserResponse getUser(
-      @Valid @NotNull @UserID String userID,
-      @Valid @NotUnknown @RequestParam UserType userType,
-      @Valid @NotNull @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String firstName,
-      @Valid @NotNull @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) @RequestParam String lastName,
-      @Valid @Age @RequestParam Integer age) {
-    return userService.getUser(userID, userType, firstName, lastName, age);
+  @GetMapping("search")
+  public SearchUserResponse searchUser(
+      @RequestParam(required = false) @Valid @ID Long id,
+      @RequestParam(required = false) @Valid @UserID String userID,
+      @RequestParam(required = false) @Valid @NotUnknown UserType userType,
+      @RequestParam(required = false) @Valid @NotUnknown UserStatus userStatus,
+      @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String firstName,
+      @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String lastName,
+      @RequestParam(required = false) @Valid @Age Integer age) {
+    return userService.searchUser(new SearchUserParam(id, userID, userType, userStatus, firstName, lastName, age));
   }
 
   @RoleCreate

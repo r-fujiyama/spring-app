@@ -22,6 +22,8 @@ spring:
 logging:
   level:
     root: INFO
+    app:
+      dao: DEBUG
 security:
   allowedOrigins:
     - "*"

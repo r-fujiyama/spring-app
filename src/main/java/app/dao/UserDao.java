@@ -3,8 +3,12 @@ package app.dao;
 import app.entity.Role;
 import app.entity.User;
 import app.entity.join.UserInfo;
+import app.service.userV1.dto.SearchUserParam;
+import java.util.List;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -21,6 +25,37 @@ public interface UserDao {
         user_id = #{userID}
       """, "</script>"})
   User findByUserID(String userID);
+
+  @Select({"<script>", """
+      SELECT
+        *
+      FROM
+        user
+      WHERE
+        1 = 1
+        <if test="param.id != null">
+          AND id = #{param.id}
+        </if>
+        <if test="param.userID != null">
+          AND user_id = #{param.userID}
+        </if>
+        <if test="param.userType != null">
+          AND user_type = #{param.userType.code}
+        </if>
+        <if test="param.userStatus != null">
+          AND user_status = #{param.userStatus.code}
+        </if>
+        <if test="param.firstName != null">
+          AND first_name = #{param.firstName}
+        </if>
+        <if test="param.lastName != null">
+          AND last_name = #{param.lastName}
+        </if>
+        <if test="param.age != null">
+          AND age = #{param.age}
+        </if>
+      """, "</script>"})
+  List<User> findBySearchParam(@Param("param") SearchUserParam param);
 
   @Select({"<script>", """
       SELECT

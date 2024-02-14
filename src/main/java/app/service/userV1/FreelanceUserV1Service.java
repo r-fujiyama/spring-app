@@ -1,6 +1,7 @@
 package app.service.userV1;
 
 import app.annotation.service.Freelance;
+import app.dao.UserDao;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -8,6 +9,10 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 public class FreelanceUserV1Service extends AbstractUserV1Service {
+
+  public FreelanceUserV1Service(UserDao userDao) {
+    super(userDao);
+  }
 
   @Override
   protected void getUserDetailProcess() {

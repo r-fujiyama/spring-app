@@ -4,28 +4,36 @@ import app.controller.user.response.User;
 import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;
-import app.controller.user.v1.response.GetUserResponse;
 import app.controller.user.v1.response.InsertUserResponse;
+import app.controller.user.v1.response.SearchUserResponse;
 import app.controller.user.v1.response.UpdateUserResponse;
+import app.dao.UserDao;
 import app.enums.UserStatus;
 import app.enums.UserType;
+import app.service.userV1.dto.SearchUserParam;
+import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 public abstract class AbstractUserV1Service implements UserV1Service {
 
+  private final UserDao userDao;
+
   @Override
-  public GetUserResponse getUser(String userID, UserType userType, String firstName, String lastName, Integer age) {
+  public SearchUserResponse searchUser(SearchUserParam param) {
     getUserDetailProcess();
-    return new GetUserResponse(
-        User.builder()
-            .id(1L)
-            .userID(null)
-            .type(UserType.UNKNOWN)
-            .status(UserStatus.UNKNOWN)
-            .firstName(null)
-            .lastName(null)
-            .age(0)
+    var users = userDao.findBySearchParam(param);
+    return new SearchUserResponse(users.stream().map(
+        user -> User.builder()
+            .id(user.getId())
+            .userID(user.getUserID())
+            .type(user.getUserType())
+            .status(user.getUserStatus())
+            .firstName(user.getFirstName())
+            .lastName(user.getLastName())
+            .age(user.getAge())
             .build()
-    );
+    ).collect(Collectors.toList()));
   }
 
   protected abstract void getUserDetailProcess();
