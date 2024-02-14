@@ -29,12 +29,11 @@ public class UserNameTest extends ConstraintsTest {
 
   static Stream<Arguments> testValueProvider() {
     return Stream.of(
-        arguments(new StringValue("user-name", false), null),
+        arguments(new StringValue("user-_name", false), null),
         arguments(new StringValue(null, false), null),
-        arguments(new StringValue("", true), new String[]{"{param_name}は^.*[1-9a-z-]$の形式で入力してください。",
-            "{param_name}は1~256文字以内で入力してください。"}),
-        arguments(new StringValue(" ", true), new String[]{"{param_name}は^.*[1-9a-z-]$の形式で入力してください。"}),
-        arguments(new StringValue("!", true), new String[]{"{param_name}は^.*[1-9a-z-]$の形式で入力してください。"}));
+        arguments(new StringValue("", true), new String[]{"{param_name}は^.*[1-9a-z-_]$の形式で入力してください。", "{param_name}は1~256文字以内で入力してください。"}),
+        arguments(new StringValue(" ", true), new String[]{"{param_name}は^.*[1-9a-z-_]$の形式で入力してください。"}),
+        arguments(new StringValue("!", true), new String[]{"{param_name}は^.*[1-9a-z-_]$の形式で入力してください。"}));
 
   }
 
