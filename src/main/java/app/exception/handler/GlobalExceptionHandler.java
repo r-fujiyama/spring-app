@@ -18,6 +18,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -150,6 +151,21 @@ public class GlobalExceptionHandler {
     var paramName = messageUtils.getMessage(PARAM_NAME_CODE + ex.getParameterName(), null, ex.getParameterName());
     var error = new Error(ErrorCode.BAD_REQUEST,
         messageUtils.getMessage(ErrorMessage.MISSING_REQUEST_PARAMETER, paramName, null));
+    return new Response(error);
+  }
+
+  /**
+   * サポートしていないリクエストメソッドが指定された場合のハンドリング
+   *
+   * @param ex {@link HttpRequestMethodNotSupportedException}
+   * @return Failure {@link Response}
+   */
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+  public Response handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
+    log.info(ex.getMessage(), ex);
+    var error = new Error(ErrorCode.BAD_REQUEST,
+        messageUtils.getMessage(ErrorMessage.METHOD_NOT_SUPPORTED, ex.getMethod(), null));
     return new Response(error);
   }
 

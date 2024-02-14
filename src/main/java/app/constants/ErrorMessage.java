@@ -14,5 +14,7 @@ public class ErrorMessage {
   public static final String MISSING_REQUEST_PARAMETER = "app.error.message.missing.request.parameter";
   // {0}に指定された値の型に誤りがあります。
   public static final String TYPE_MISMATCH = "app.error.message.type.mismatch";
+  // リクエストメソッド'{0}'はサポートされていません。
+  public static final String METHOD_NOT_SUPPORTED = "app.error.method.not.supported";
 
 }
