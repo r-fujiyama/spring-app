@@ -52,7 +52,15 @@ public class UserV1Controller {
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String firstName,
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String lastName,
       @RequestParam(required = false) @Valid @Age Integer age) {
-    return userService.searchUser(new SearchUserParam(id, userName, userType, userStatus, firstName, lastName, age));
+    return userService.searchUser(SearchUserParam.builder()
+        .id(id)
+        .userName(userName)
+        .userType(userType)
+        .userStatus(userStatus)
+        .firstName(firstName)
+        .lastName(lastName)
+        .age(age)
+        .build());
   }
 
   @RoleCreate

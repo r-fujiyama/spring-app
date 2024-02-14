@@ -2,9 +2,9 @@ package app.service.userV1.dto;
 
 import app.enums.UserStatus;
 import app.enums.UserType;
-import lombok.Value;
+import lombok.Builder;
 
-@Value
+@Builder
 public class SearchUserParam {
 
   Long id;
