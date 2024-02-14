@@ -12,7 +12,7 @@ INSERT INTO role (
   , created_at
 )
 VALUES (
-  'private_user'
+  1
   , true
   , true
   , true
@@ -23,7 +23,7 @@ VALUES (
   , '2023-01-01 00:00:00'
 )
 , (
-  'freelance_user'
+  2
   , true
   , true
   , true
@@ -34,7 +34,7 @@ VALUES (
   , '2023-01-01 00:00:00'
 )
 , (
-  'corporate_user'
+  3
   , true
   , true
   , true

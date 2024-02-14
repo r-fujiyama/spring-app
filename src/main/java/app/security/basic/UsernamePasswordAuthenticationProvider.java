@@ -30,15 +30,15 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
 
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    var userID = authentication.getName();
+    var userName = authentication.getName();
     var password = authentication.getCredentials().toString();
 
-    var userInfo = userDao.findUserAndRoleByUserID(userID);
+    var userInfo = userDao.findUserAndRoleByUserName(userName);
     if (!userExists(userInfo, password)) {
       return null;
     }
 
-    return new UsernamePasswordAuthenticationToken(userID, password, userInfo.getRole().getGrantList());
+    return new UsernamePasswordAuthenticationToken(userName, password, userInfo.getRole().getGrantList());
   }
 
   private boolean userExists(UserInfo userInfo, String password) {

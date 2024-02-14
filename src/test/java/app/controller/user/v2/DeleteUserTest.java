@@ -51,7 +51,7 @@ public class DeleteUserTest extends ControllerTest {
 
   static Stream<Arguments> validationErrorProvider() {
     return Stream.of(
-        // ユーザーID
+        // ユーザー名
         arguments("a", new Error(ErrorCode.BAD_REQUEST, "IDに指定された値の型に誤りがあります。")),
         arguments("0",
             new Error(ErrorCode.BAD_REQUEST, "IDは1~9223372036854775807以内の値を入力してください。")),

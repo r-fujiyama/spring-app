@@ -5,7 +5,6 @@ import app.entity.User;
 import app.entity.join.UserInfo;
 import app.service.userV1.dto.SearchUserParam;
 import java.util.List;
-import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Param;
@@ -22,9 +21,9 @@ public interface UserDao {
       FROM
         user
       WHERE
-        user_id = #{userID}
+        name = #{name}
       """, "</script>"})
-  User findByUserID(String userID);
+  User findByName(String name);
 
   @Select({"<script>", """
       SELECT
@@ -36,14 +35,14 @@ public interface UserDao {
         <if test="param.id != null">
           AND id = #{param.id}
         </if>
-        <if test="param.userID != null">
-          AND user_id = #{param.userID}
+        <if test="param.userName != null">
+          AND name = #{param.userName}
         </if>
         <if test="param.userType != null">
-          AND user_type = #{param.userType.code}
+          AND type = #{param.userType.code}
         </if>
         <if test="param.userStatus != null">
-          AND user_status = #{param.userStatus.code}
+          AND status = #{param.userStatus.code}
         </if>
         <if test="param.firstName != null">
           AND first_name = #{param.firstName}
@@ -71,15 +70,15 @@ public interface UserDao {
         , r.created_at AS role_created_at
       FROM
         user u JOIN role r
-          ON u.user_id = r.user_id
+          ON u.id = r.user_id
       WHERE
-        u.user_id = #{userID}
+        u.name = #{userName}
       """, "</script>"})
   @Results(value = {
       @Result(property = "user", one = @One(resultMap = "userResultMap")),
       @Result(property = "role", one = @One(resultMap = "roleResultMap", columnPrefix = "role_"))
   })
-  UserInfo findUserAndRoleByUserID(String userID);
+  UserInfo findUserAndRoleByUserName(String userName);
 
   @Select({"<script>", """
       SELECT
@@ -95,8 +94,8 @@ public interface UserDao {
         , r.created_at AS role_created_at
       FROM
         user u JOIN role r
-          ON u.user_id = r.user_id JOIN api_key a
-          ON u.user_id = a.user_id
+          ON u.id = r.user_id JOIN api_key a
+          ON u.id = a.user_id
       WHERE
         a.api_key = #{apiKey}
       """, "</script>"})
@@ -109,10 +108,10 @@ public interface UserDao {
   @Select("SELECT 1")
   @Results(id = "userResultMap", value = {
       @Result(id = true, column = "id", property = "id"),
-      @Result(column = "user_id", property = "userID"),
+      @Result(column = "name", property = "name"),
       @Result(column = "password", property = "password"),
-      @Result(column = "user_type", property = "userType"),
-      @Result(column = "user_status", property = "userStatus"),
+      @Result(column = "type", property = "type"),
+      @Result(column = "status", property = "status"),
       @Result(column = "last_name", property = "lastName"),
       @Result(column = "first_name", property = "firstName"),
       @Result(column = "age", property = "age"),

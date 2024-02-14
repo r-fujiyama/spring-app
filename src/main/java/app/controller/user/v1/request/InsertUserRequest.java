@@ -5,7 +5,7 @@ import app.constants.RegExp;
 import app.constraint.Age;
 import app.constraint.NotUnknown;
 import app.constraint.Password;
-import app.constraint.UserID;
+import app.constraint.UserName;
 import app.enums.UserType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -15,8 +15,8 @@ import lombok.Value;
 public class InsertUserRequest {
 
   @NotNull
-  @UserID
-  String userID;
+  @UserName
+  String userName;
 
   @NotNull
   @Password

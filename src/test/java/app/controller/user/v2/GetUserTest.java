@@ -38,7 +38,7 @@ public class GetUserTest extends ControllerTest {
     var res = new GetUserResponse(
         User.builder()
             .id(1L)
-            .userID("user-id")
+            .name("user-name")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")
@@ -52,7 +52,7 @@ public class GetUserTest extends ControllerTest {
   @Test
   public void OK200() throws Exception {
     var actual = mockMvc.perform(get("/v2/user")
-            .param("userID", "user-id")
+            .param("userName", "user-name")
             .param("userType", UserType.PRIVATE.getValue())
             .param("firstName", "taro")
             .param("lastName", "tokyo")
@@ -63,7 +63,7 @@ public class GetUserTest extends ControllerTest {
     var expected = JSONUtils.toJSON(new GetUserResponse(
         User.builder()
             .id(1L)
-            .userID("user-id")
+            .name("user-name")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")
@@ -76,10 +76,10 @@ public class GetUserTest extends ControllerTest {
 
   @ParameterizedTest
   @MethodSource("validationErrorProvider")
-  public void validationErrorTest(String userID, String userType, String firstName, String lastName,
+  public void validationErrorTest(String userName, String userType, String firstName, String lastName,
       String age, Error[] errors) throws Exception {
     var res = mockMvc.perform(get("/v2/user")
-            .param("userID", userID)
+            .param("userName", userName)
             .param("userType", userType)
             .param("firstName", firstName)
             .param("lastName", lastName)
@@ -95,18 +95,18 @@ public class GetUserTest extends ControllerTest {
 
   static Stream<Arguments> validationErrorProvider() {
     return Stream.of(
-        // ユーザーID
+        // ユーザー名
         arguments(null, UserType.PRIVATE.getValue(), "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザーIDにNULLは許可されていません。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名にNULLは許可されていません。")}),
         arguments("", UserType.PRIVATE.getValue(), "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは^.*[1-9a-z-]$の形式で入力してください。"),
-                new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは1~256文字以内で入力してください。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-]$の形式で入力してください。"),
+                new Error(ErrorCode.BAD_REQUEST, "ユーザー名は1~256文字以内で入力してください。")}),
         arguments("a".repeat(257), UserType.PRIVATE.getValue(), "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは1~256文字以内で入力してください。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は1~256文字以内で入力してください。")}),
         arguments(" ", UserType.PRIVATE.getValue(), "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは^.*[1-9a-z-]$の形式で入力してください。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-]$の形式で入力してください。")}),
         arguments("!", UserType.PRIVATE.getValue(), "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザーIDは^.*[1-9a-z-]$の形式で入力してください。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-]$の形式で入力してください。")}),
         // ユーザタイプ
         arguments("1", "", "taro", "tokyo", "20",
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")}),

@@ -8,7 +8,7 @@ import app.constants.RegExp;
 import app.constraint.Age;
 import app.constraint.ID;
 import app.constraint.NotUnknown;
-import app.constraint.UserID;
+import app.constraint.UserName;
 import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;
@@ -46,13 +46,13 @@ public class UserV1Controller {
   @GetMapping("search")
   public SearchUserResponse searchUser(
       @RequestParam(required = false) @Valid @ID Long id,
-      @RequestParam(required = false) @Valid @UserID String userID,
+      @RequestParam(required = false) @Valid @UserName String userName,
       @RequestParam(required = false) @Valid @NotUnknown UserType userType,
       @RequestParam(required = false) @Valid @NotUnknown UserStatus userStatus,
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String firstName,
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.ALL_HALF_WIDTH_ALPHABET) String lastName,
       @RequestParam(required = false) @Valid @Age Integer age) {
-    return userService.searchUser(new SearchUserParam(id, userID, userType, userStatus, firstName, lastName, age));
+    return userService.searchUser(new SearchUserParam(id, userName, userType, userStatus, firstName, lastName, age));
   }
 
   @RoleCreate

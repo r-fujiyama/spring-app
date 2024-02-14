@@ -8,7 +8,7 @@ import lombok.Value;
 public class SearchUserParam {
 
   Long id;
-  String userID;
+  String userName;
   UserType userType;
   UserStatus userStatus;
   String firstName;

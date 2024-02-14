@@ -38,7 +38,7 @@ public class DeleteUserTest extends ControllerTest {
     var res = new DeleteUserResponse(
         User.builder()
             .id(1L)
-            .userID("user-id")
+            .name("user-name")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")
@@ -58,7 +58,7 @@ public class DeleteUserTest extends ControllerTest {
     var expected = JSONUtils.toJSON(new DeleteUserResponse(
         User.builder()
             .id(1L)
-            .userID("user-id")
+            .name("user-name")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")

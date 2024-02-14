@@ -9,10 +9,10 @@ import lombok.Data;
 public class User {
 
   private long id;
-  private String userID;
+  private String name;
   private String password;
-  private UserType userType;
-  private UserStatus userStatus;
+  private UserType type;
+  private UserStatus status;
   private String lastName;
   private String firstName;
   private int age;

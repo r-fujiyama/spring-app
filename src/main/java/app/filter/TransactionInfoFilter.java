@@ -27,10 +27,10 @@ public class TransactionInfoFilter extends OncePerRequestFilter {
   protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
       @NonNull FilterChain filterChain) throws ServletException, IOException {
     if (!(SecurityContextHolder.getContext().getAuthentication() instanceof AnonymousAuthenticationToken)) {
-      var userID = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-      var user = UserDao.findByUserID(userID);
+      var name = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+      var user = UserDao.findByName(name);
       if (user != null) {
-        TransactionInfo.init(user.getUserType());
+        TransactionInfo.init(user.getType());
       }
     }
     filterChain.doFilter(request, response);

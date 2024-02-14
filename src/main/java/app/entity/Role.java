@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 @Data
 public class Role {
 
-  private String userID;
+  private long userID;
   private boolean allowCreate;
   private boolean allowRead;
   private boolean allowUpdate;

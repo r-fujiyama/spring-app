@@ -108,7 +108,7 @@ public class GlobalExceptionHandler {
     var errors = new ArrayList<Error>();
     ex.getConstraintViolations().forEach(constraintViolation -> {
       // constraintViolation.getPropertyPath().toString() を実行すると以下のような文字列が取得できる。
-      // 例：getUser.userID
+      // 例：getUser.userName
       //    {controller_method_name}.{parameter_name}
       // {parameter_name}を取得するためsplitし最後尾の文字列を取得している。
       var path = constraintViolation.getPropertyPath().toString().split("\\.");

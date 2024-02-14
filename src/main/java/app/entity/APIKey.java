@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class APIKey {
 
-  private String userID;
+  private long userID;
   private String apiKey;
   private String updatedBy;
   private LocalDateTime updatedAt;

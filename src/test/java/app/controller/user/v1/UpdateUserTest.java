@@ -41,7 +41,7 @@ public class UpdateUserTest extends ControllerTest {
     var res = new UpdateUserResponse(
         User.builder()
             .id(1L)
-            .userID("user-id")
+            .name("user-name")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")
@@ -64,7 +64,7 @@ public class UpdateUserTest extends ControllerTest {
     var expected = JSONUtils.toJSON(new UpdateUserResponse(
         User.builder()
             .id(1L)
-            .userID("user-id")
+            .name("user-name")
             .type(UserType.PRIVATE)
             .status(UserStatus.REGISTERED)
             .firstName("taro")
@@ -94,7 +94,7 @@ public class UpdateUserTest extends ControllerTest {
 
   static Stream<Arguments> validationErrorProvider() {
     return Stream.of(
-        // ユーザーID
+        // ユーザー名
         arguments("a", UserType.PRIVATE, "taro", "tokyo", "20",
             new Error(ErrorCode.BAD_REQUEST, "IDに指定された値の型に誤りがあります。")),
         arguments("0", UserType.PRIVATE, "taro", "tokyo", "20",

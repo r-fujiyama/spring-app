@@ -26,9 +26,9 @@ public abstract class AbstractUserV1Service implements UserV1Service {
     return new SearchUserResponse(users.stream().map(
         user -> User.builder()
             .id(user.getId())
-            .userID(user.getUserID())
-            .type(user.getUserType())
-            .status(user.getUserStatus())
+            .name(user.getName())
+            .type(user.getType())
+            .status(user.getStatus())
             .firstName(user.getFirstName())
             .lastName(user.getLastName())
             .age(user.getAge())
@@ -44,7 +44,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
     return new InsertUserResponse(
         User.builder()
             .id(1L)
-            .userID(null)
+            .name(null)
             .type(UserType.UNKNOWN)
             .status(UserStatus.UNKNOWN)
             .firstName(null)
@@ -62,7 +62,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
     return new UpdateUserResponse(
         User.builder()
             .id(1L)
-            .userID(null)
+            .name(null)
             .type(UserType.UNKNOWN)
             .status(UserStatus.UNKNOWN)
             .firstName(null)
@@ -80,7 +80,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
     return new DeleteUserResponse(
         User.builder()
             .id(1L)
-            .userID(null)
+            .name(null)
             .type(UserType.UNKNOWN)
             .status(UserStatus.UNKNOWN)
             .firstName(null)

@@ -20,12 +20,12 @@ import java.lang.annotation.Target;
 
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)
-@Repeatable(UserID.List.class)
+@Repeatable(UserName.List.class)
 @Documented
 @Constraint(validatedBy = {})
-@Size(min = 1, max = 256, message = "{validation.constraints.UserID.message}")
+@Size(min = 1, max = 256, message = "{validation.constraints.UserName.message}")
 @Pattern(regexp = RegExp.USER_ID)
-public @interface UserID {
+public @interface UserName {
 
   String message() default "";
 
@@ -38,6 +38,6 @@ public @interface UserID {
   @Documented
   @interface List {
 
-    UserID[] value();
+    UserName[] value();
   }
 }

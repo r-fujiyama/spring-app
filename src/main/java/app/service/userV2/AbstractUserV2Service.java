@@ -16,7 +16,7 @@ public abstract class AbstractUserV2Service implements UserV2Service {
     return new GetUserResponse(
         User.builder()
             .id(1L)
-            .userID(null)
+            .name(null)
             .type(UserType.UNKNOWN)
             .status(UserStatus.UNKNOWN)
             .firstName(null)
