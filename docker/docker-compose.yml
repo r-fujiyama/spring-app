@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  mysql:
+  mysql-app:
     container_name: "mysql-app"
     build: ./mysql
     environment:
@@ -9,9 +9,23 @@ services:
     volumes:
       - ./mysql/initdb.d:/docker-entrypoint-initdb.d
       - ./mysql/conf.d/config.cnf:/etc/mysql/conf.d/config.cnf
-      - ./mysql/data:/var/lib/mysql
+      - ./mysql/app-db-data:/var/lib/mysql
     ports:
       - "3306:3306"
+    tty: true
+  mysql-test:
+    container_name: "mysql-test"
+    build: ./mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      TZ: Asia/Tokyo
+    volumes:
+      - ./mysql/initdb.d/001_init_database.sql:/docker-entrypoint-initdb.d/001_init_database.sql
+      - ./mysql/initdb.d/101_create_table.sql:/docker-entrypoint-initdb.d/101_create_table.sql
+      - ./mysql/conf.d/config.cnf:/etc/mysql/conf.d/config.cnf
+      - ./mysql/test-db-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
     tty: true
   redis:
     container_name: "redis-app"
