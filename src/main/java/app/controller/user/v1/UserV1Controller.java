@@ -14,13 +14,13 @@ import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;
 import app.controller.user.v1.response.InsertUserResponse;
-import app.controller.user.v1.response.SearchUserResponse;
+import app.controller.user.v1.response.UserSearchResponse;
 import app.controller.user.v1.response.UpdateUserResponse;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
 import app.service.userV1.parameter.InsertUserParam;
-import app.service.userV1.parameter.SearchUserParam;
+import app.service.userV1.parameter.UserSearchParam;
 import app.service.userV1.parameter.UpdateUserParam;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -48,7 +48,7 @@ public class UserV1Controller {
 
   @RoleRead
   @GetMapping("search")
-  public SearchUserResponse searchUser(
+  public UserSearchResponse userSearch(
       @RequestParam(required = false) @Valid @ID Long id,
       @RequestParam(required = false) @Valid @UserName String userName,
       @RequestParam(required = false) @Valid @NotUnknown UserType userType,
@@ -56,7 +56,7 @@ public class UserV1Controller {
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET) String firstName,
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET) String lastName,
       @RequestParam(required = false) @Valid @Age Integer age) {
-    var users = userService.searchUser(SearchUserParam.builder()
+    var users = userService.userSearch(UserSearchParam.builder()
         .id(id)
         .userName(userName)
         .userType(userType)
@@ -65,7 +65,7 @@ public class UserV1Controller {
         .lastName(lastName)
         .age(age)
         .build());
-    return new SearchUserResponse(users.stream().map(
+    return new UserSearchResponse(users.stream().map(
         user -> User.builder()
             .id(user.getId())
             .name(user.getName())

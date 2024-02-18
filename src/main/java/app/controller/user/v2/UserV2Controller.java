@@ -8,12 +8,12 @@ import app.annotation.role.RoleUpdate;
 import app.controller.response.Response;
 import app.controller.user.response.User;
 import app.controller.user.v2.request.InsertUserRequest;
-import app.controller.user.v2.request.SearchUserRequest;
+import app.controller.user.v2.request.UserSearchRequest;
 import app.controller.user.v2.request.UpdateUserRequest;
-import app.controller.user.v2.response.SearchUserResponse;
+import app.controller.user.v2.response.UserSearchResponse;
 import app.service.userV2.UserV2Service;
 import app.service.userV2.parameter.InsertUserParam;
-import app.service.userV2.parameter.SearchUserParam;
+import app.service.userV2.parameter.UserSearchParam;
 import app.service.userV2.parameter.UpdateUserParam;
 import jakarta.validation.Valid;
 import java.util.stream.Collectors;
@@ -39,8 +39,8 @@ public class UserV2Controller {
 
   @RoleRead
   @GetMapping
-  public SearchUserResponse searchUser(@Valid SearchUserRequest request) {
-    var users = userService.searchUser(SearchUserParam.builder()
+  public UserSearchResponse userSearch(@Valid UserSearchRequest request) {
+    var users = userService.userSearch(UserSearchParam.builder()
         .id(null)
         .userName(request.getUserName())
         .userType(request.getUserType())
@@ -49,7 +49,7 @@ public class UserV2Controller {
         .lastName(request.getLastName())
         .age(request.getAge())
         .build());
-    return new SearchUserResponse(users.stream().map(
+    return new UserSearchResponse(users.stream().map(
         user -> User.builder()
             .id(user.getId())
             .name(user.getName())

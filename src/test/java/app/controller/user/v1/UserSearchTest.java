@@ -11,7 +11,7 @@ import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
 import app.controller.user.response.User;
-import app.controller.user.v1.response.SearchUserResponse;
+import app.controller.user.v1.response.UserSearchResponse;
 import app.enums.ErrorCode;
 import app.enums.UserStatus;
 import app.enums.UserType;
@@ -29,7 +29,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @WebMvcTest(UserV1Controller.class)
-public class SearchUserTest extends ControllerTest {
+public class UserSearchTest extends ControllerTest {
 
   @MockBean
   UserV1Service userService;
@@ -46,7 +46,7 @@ public class SearchUserTest extends ControllerTest {
         .lastName("tokyo")
         .age(20)
         .build());
-    when(userService.searchUser(any())).thenReturn(users);
+    when(userService.userSearch(any())).thenReturn(users);
   }
 
   @Test
@@ -72,7 +72,7 @@ public class SearchUserTest extends ControllerTest {
         .lastName("tokyo")
         .age(20)
         .build());
-    var expected = JSONUtils.toJSON(new SearchUserResponse(users));
+    var expected = JSONUtils.toJSON(new UserSearchResponse(users));
     assertThat(actual).isEqualTo(expected);
   }
 

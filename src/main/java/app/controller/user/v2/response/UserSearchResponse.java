@@ -1,4 +1,4 @@
-package app.controller.user.v1.response;
+package app.controller.user.v2.response;
 
 import app.controller.response.Response;
 import app.controller.user.response.User;
@@ -8,7 +8,7 @@ import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
-public class SearchUserResponse extends Response {
+public class UserSearchResponse extends Response {
 
   List<User> users;
 

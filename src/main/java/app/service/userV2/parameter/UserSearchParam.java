@@ -7,7 +7,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class SearchUserParam {
+public class UserSearchParam {
 
   Long id;
   String userName;
