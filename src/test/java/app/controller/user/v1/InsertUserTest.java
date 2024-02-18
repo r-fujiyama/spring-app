@@ -37,18 +37,16 @@ public class InsertUserTest extends ControllerTest {
 
   @BeforeEach
   public void beforeEach() {
-    var res = new InsertUserResponse(
-        User.builder()
-            .id(1L)
-            .name("user-name")
-            .type(UserType.PRIVATE)
-            .status(UserStatus.REGISTERED)
-            .firstName("taro")
-            .lastName("tokyo")
-            .age(20)
-            .build()
-    );
-    when(userService.insertUser(any())).thenReturn(res);
+    var user = app.service.userV1.result.User.builder()
+        .id(1L)
+        .name("user-name")
+        .type(UserType.PRIVATE)
+        .status(UserStatus.REGISTERED)
+        .firstName("taro")
+        .lastName("tokyo")
+        .age(20)
+        .build();
+    when(userService.insertUser(any())).thenReturn(user);
   }
 
   @Test
@@ -76,7 +74,8 @@ public class InsertUserTest extends ControllerTest {
 
   @ParameterizedTest
   @MethodSource("validationErrorProvider")
-  public void validationErrorTest(String userName, String password, UserType userType, String firstName, String lastName,
+  public void validationErrorTest(String userName, String password, UserType userType, String firstName,
+      String lastName,
       Integer age, Error[] errors) throws Exception {
     var req = new InsertUserRequest(userName, password, userType, firstName, lastName, age);
     var res = mockMvc.perform(post("/v1/user")

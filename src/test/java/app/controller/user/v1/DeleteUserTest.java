@@ -35,17 +35,15 @@ public class DeleteUserTest extends ControllerTest {
 
   @BeforeEach
   public void beforeEach() {
-    var res = new DeleteUserResponse(
-        User.builder()
-            .id(1L)
-            .name("user-name")
-            .type(UserType.PRIVATE)
-            .status(UserStatus.REGISTERED)
-            .firstName("taro")
-            .lastName("tokyo")
-            .age(20)
-            .build()
-    );
+    var res = app.service.userV1.result.User.builder()
+        .id(1L)
+        .name("user-name")
+        .type(UserType.PRIVATE)
+        .status(UserStatus.REGISTERED)
+        .firstName("taro")
+        .lastName("tokyo")
+        .age(20)
+        .build();
     when(userService.deleteUser(anyLong())).thenReturn(res);
   }
 

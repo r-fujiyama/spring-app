@@ -1,15 +1,12 @@
 package app.service.userV1;
 
-import app.controller.user.response.User;
-import app.controller.user.v1.request.InsertUserRequest;
-import app.controller.user.v1.request.UpdateUserRequest;
-import app.controller.user.v1.response.DeleteUserResponse;
-import app.controller.user.v1.response.InsertUserResponse;
-import app.controller.user.v1.response.UpdateUserResponse;
 import app.dao.UserDao;
 import app.enums.UserStatus;
 import app.enums.UserType;
+import app.service.userV1.parameter.InsertUserParam;
 import app.service.userV1.parameter.SearchUserParam;
+import app.service.userV1.parameter.UpdateUserParam;
+import app.service.userV1.result.User;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -20,7 +17,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   private final UserDao userDao;
 
   @Override
-  public List<app.service.userV1.result.User> searchUser(SearchUserParam param) {
+  public List<User> searchUser(SearchUserParam param) {
     getUserDetailProcess();
     var users = userDao.findBySearchParam(param);
     return users.stream().map(
@@ -39,55 +36,49 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   protected abstract void getUserDetailProcess();
 
   @Override
-  public InsertUserResponse insertUser(InsertUserRequest request) {
+  public User insertUser(InsertUserParam param) {
     insertUserDetailProcess();
-    return new InsertUserResponse(
-        User.builder()
-            .id(1L)
-            .name(null)
-            .type(UserType.UNKNOWN)
-            .status(UserStatus.UNKNOWN)
-            .firstName(null)
-            .lastName(null)
-            .age(0)
-            .build()
-    );
+    return User.builder()
+        .id(1L)
+        .name(null)
+        .type(UserType.UNKNOWN)
+        .status(UserStatus.UNKNOWN)
+        .firstName(null)
+        .lastName(null)
+        .age(0)
+        .build();
   }
 
   protected abstract void insertUserDetailProcess();
 
   @Override
-  public UpdateUserResponse updateUser(long id, UpdateUserRequest request) {
+  public User updateUser(UpdateUserParam param) {
     updateUserDetailProcess();
-    return new UpdateUserResponse(
-        User.builder()
-            .id(1L)
-            .name(null)
-            .type(UserType.UNKNOWN)
-            .status(UserStatus.UNKNOWN)
-            .firstName(null)
-            .lastName(null)
-            .age(0)
-            .build()
-    );
+    return User.builder()
+        .id(1L)
+        .name(null)
+        .type(UserType.UNKNOWN)
+        .status(UserStatus.UNKNOWN)
+        .firstName(null)
+        .lastName(null)
+        .age(0)
+        .build();
   }
 
   protected abstract void updateUserDetailProcess();
 
   @Override
-  public DeleteUserResponse deleteUser(long id) {
+  public User deleteUser(long id) {
     deleteUserDetailProcess();
-    return new DeleteUserResponse(
-        User.builder()
-            .id(1L)
-            .name(null)
-            .type(UserType.UNKNOWN)
-            .status(UserStatus.UNKNOWN)
-            .firstName(null)
-            .lastName(null)
-            .age(0)
-            .build()
-    );
+    return User.builder()
+        .id(1L)
+        .name(null)
+        .type(UserType.UNKNOWN)
+        .status(UserStatus.UNKNOWN)
+        .firstName(null)
+        .lastName(null)
+        .age(0)
+        .build();
   }
 
   protected abstract void deleteUserDetailProcess();

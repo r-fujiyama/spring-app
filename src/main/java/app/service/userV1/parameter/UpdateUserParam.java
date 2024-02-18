@@ -1,18 +1,15 @@
 package app.service.userV1.parameter;
 
-import app.enums.UserStatus;
 import app.enums.UserType;
 import lombok.Builder;
 import lombok.Value;
 
 @Value
 @Builder
-public class SearchUserParam {
+public class UpdateUserParam {
 
-  Long id;
-  String userName;
+  long id;
   UserType userType;
-  UserStatus userStatus;
   String firstName;
   String lastName;
   Integer age;

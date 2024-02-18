@@ -10,12 +10,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
+import app.controller.user.response.User;
 import app.controller.user.v1.response.SearchUserResponse;
 import app.enums.ErrorCode;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
-import app.service.userV1.result.User;
 import app.util.JSONUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ public class SearchUserTest extends ControllerTest {
 
   @BeforeEach
   public void beforeEach() {
-    var users = new ArrayList<User>();
-    users.add(User.builder()
+    var users = new ArrayList<app.service.userV1.result.User>();
+    users.add(app.service.userV1.result.User.builder()
         .id(1L)
         .name("user-name")
         .type(UserType.PRIVATE)
@@ -62,8 +62,8 @@ public class SearchUserTest extends ControllerTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var users = new ArrayList<app.controller.user.v1.response.User>();
-    users.add(app.controller.user.v1.response.User.builder()
+    var users = new ArrayList<User>();
+    users.add(User.builder()
         .id(1L)
         .name("user-name")
         .type(UserType.PRIVATE)

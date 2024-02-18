@@ -1,4 +1,4 @@
-package app.service.userV1.parameter;
+package app.service.userV1.result;
 
 import app.enums.UserStatus;
 import app.enums.UserType;
@@ -7,14 +7,14 @@ import lombok.Value;
 
 @Value
 @Builder
-public class SearchUserParam {
+public class User {
 
-  Long id;
-  String userName;
-  UserType userType;
-  UserStatus userStatus;
+  long id;
+  String name;
+  UserType type;
+  UserStatus status;
   String firstName;
   String lastName;
-  Integer age;
+  int age;
 
 }

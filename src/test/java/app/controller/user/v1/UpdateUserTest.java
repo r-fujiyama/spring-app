@@ -3,7 +3,6 @@ package app.controller.user.v1;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,18 +37,16 @@ public class UpdateUserTest extends ControllerTest {
 
   @BeforeEach
   public void beforeEach() {
-    var res = new UpdateUserResponse(
-        User.builder()
-            .id(1L)
-            .name("user-name")
-            .type(UserType.PRIVATE)
-            .status(UserStatus.REGISTERED)
-            .firstName("taro")
-            .lastName("tokyo")
-            .age(20)
-            .build()
-    );
-    when(userService.updateUser(anyLong(), any())).thenReturn(res);
+    var user = app.service.userV1.result.User.builder()
+        .id(1L)
+        .name("user-name")
+        .type(UserType.PRIVATE)
+        .status(UserStatus.REGISTERED)
+        .firstName("taro")
+        .lastName("tokyo")
+        .age(20)
+        .build();
+    when(userService.updateUser(any())).thenReturn(user);
   }
 
   @Test

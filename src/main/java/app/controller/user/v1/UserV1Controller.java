@@ -9,17 +9,19 @@ import app.annotation.role.RoleDelete;
 import app.annotation.role.RoleRead;
 import app.annotation.role.RoleUpdate;
 import app.constants.RegExp;
+import app.controller.user.response.User;
 import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;
 import app.controller.user.v1.response.InsertUserResponse;
 import app.controller.user.v1.response.SearchUserResponse;
 import app.controller.user.v1.response.UpdateUserResponse;
-import app.controller.user.v1.response.User;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
+import app.service.userV1.parameter.InsertUserParam;
 import app.service.userV1.parameter.SearchUserParam;
+import app.service.userV1.parameter.UpdateUserParam;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import java.util.stream.Collectors;
@@ -79,20 +81,60 @@ public class UserV1Controller {
   @RoleCreate
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
   public InsertUserResponse insertUser(@Valid @RequestBody InsertUserRequest request) {
-    return userService.insertUser(request);
+    var user = userService.insertUser(InsertUserParam.builder()
+        .userName(request.getUserName())
+        .password(request.getPassword())
+        .userType(request.getUserType())
+        .firstName(request.getFirstName())
+        .lastName(request.getLastName())
+        .age(request.getAge())
+        .build());
+    return new InsertUserResponse(User.builder()
+        .id(user.getId())
+        .name(user.getName())
+        .type(user.getType())
+        .status(user.getStatus())
+        .firstName(user.getFirstName())
+        .lastName(user.getLastName())
+        .age(user.getAge())
+        .build());
   }
 
   @RoleUpdate
   @PutMapping(path = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
   public UpdateUserResponse updateUser(@Valid @ID @PathVariable("id") long id,
       @Valid @RequestBody UpdateUserRequest request) {
-    return userService.updateUser(id, request);
+    var user = userService.updateUser(UpdateUserParam.builder()
+        .id(id)
+        .userType(request.getUserType())
+        .firstName(request.getFirstName())
+        .lastName(request.getLastName())
+        .age(request.getAge())
+        .build());
+    return new UpdateUserResponse(User.builder()
+        .id(user.getId())
+        .name(user.getName())
+        .type(user.getType())
+        .status(user.getStatus())
+        .firstName(user.getFirstName())
+        .lastName(user.getLastName())
+        .age(user.getAge())
+        .build());
   }
 
   @RoleDelete
   @DeleteMapping(path = "{id}")
   public DeleteUserResponse deleteUser(@Valid @ID @PathVariable("id") long id) {
-    return userService.deleteUser(id);
+    var user = userService.deleteUser(id);
+    return new DeleteUserResponse(User.builder()
+        .id(user.getId())
+        .name(user.getName())
+        .type(user.getType())
+        .status(user.getStatus())
+        .firstName(user.getFirstName())
+        .lastName(user.getLastName())
+        .age(user.getAge())
+        .build());
   }
 
 }
