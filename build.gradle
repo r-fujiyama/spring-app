@@ -27,6 +27,7 @@ def guavaVersion = '33.0.0-jre'
 def mysqlConnectorJVersion = '8.3.0'
 def lombokVersion = '1.18.30'
 def springSecurityTestVersion = '6.2.1'
+def riderSpring = '1.41.0'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -44,6 +45,7 @@ dependencies {
     }
     testImplementation group: 'org.springframework.security', name: 'spring-security-test', version: springSecurityTestVersion
     testImplementation group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter-test', version: mybatisSpringBootStarter
+    testImplementation group: 'com.github.database-rider', name: 'rider-spring', version: riderSpring
     testCompileOnly group: 'org.projectlombok', name: 'lombok', version: lombokVersion
     testAnnotationProcessor group: 'org.projectlombok', name: 'lombok', version: lombokVersion
 }
