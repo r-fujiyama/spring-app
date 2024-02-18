@@ -5,12 +5,12 @@ import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;
 import app.controller.user.v1.response.InsertUserResponse;
-import app.controller.user.v1.response.SearchUserResponse;
 import app.controller.user.v1.response.UpdateUserResponse;
 import app.dao.UserDao;
 import app.enums.UserStatus;
 import app.enums.UserType;
-import app.service.userV1.dto.SearchUserParam;
+import app.service.userV1.parameter.SearchUserParam;
+import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 
@@ -20,11 +20,11 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   private final UserDao userDao;
 
   @Override
-  public SearchUserResponse searchUser(SearchUserParam param) {
+  public List<app.service.userV1.result.User> searchUser(SearchUserParam param) {
     getUserDetailProcess();
     var users = userDao.findBySearchParam(param);
-    return new SearchUserResponse(users.stream().map(
-        user -> User.builder()
+    return users.stream().map(
+        user -> app.service.userV1.result.User.builder()
             .id(user.getId())
             .name(user.getName())
             .type(user.getType())
@@ -33,7 +33,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
             .lastName(user.getLastName())
             .age(user.getAge())
             .build()
-    ).collect(Collectors.toList()));
+    ).collect(Collectors.toList());
   }
 
   protected abstract void getUserDetailProcess();

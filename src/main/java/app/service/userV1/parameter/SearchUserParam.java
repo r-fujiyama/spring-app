@@ -1,4 +1,4 @@
-package app.service.userV1.dto;
+package app.service.userV1.parameter;
 
 import app.enums.UserStatus;
 import app.enums.UserType;

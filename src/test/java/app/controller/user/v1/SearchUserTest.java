@@ -10,12 +10,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
-import app.controller.user.response.User;
 import app.controller.user.v1.response.SearchUserResponse;
 import app.enums.ErrorCode;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
+import app.service.userV1.result.User;
 import app.util.JSONUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -46,8 +46,7 @@ public class SearchUserTest extends ControllerTest {
         .lastName("tokyo")
         .age(20)
         .build());
-    var res = new SearchUserResponse(users);
-    when(userService.searchUser(any())).thenReturn(res);
+    when(userService.searchUser(any())).thenReturn(users);
   }
 
   @Test
@@ -63,8 +62,8 @@ public class SearchUserTest extends ControllerTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var users = new ArrayList<User>();
-    users.add(User.builder()
+    var users = new ArrayList<app.controller.user.v1.response.User>();
+    users.add(app.controller.user.v1.response.User.builder()
         .id(1L)
         .name("user-name")
         .type(UserType.PRIVATE)
@@ -112,13 +111,13 @@ public class SearchUserTest extends ControllerTest {
         // ユーザー名
         arguments("1", "", UserType.PRIVATE.getValue(), UserStatus.REGISTERED.getValue(), "taro", "tokyo", "20",
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は1~256文字以内で入力してください。"),
-                new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-]$の形式で入力してください。")}),
+                new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-_]$の形式で入力してください。")}),
         arguments("1", "a".repeat(257), UserType.PRIVATE.getValue(), UserStatus.REGISTERED.getValue(), "taro", "tokyo",
             "20", new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は1~256文字以内で入力してください。")}),
         arguments("1", " ", UserType.PRIVATE.getValue(), UserStatus.REGISTERED.getValue(), "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-]$の形式で入力してください。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-_]$の形式で入力してください。")}),
         arguments("1", "!", UserType.PRIVATE.getValue(), UserStatus.REGISTERED.getValue(), "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-]$の形式で入力してください。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-_]$の形式で入力してください。")}),
         // ユーザタイプ
         arguments("1", "user-name", "", UserStatus.REGISTERED.getValue(), "taro", "tokyo", "20",
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")}),

@@ -1,26 +1,28 @@
 package app.controller.user.v1;
 
+import app.annotation.constraint.Age;
+import app.annotation.constraint.ID;
+import app.annotation.constraint.NotUnknown;
+import app.annotation.constraint.UserName;
 import app.annotation.role.RoleCreate;
 import app.annotation.role.RoleDelete;
 import app.annotation.role.RoleRead;
 import app.annotation.role.RoleUpdate;
 import app.constants.RegExp;
-import app.annotation.constraint.Age;
-import app.annotation.constraint.ID;
-import app.annotation.constraint.NotUnknown;
-import app.annotation.constraint.UserName;
 import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;
 import app.controller.user.v1.response.InsertUserResponse;
 import app.controller.user.v1.response.SearchUserResponse;
 import app.controller.user.v1.response.UpdateUserResponse;
+import app.controller.user.v1.response.User;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
-import app.service.userV1.dto.SearchUserParam;
+import app.service.userV1.parameter.SearchUserParam;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -52,7 +54,7 @@ public class UserV1Controller {
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET) String firstName,
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET) String lastName,
       @RequestParam(required = false) @Valid @Age Integer age) {
-    return userService.searchUser(SearchUserParam.builder()
+    var users = userService.searchUser(SearchUserParam.builder()
         .id(id)
         .userName(userName)
         .userType(userType)
@@ -61,6 +63,17 @@ public class UserV1Controller {
         .lastName(lastName)
         .age(age)
         .build());
+    return new SearchUserResponse(users.stream().map(
+        user -> User.builder()
+            .id(user.getId())
+            .name(user.getName())
+            .type(user.getType())
+            .status(user.getStatus())
+            .firstName(user.getFirstName())
+            .lastName(user.getLastName())
+            .age(user.getAge())
+            .build()
+    ).collect(Collectors.toList()));
   }
 
   @RoleCreate
