@@ -4,8 +4,8 @@ import app.dao.UserDao;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.parameter.InsertUserParam;
-import app.service.userV1.parameter.UserSearchParam;
 import app.service.userV1.parameter.UpdateUserParam;
+import app.service.userV1.parameter.UserSearchParam;
 import app.service.userV1.result.User;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,7 +21,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
     getUserDetailProcess();
     var users = userDao.findByUserSearchParam(param);
     return users.stream().map(
-        user -> app.service.userV1.result.User.builder()
+        user -> User.builder()
             .id(user.getId())
             .name(user.getName())
             .type(user.getType())
