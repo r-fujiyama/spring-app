@@ -13,8 +13,8 @@ public class User {
   private String password;
   private UserType type;
   private UserStatus status;
-  private String lastName;
   private String firstName;
+  private String lastName;
   private int age;
   private String updatedBy;
   private LocalDateTime updatedAt;
