@@ -6,10 +6,10 @@ import app.annotation.role.RoleRead;
 import app.annotation.role.RoleUpdate;
 import app.annotation.constraint.ID;
 import app.controller.response.Response;
-import app.controller.user.v2.request.GetUserRequest;
+import app.controller.user.v2.request.SearchUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;
 import app.controller.user.v2.request.UpdateUserRequest;
-import app.controller.user.v2.response.GetUserResponse;
+import app.controller.user.v2.response.SearchUserResponse;
 import app.service.userV2.UserV2Service;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -34,7 +34,7 @@ public class UserV2Controller {
 
   @RoleRead
   @GetMapping
-  public GetUserResponse getUserV2(@Valid GetUserRequest request) {
+  public SearchUserResponse searchUser(@Valid SearchUserRequest request) {
     return userService.getUser(request);
   }
 

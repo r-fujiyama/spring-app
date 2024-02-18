@@ -7,7 +7,7 @@ import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
-public class GetUserResponse extends Response {
+public class SearchUserResponse extends Response {
 
   User user;
 

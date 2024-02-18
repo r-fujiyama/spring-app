@@ -1,13 +1,13 @@
 package app.service.userV2;
 
-import app.controller.user.v2.request.GetUserRequest;
+import app.controller.user.v2.request.SearchUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;
 import app.controller.user.v2.request.UpdateUserRequest;
-import app.controller.user.v2.response.GetUserResponse;
+import app.controller.user.v2.response.SearchUserResponse;
 
 public interface UserV2Service {
 
-  GetUserResponse getUser(GetUserRequest request);
+  SearchUserResponse getUser(SearchUserRequest request);
 
   void insertUser(InsertUserRequest request);
 

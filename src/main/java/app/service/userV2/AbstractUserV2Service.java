@@ -1,19 +1,19 @@
 package app.service.userV2;
 
 import app.controller.user.response.User;
-import app.controller.user.v2.request.GetUserRequest;
+import app.controller.user.v2.request.SearchUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;
 import app.controller.user.v2.request.UpdateUserRequest;
-import app.controller.user.v2.response.GetUserResponse;
+import app.controller.user.v2.response.SearchUserResponse;
 import app.enums.UserStatus;
 import app.enums.UserType;
 
 public abstract class AbstractUserV2Service implements UserV2Service {
 
   @Override
-  public GetUserResponse getUser(GetUserRequest request) {
+  public SearchUserResponse getUser(SearchUserRequest request) {
     getUserDetailProcess();
-    return new GetUserResponse(
+    return new SearchUserResponse(
         User.builder()
             .id(1L)
             .name(null)
