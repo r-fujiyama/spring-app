@@ -66,11 +66,11 @@ public class InsertUserTest extends ControllerTest {
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名にNULLは許可されていません。")}),
         arguments("", "password", UserType.PRIVATE, "taro", "tokyo", "20",
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は1~256文字以内で入力してください。"),
-                new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-]$の形式で入力してください。")}),
+                new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-_]$の形式で入力してください。")}),
         arguments("a".repeat(257), "password", UserType.PRIVATE, "taro", "tokyo", "20",
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は1~256文字以内で入力してください。")}),
         arguments(">".repeat(8), "password", UserType.PRIVATE, "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-]$の形式で入力してください。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-_]$の形式で入力してください。")}),
         // パスワード
         arguments("user-name", null, UserType.PRIVATE, "taro", "tokyo", "20",
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "パスワードにNULLは許可されていません。")}),
