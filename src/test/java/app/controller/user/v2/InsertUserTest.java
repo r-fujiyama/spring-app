@@ -44,8 +44,8 @@ public class InsertUserTest extends ControllerTest {
 
   @ParameterizedTest
   @MethodSource("validationErrorProvider")
-  public void validationErrorTest(String userName, String password, UserType userType, String firstName, String lastName,
-      Integer age, Error[] errors) throws Exception {
+  public void validationErrorTest(String userName, String password, UserType userType, String firstName,
+      String lastName, Integer age, Error[] errors) throws Exception {
     var req = new InsertUserRequest(userName, password, userType, firstName, lastName, age);
     var res = mockMvc.perform(post("/v2/user")
             .contentType(MediaType.APPLICATION_JSON)

@@ -1,8 +1,8 @@
 package app.service.userV2;
 
 import app.controller.user.response.User;
-import app.controller.user.v2.request.SearchUserRequest;
 import app.controller.user.v2.request.InsertUserRequest;
+import app.controller.user.v2.request.SearchUserRequest;
 import app.controller.user.v2.request.UpdateUserRequest;
 import app.controller.user.v2.response.SearchUserResponse;
 import app.enums.UserStatus;
