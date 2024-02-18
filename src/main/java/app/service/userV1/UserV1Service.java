@@ -10,9 +10,9 @@ public interface UserV1Service {
 
   List<User> searchUser(SearchUserParam param);
 
-  User insertUser(InsertUserParam request);
+  User insertUser(InsertUserParam param);
 
-  User updateUser(UpdateUserParam request);
+  User updateUser(UpdateUserParam param);
 
   User deleteUser(long id);
 
