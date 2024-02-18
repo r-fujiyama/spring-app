@@ -1,17 +1,18 @@
 package app.service.userV2;
 
-import app.controller.user.v2.request.InsertUserRequest;
-import app.controller.user.v2.request.SearchUserRequest;
-import app.controller.user.v2.request.UpdateUserRequest;
-import app.controller.user.v2.response.SearchUserResponse;
+import app.service.userV2.parameter.InsertUserParam;
+import app.service.userV2.parameter.SearchUserParam;
+import app.service.userV2.parameter.UpdateUserParam;
+import app.service.userV2.result.User;
+import java.util.List;
 
 public interface UserV2Service {
 
-  SearchUserResponse getUser(SearchUserRequest request);
+  List<User> searchUser(SearchUserParam param);
 
-  void insertUser(InsertUserRequest request);
+  void insertUser(InsertUserParam param);
 
-  void updateUser(long id, UpdateUserRequest request);
+  void updateUser(UpdateUserParam param);
 
   void deleteUser(long id);
 

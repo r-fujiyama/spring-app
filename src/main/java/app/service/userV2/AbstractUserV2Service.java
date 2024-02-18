@@ -1,42 +1,44 @@
 package app.service.userV2;
 
-import app.controller.user.response.User;
-import app.controller.user.v2.request.InsertUserRequest;
-import app.controller.user.v2.request.SearchUserRequest;
-import app.controller.user.v2.request.UpdateUserRequest;
-import app.controller.user.v2.response.SearchUserResponse;
 import app.enums.UserStatus;
 import app.enums.UserType;
+import app.service.userV2.parameter.InsertUserParam;
+import app.service.userV2.parameter.SearchUserParam;
+import app.service.userV2.parameter.UpdateUserParam;
+import app.service.userV2.result.User;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractUserV2Service implements UserV2Service {
 
   @Override
-  public SearchUserResponse getUser(SearchUserRequest request) {
+  public List<User> searchUser(SearchUserParam param) {
     getUserDetailProcess();
-    return new SearchUserResponse(
-        User.builder()
-            .id(1L)
-            .name(null)
-            .type(UserType.UNKNOWN)
-            .status(UserStatus.UNKNOWN)
-            .firstName(null)
-            .lastName(null)
-            .age(0)
-            .build()
-    );
+    var user = User.builder()
+        .id(1L)
+        .name(null)
+        .type(UserType.UNKNOWN)
+        .status(UserStatus.UNKNOWN)
+        .firstName(null)
+        .lastName(null)
+        .age(0)
+        .build();
+    var users = new ArrayList<User>();
+    users.add(user);
+    return users;
   }
 
   protected abstract void getUserDetailProcess();
 
   @Override
-  public void insertUser(InsertUserRequest request) {
+  public void insertUser(InsertUserParam param) {
     insertUserDetailProcess();
   }
 
   protected abstract void insertUserDetailProcess();
 
   @Override
-  public void updateUser(long id, UpdateUserRequest request) {
+  public void updateUser(UpdateUserParam param) {
     updateUserDetailProcess();
   }
 

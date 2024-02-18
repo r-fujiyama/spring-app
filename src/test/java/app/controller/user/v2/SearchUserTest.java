@@ -11,13 +11,14 @@ import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
 import app.controller.user.response.User;
-import app.controller.user.v2.response.SearchUserResponse;
+import app.controller.user.v1.response.SearchUserResponse;
 import app.enums.ErrorCode;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV2.UserV2Service;
 import app.util.JSONUtils;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,18 +36,17 @@ public class SearchUserTest extends ControllerTest {
 
   @BeforeEach
   public void beforeEach() {
-    var res = new SearchUserResponse(
-        User.builder()
-            .id(1L)
-            .name("user-name")
-            .type(UserType.PRIVATE)
-            .status(UserStatus.REGISTERED)
-            .firstName("taro")
-            .lastName("tokyo")
-            .age(20)
-            .build()
-    );
-    when(userService.getUser(any())).thenReturn(res);
+    var users = new ArrayList<app.service.userV2.result.User>();
+    users.add(app.service.userV2.result.User.builder()
+        .id(1L)
+        .name("user-name")
+        .type(UserType.PRIVATE)
+        .status(UserStatus.REGISTERED)
+        .firstName("taro")
+        .lastName("tokyo")
+        .age(20)
+        .build());
+    when(userService.searchUser(any())).thenReturn(users);
   }
 
   @Test
@@ -60,17 +60,17 @@ public class SearchUserTest extends ControllerTest {
         .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
-    var expected = JSONUtils.toJSON(new SearchUserResponse(
-        User.builder()
-            .id(1L)
-            .name("user-name")
-            .type(UserType.PRIVATE)
-            .status(UserStatus.REGISTERED)
-            .firstName("taro")
-            .lastName("tokyo")
-            .age(20)
-            .build()
-    ));
+    var users = new ArrayList<User>();
+    users.add(User.builder()
+        .id(1L)
+        .name("user-name")
+        .type(UserType.PRIVATE)
+        .status(UserStatus.REGISTERED)
+        .firstName("taro")
+        .lastName("tokyo")
+        .age(20)
+        .build());
+    var expected = JSONUtils.toJSON(new SearchUserResponse(users));
     assertThat(actual).isEqualTo(expected);
   }
 
