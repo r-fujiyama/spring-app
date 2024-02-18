@@ -1,10 +1,10 @@
 package app.config;
 
 import app.config.properties.SecurityProperties;
+import app.security.ErrorAuthenticationEntryPoint;
 import app.security.api_key.APIKeyAuthenticationFilterConfig;
 import app.security.api_key.APIKeyAuthenticationProvider;
 import app.security.basic.UsernamePasswordAuthenticationProvider;
-import app.security.basic.UsernamePasswordAuthenticationProvider.ErrorAuthenticationEntryPoint;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
