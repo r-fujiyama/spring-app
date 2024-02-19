@@ -111,13 +111,13 @@ public class UserSearchTest extends ControllerTest {
         // ユーザー名
         arguments("1", "", UserType.PRIVATE.getValue(), UserStatus.REGISTERED.getValue(), "taro", "tokyo", "20",
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は1~256文字以内で入力してください。"),
-                new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-_]$の形式で入力してください。")}),
+                new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-zA-Z-_]$の形式で入力してください。")}),
         arguments("1", "a".repeat(257), UserType.PRIVATE.getValue(), UserStatus.REGISTERED.getValue(), "taro", "tokyo",
             "20", new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は1~256文字以内で入力してください。")}),
         arguments("1", " ", UserType.PRIVATE.getValue(), UserStatus.REGISTERED.getValue(), "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-_]$の形式で入力してください。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-zA-Z-_]$の形式で入力してください。")}),
         arguments("1", "!", UserType.PRIVATE.getValue(), UserStatus.REGISTERED.getValue(), "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-z-_]$の形式で入力してください。")}),
+            new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザー名は^.*[1-9a-zA-Z-_]$の形式で入力してください。")}),
         // ユーザタイプ
         arguments("1", "user-name", "", UserStatus.REGISTERED.getValue(), "taro", "tokyo", "20",
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザータイプに指定された値は許可されていません。")}),

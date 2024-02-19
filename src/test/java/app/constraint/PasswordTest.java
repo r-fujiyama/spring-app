@@ -29,16 +29,16 @@ public class PasswordTest extends ConstraintsTest {
 
   static Stream<Arguments> testValueProvider() {
     return Stream.of(
-        arguments(new StringValue("password123!#$%&@", false), null),
+        arguments(new StringValue("Password123!#$%&@", false), null),
         arguments(new StringValue(null, false), null),
         arguments(new StringValue("", true), new String[]{"{param_name}は8~64文字以内で入力してください。",
-            "{param_name}は^.*[1-9a-z!#$%&@]$の形式で入力してください。"}),
+            "{param_name}は^.*[1-9a-zA-Z!#$%&@]$の形式で入力してください。"}),
         arguments(new StringValue("a".repeat(7), true), new String[]{"{param_name}は8~64文字以内で入力してください。"}),
         arguments(new StringValue("a".repeat(65), true), new String[]{"{param_name}は8~64文字以内で入力してください。"}),
         arguments(new StringValue("<<<<<<<<", true),
-            new String[]{"{param_name}は^.*[1-9a-z!#$%&@]$の形式で入力してください。"}),
+            new String[]{"{param_name}は^.*[1-9a-zA-Z!#$%&@]$の形式で入力してください。"}),
         arguments(new StringValue("<", true), new String[]{"{param_name}は8~64文字以内で入力してください。",
-            "{param_name}は^.*[1-9a-z!#$%&@]$の形式で入力してください。"}));
+            "{param_name}は^.*[1-9a-zA-Z!#$%&@]$の形式で入力してください。"}));
 
   }
 
