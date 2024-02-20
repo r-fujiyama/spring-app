@@ -22,7 +22,7 @@ public abstract class ControllerTest {
   private WebApplicationContext webApplicationContext;
   protected MockMvc mockMvc;
   @MockBean
-  UserDao userDao;
+  protected UserDao userDao;
 
   @BeforeAll
   public void setupMockMvc() {
