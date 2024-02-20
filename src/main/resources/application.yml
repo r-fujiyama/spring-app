@@ -2,6 +2,9 @@ server:
   port: 8080
   servlet:
     contextPath: /api
+    session:
+      cookie:
+        same-site: strict
 spring:
   messages:
     basename: error-messages, parameter-name
