@@ -101,7 +101,7 @@ public interface UserDao {
       """, "</script>"})
   @Results(value = {
       @Result(property = "user", one = @One(resultMap = "userResultMap")),
-      @Result(property = "role", one = @One(resultMap = "roleResultMap", columnPrefix = "role_"))
+      @Result(property = "role", one = @One(resultMap = "app.dao.RoleDao.roleResultMap", columnPrefix = "role_"))
   })
   UserInfo findUserAndRoleByAPIKey(String apiKey);
 
@@ -121,19 +121,5 @@ public interface UserDao {
       @Result(column = "created_at", property = "createdAt")
   })
   User __userResultMap();
-
-  @Select("SELECT 1")
-  @Results(id = "roleResultMap", value = {
-      @Result(id = true, column = "user_id", property = "userID"),
-      @Result(column = "allow_create", property = "allowCreate"),
-      @Result(column = "allow_read", property = "allowRead"),
-      @Result(column = "allow_update", property = "allowUpdate"),
-      @Result(column = "allow_delete", property = "allowDelete"),
-      @Result(column = "updated_by", property = "updatedBy"),
-      @Result(column = "updated_at", property = "updatedAt"),
-      @Result(column = "created_by", property = "createdBy"),
-      @Result(column = "created_at", property = "createdAt")
-  })
-  Role __roleResultMap();
 
 }
