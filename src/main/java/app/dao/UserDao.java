@@ -75,7 +75,7 @@ public interface UserDao {
       """, "</script>"})
   @Results(value = {
       @Result(property = "user", one = @One(resultMap = "userResultMap")),
-      @Result(property = "role", one = @One(resultMap = "roleResultMap", columnPrefix = "role_"))
+      @Result(property = "role", one = @One(resultMap = "app.dao.RoleDao.roleResultMap", columnPrefix = "role_"))
   })
   UserInfo findUserAndRoleByUserName(String userName);
 
