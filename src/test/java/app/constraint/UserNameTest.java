@@ -34,7 +34,8 @@ public class UserNameTest extends ConstraintsTest {
         arguments(new StringValue("", true), new String[]{"{param_name}は^.*[1-9a-zA-Z-_]$の形式で入力してください。",
             "{param_name}は1~256文字以内で入力してください。"}),
         arguments(new StringValue(" ", true), new String[]{"{param_name}は^.*[1-9a-zA-Z-_]$の形式で入力してください。"}),
-        arguments(new StringValue("!", true), new String[]{"{param_name}は^.*[1-9a-zA-Z-_]$の形式で入力してください。"}));
+        arguments(new StringValue("!", true),
+            new String[]{"{param_name}は^.*[1-9a-zA-Z-_]$の形式で入力してください。"}));
 
   }
 

@@ -1,6 +1,5 @@
 package app.dao;
 
-import app.entity.Role;
 import app.entity.User;
 import app.entity.join.UserInfo;
 import app.service.userV1.parameter.UserSearchParam;

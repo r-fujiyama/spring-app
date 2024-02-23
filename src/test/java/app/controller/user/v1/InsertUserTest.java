@@ -115,7 +115,8 @@ public class InsertUserTest extends ControllerTest {
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "パスワードは8~64文字以内で入力してください。"),
                 new Error(ErrorCode.BAD_REQUEST, "パスワードは^.*[1-9a-zA-Z!#$%&@]$の形式で入力してください。")}),
         arguments("user-name", "<".repeat(8), UserType.PRIVATE, "taro", "tokyo", "20",
-            new Error[]{new Error(ErrorCode.BAD_REQUEST, "パスワードは^.*[1-9a-zA-Z!#$%&@]$の形式で入力してください。")}),
+            new Error[]{
+                new Error(ErrorCode.BAD_REQUEST, "パスワードは^.*[1-9a-zA-Z!#$%&@]$の形式で入力してください。")}),
         // ユーザタイプ
         arguments("user-name", "password", null, "taro", "tokyo", "20",
             new Error[]{new Error(ErrorCode.BAD_REQUEST, "ユーザータイプにNULLは許可されていません。")}),
