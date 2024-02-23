@@ -3,10 +3,12 @@ package app.entity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Data
+@Builder
 public class Role {
 
   private long userID;
