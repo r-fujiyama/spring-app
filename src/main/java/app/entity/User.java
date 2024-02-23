@@ -3,9 +3,13 @@ package app.entity;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class User {
