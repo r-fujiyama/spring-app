@@ -31,29 +31,29 @@ public interface UserDao {
         user
       WHERE
         1 = 1
-        <if test="param.id != null">
-          AND id = #{param.id}
+        <if test="id != null">
+          AND id = #{id}
         </if>
-        <if test="param.userName != null">
-          AND name = #{param.userName}
+        <if test="userName != null">
+          AND name = #{userName}
         </if>
-        <if test="param.userType != null">
-          AND type = #{param.userType.code}
+        <if test="userType != null">
+          AND type = #{userType.code}
         </if>
-        <if test="param.userStatus != null">
-          AND status = #{param.userStatus.code}
+        <if test="userStatus != null">
+          AND status = #{userStatus.code}
         </if>
-        <if test="param.firstName != null">
-          AND first_name = #{param.firstName}
+        <if test="firstName != null">
+          AND first_name = #{firstName}
         </if>
-        <if test="param.lastName != null">
-          AND last_name = #{param.lastName}
+        <if test="lastName != null">
+          AND last_name = #{lastName}
         </if>
-        <if test="param.age != null">
-          AND age = #{param.age}
+        <if test="age != null">
+          AND age = #{age}
         </if>
       """, "</script>"})
-  List<User> findByUserSearchParam(@Param("param") UserSearchParam param);
+  List<User> findByUserSearchParam(UserSearchParam param);
 
   @Select({"<script>", """
       SELECT
