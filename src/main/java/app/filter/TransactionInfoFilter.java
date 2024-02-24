@@ -30,7 +30,7 @@ public class TransactionInfoFilter extends OncePerRequestFilter {
       var name = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
       var user = UserDao.findByName(name);
       if (user != null) {
-        TransactionInfo.init(user.getType());
+        TransactionInfo.init(user.getName(), user.getType());
       }
     }
     filterChain.doFilter(request, response);
