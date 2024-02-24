@@ -18,8 +18,7 @@ public class UserServiceConfig {
   public UserV1Service userV1Service(@Private UserV1Service privateService,
       @Freelance UserV1Service freelanceService,
       @Corporate UserV1Service corporateService) {
-    var serviceMap = ServiceUtils.createServiceMap(privateService, freelanceService, corporateService);
-    return ServiceUtils.newProxy(UserV1Service.class, serviceMap);
+    return ServiceUtils.newProxy(UserV1Service.class, privateService, freelanceService, corporateService);
   }
 
   @Bean
@@ -27,8 +26,7 @@ public class UserServiceConfig {
   public UserV2Service userV2Service(@Private UserV2Service privateService,
       @Freelance UserV2Service freelanceService,
       @Corporate UserV2Service corporateService) {
-    var serviceMap = ServiceUtils.createServiceMap(privateService, freelanceService, corporateService);
-    return ServiceUtils.newProxy(UserV2Service.class, serviceMap);
+    return ServiceUtils.newProxy(UserV2Service.class, privateService, freelanceService, corporateService);
   }
 
 }
