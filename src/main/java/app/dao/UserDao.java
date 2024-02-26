@@ -4,9 +4,9 @@ import app.entity.User;
 import app.entity.join.UserInfo;
 import app.service.userV1.parameter.UserSearchParam;
 import java.util.List;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
-import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -103,6 +103,36 @@ public interface UserDao {
       @Result(property = "role", one = @One(resultMap = "app.dao.RoleDao.roleResultMap", columnPrefix = "role_"))
   })
   UserInfo findUserAndRoleByAPIKey(String apiKey);
+
+  @Insert({"<script>", """
+      INSERT INTO user(
+        name
+        , password
+        , type
+        , status
+        , first_name
+        , last_name
+        , age
+        , updated_by
+        , updated_at
+        , created_by
+        , created_at
+      )
+      VALUES (
+        #{name}
+        , #{password}
+        , #{type}
+        , #{status}
+        , #{firstName}
+        , #{lastName}
+        , #{age}
+        , '${@app.TransactionInfo@getUserName()}'
+        , NOW()
+        , '${@app.TransactionInfo@getUserName()}'
+        , NOW()
+      )
+      """, "</script>"})
+  void insert(User user);
 
   @Select("SELECT 1")
   @Results(id = "userResultMap", value = {

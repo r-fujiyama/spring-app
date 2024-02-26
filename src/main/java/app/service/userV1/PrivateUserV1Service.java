@@ -2,6 +2,7 @@ package app.service.userV1;
 
 import app.annotation.service.Private;
 import app.dao.UserDao;
+import app.util.MessageUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class PrivateUserV1Service extends AbstractUserV1Service {
 
-  public PrivateUserV1Service(UserDao userDao) {
-    super(userDao);
+  public PrivateUserV1Service(UserDao userDao, MessageUtils messageUtils) {
+    super(userDao, messageUtils);
   }
 
   @Override

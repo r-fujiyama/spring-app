@@ -16,5 +16,7 @@ public class ErrorMessage {
   public static final String TYPE_MISMATCH = "app.error.message.type.mismatch";
   // リクエストメソッド'{0}'はサポートされていません。
   public static final String METHOD_NOT_SUPPORTED = "app.error.method.not.supported";
+  // '{0}'ユーザーは既に存在します。追加することは出来ません。
+  public static final String USER_ALREADY_EXISTS = "app.error.user.already.exists";
 
 }
