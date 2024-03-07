@@ -4,7 +4,7 @@ import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV2.parameter.InsertUserParam;
 import app.service.userV2.parameter.UpdateUserParam;
-import app.service.userV2.parameter.UserSearchParam;
+import app.service.userV2.parameter.SearchUserParam;
 import app.service.userV2.result.User;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import java.util.List;
 public abstract class AbstractUserV2Service implements UserV2Service {
 
   @Override
-  public List<User> userSearch(UserSearchParam param) {
+  public List<User> searchUsers(SearchUserParam param) {
     getUserDetailProcess();
     var user = User.builder()
         .id(1L)

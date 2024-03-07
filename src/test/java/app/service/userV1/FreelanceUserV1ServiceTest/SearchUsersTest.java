@@ -26,7 +26,7 @@ public class SearchUsersTest extends ServiceTest {
   @DataSet("test-data/service/userV1/FreelanceUserV1ServiceTest/SearchUsersTest/users.yml")
   @ParameterizedTest
   @MethodSource("searchUsersTestDataProvider")
-  public void userSearchTest(SearchUsersParam param, User[] expected) {
+  public void searchUsersTest(SearchUsersParam param, User[] expected) {
     var actual = service.searchUsers(param);
     assertThat(actual).containsExactly(expected);
   }

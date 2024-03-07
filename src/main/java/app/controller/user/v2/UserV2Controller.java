@@ -10,11 +10,11 @@ import app.controller.user.response.User;
 import app.controller.user.v2.request.InsertUserRequest;
 import app.controller.user.v2.request.UpdateUserRequest;
 import app.controller.user.v2.request.SearchUsersRequest;
-import app.controller.user.v2.response.UserSearchResponse;
+import app.controller.user.v2.response.SearchUsersResponse;
 import app.service.userV2.UserV2Service;
 import app.service.userV2.parameter.InsertUserParam;
 import app.service.userV2.parameter.UpdateUserParam;
-import app.service.userV2.parameter.UserSearchParam;
+import app.service.userV2.parameter.SearchUserParam;
 import jakarta.validation.Valid;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -39,8 +39,8 @@ public class UserV2Controller {
 
   @RoleRead
   @GetMapping
-  public UserSearchResponse userSearch(@Valid SearchUsersRequest request) {
-    var users = userService.userSearch(UserSearchParam.builder()
+  public SearchUsersResponse searchUsers(@Valid SearchUsersRequest request) {
+    var users = userService.searchUsers(SearchUserParam.builder()
         .id(null)
         .userName(request.getUserName())
         .userType(request.getUserType())
@@ -49,7 +49,7 @@ public class UserV2Controller {
         .lastName(request.getLastName())
         .age(request.getAge())
         .build());
-    return new UserSearchResponse(users.stream().map(
+    return new SearchUsersResponse(users.stream().map(
         user -> User.builder()
             .id(user.getId())
             .name(user.getName())

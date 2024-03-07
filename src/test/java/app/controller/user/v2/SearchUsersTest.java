@@ -29,7 +29,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @WebMvcTest(UserV2Controller.class)
-public class UserSearchTest extends ControllerTest {
+public class SearchUsersTest extends ControllerTest {
 
   @MockBean
   UserV2Service userService;
@@ -46,7 +46,7 @@ public class UserSearchTest extends ControllerTest {
         .lastName("tokyo")
         .age(20)
         .build());
-    when(userService.userSearch(any())).thenReturn(users);
+    when(userService.searchUsers(any())).thenReturn(users);
   }
 
   @Test

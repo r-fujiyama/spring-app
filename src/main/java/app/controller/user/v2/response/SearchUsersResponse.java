@@ -8,7 +8,7 @@ import lombok.Value;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
-public class UserSearchResponse extends Response {
+public class SearchUsersResponse extends Response {
 
   List<User> users;
 
