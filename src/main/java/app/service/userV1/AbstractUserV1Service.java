@@ -7,7 +7,7 @@ import app.enums.UserType;
 import app.exception.ConflictException;
 import app.service.userV1.parameter.InsertUserParam;
 import app.service.userV1.parameter.UpdateUserParam;
-import app.service.userV1.parameter.UserSearchParam;
+import app.service.userV1.parameter.SearchUsersParam;
 import app.service.userV1.result.User;
 import app.util.MessageUtils;
 import java.util.List;
@@ -22,9 +22,9 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   private final MessageUtils messageUtils;
 
   @Override
-  public List<User> userSearch(UserSearchParam param) {
+  public List<User> searchUsers(SearchUsersParam param) {
     getUserDetailProcess();
-    var users = userDao.findByUserSearchParam(param);
+    var users = userDao.findBySearchUsersParam(param);
     return users.stream().map(
         user -> User.builder()
             .id(user.getId())

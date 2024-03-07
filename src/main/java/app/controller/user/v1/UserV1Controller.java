@@ -15,13 +15,13 @@ import app.controller.user.v1.request.UpdateUserRequest;
 import app.controller.user.v1.response.DeleteUserResponse;
 import app.controller.user.v1.response.InsertUserResponse;
 import app.controller.user.v1.response.UpdateUserResponse;
-import app.controller.user.v1.response.UserSearchResponse;
+import app.controller.user.v1.response.SearchUsersResponse;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
 import app.service.userV1.parameter.InsertUserParam;
 import app.service.userV1.parameter.UpdateUserParam;
-import app.service.userV1.parameter.UserSearchParam;
+import app.service.userV1.parameter.SearchUsersParam;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import java.util.stream.Collectors;
@@ -48,7 +48,7 @@ public class UserV1Controller {
 
   @RoleRead
   @GetMapping("search")
-  public UserSearchResponse userSearch(
+  public SearchUsersResponse searchUsers(
       @RequestParam(required = false) @Valid @ID Long id,
       @RequestParam(required = false) @Valid @UserName String userName,
       @RequestParam(required = false) @Valid @NotUnknown UserType userType,
@@ -56,7 +56,7 @@ public class UserV1Controller {
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET) String firstName,
       @RequestParam(required = false) @Valid @Pattern(regexp = RegExp.HALF_WIDTH_ALPHABET) String lastName,
       @RequestParam(required = false) @Valid @Age Integer age) {
-    var users = userService.userSearch(UserSearchParam.builder()
+    var users = userService.searchUsers(SearchUsersParam.builder()
         .id(id)
         .userName(userName)
         .userType(userType)
@@ -65,7 +65,7 @@ public class UserV1Controller {
         .lastName(lastName)
         .age(age)
         .build());
-    return new UserSearchResponse(users.stream().map(
+    return new SearchUsersResponse(users.stream().map(
         user -> User.builder()
             .id(user.getId())
             .name(user.getName())

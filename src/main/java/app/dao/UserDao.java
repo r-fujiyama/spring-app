@@ -2,7 +2,7 @@ package app.dao;
 
 import app.entity.User;
 import app.entity.join.UserInfo;
-import app.service.userV1.parameter.UserSearchParam;
+import app.service.userV1.parameter.SearchUsersParam;
 import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -53,7 +53,7 @@ public interface UserDao {
           AND age = #{age}
         </if>
       """, "</script>"})
-  List<User> findByUserSearchParam(UserSearchParam param);
+  List<User> findBySearchUsersParam(SearchUsersParam param);
 
   @Select({"<script>", """
       SELECT

@@ -11,7 +11,7 @@ import app.controller.ControllerTest;
 import app.controller.response.Error;
 import app.controller.response.Response;
 import app.controller.user.response.User;
-import app.controller.user.v1.response.UserSearchResponse;
+import app.controller.user.v1.response.SearchUsersResponse;
 import app.enums.ErrorCode;
 import app.enums.UserStatus;
 import app.enums.UserType;
@@ -46,7 +46,7 @@ public class UserSearchTest extends ControllerTest {
         .lastName("tokyo")
         .age(20)
         .build());
-    when(userService.userSearch(any())).thenReturn(users);
+    when(userService.searchUsers(any())).thenReturn(users);
   }
 
   @Test
@@ -72,7 +72,7 @@ public class UserSearchTest extends ControllerTest {
         .lastName("tokyo")
         .age(20)
         .build());
-    var expected = JSONUtils.toJSON(new UserSearchResponse(users));
+    var expected = JSONUtils.toJSON(new SearchUsersResponse(users));
     assertThat(actual).isEqualTo(expected);
   }
 

@@ -1,4 +1,4 @@
-package app.service.userV1.FreelanceUserV1ServiceTest;
+package app.service.userV1.CorporateUserV1ServiceTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -6,8 +6,8 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.ServiceTest;
-import app.service.userV1.FreelanceUserV1Service;
-import app.service.userV1.parameter.UserSearchParam;
+import app.service.userV1.CorporateUserV1Service;
+import app.service.userV1.parameter.SearchUsersParam;
 import app.service.userV1.result.User;
 import com.github.database.rider.core.api.dataset.DataSet;
 import java.util.stream.Stream;
@@ -17,64 +17,64 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 
-@Import(FreelanceUserV1Service.class)
-public class UserSearchTest extends ServiceTest {
+@Import(CorporateUserV1Service.class)
+public class SearchUsersTest extends ServiceTest {
 
   @Autowired
-  private FreelanceUserV1Service service;
+  private CorporateUserV1Service service;
 
-  @DataSet("test-data/service/userV1/FreelanceUserV1ServiceTest/UserSearchTest/users.yml")
+  @DataSet("test-data/service/userV1/CorporateUserV1ServiceTest/SearchUsersTest/users.yml")
   @ParameterizedTest
-  @MethodSource("userSearchTestDataProvider")
-  public void userSearchTest(UserSearchParam param, User[] expected) {
-    var actual = service.userSearch(param);
+  @MethodSource("searchUsersTestDataProvider")
+  public void userSearchTest(SearchUsersParam param, User[] expected) {
+    var actual = service.searchUsers(param);
     assertThat(actual).containsExactly(expected);
   }
 
-  private static Stream<Arguments> userSearchTestDataProvider() {
+  private static Stream<Arguments> searchUsersTestDataProvider() {
     return Stream.of(
         // id
-        arguments(UserSearchParam.builder().id(0L).build(), new User[]{}),
-        arguments(UserSearchParam.builder().id(1L).build(), new User[]{UserData.ID1}),
-        arguments(UserSearchParam.builder().id(2L).build(), new User[]{UserData.ID2}),
-        arguments(UserSearchParam.builder().id(3L).build(), new User[]{UserData.ID3}),
+        arguments(SearchUsersParam.builder().id(0L).build(), new User[]{}),
+        arguments(SearchUsersParam.builder().id(1L).build(), new User[]{UserData.ID1}),
+        arguments(SearchUsersParam.builder().id(2L).build(), new User[]{UserData.ID2}),
+        arguments(SearchUsersParam.builder().id(3L).build(), new User[]{UserData.ID3}),
         // name
-        arguments(UserSearchParam.builder().userName("unknown").build(), new User[]{}),
-        arguments(UserSearchParam.builder().userName("test_user_1").build(), new User[]{UserData.ID1}),
-        arguments(UserSearchParam.builder().userName("test_user_2").build(), new User[]{UserData.ID2}),
-        arguments(UserSearchParam.builder().userName("test_user_3").build(), new User[]{UserData.ID3}),
+        arguments(SearchUsersParam.builder().userName("unknown").build(), new User[]{}),
+        arguments(SearchUsersParam.builder().userName("test_user_1").build(), new User[]{UserData.ID1}),
+        arguments(SearchUsersParam.builder().userName("test_user_2").build(), new User[]{UserData.ID2}),
+        arguments(SearchUsersParam.builder().userName("test_user_3").build(), new User[]{UserData.ID3}),
         // type
-        arguments(UserSearchParam.builder().userType(UserType.UNKNOWN).build(), new User[]{}),
-        arguments(UserSearchParam.builder().userType(UserType.PRIVATE).build(), new User[]{UserData.ID1, UserData.ID4}),
-        arguments(UserSearchParam.builder().userType(UserType.FREELANCE).build(),
+        arguments(SearchUsersParam.builder().userType(UserType.UNKNOWN).build(), new User[]{}),
+        arguments(SearchUsersParam.builder().userType(UserType.PRIVATE).build(), new User[]{UserData.ID1, UserData.ID4}),
+        arguments(SearchUsersParam.builder().userType(UserType.FREELANCE).build(),
             new User[]{UserData.ID2, UserData.ID5}),
-        arguments(UserSearchParam.builder().userType(UserType.CORPORATE).build(),
+        arguments(SearchUsersParam.builder().userType(UserType.CORPORATE).build(),
             new User[]{UserData.ID3, UserData.ID6}),
         // status
-        arguments(UserSearchParam.builder().userStatus(UserStatus.UNKNOWN).build(), new User[]{}),
-        arguments(UserSearchParam.builder().userStatus(UserStatus.REGISTERED).build(),
+        arguments(SearchUsersParam.builder().userStatus(UserStatus.UNKNOWN).build(), new User[]{}),
+        arguments(SearchUsersParam.builder().userStatus(UserStatus.REGISTERED).build(),
             new User[]{UserData.ID1, UserData.ID4}),
-        arguments(UserSearchParam.builder().userStatus(UserStatus.BLOCKED).build(),
+        arguments(SearchUsersParam.builder().userStatus(UserStatus.BLOCKED).build(),
             new User[]{UserData.ID2, UserData.ID5}),
-        arguments(UserSearchParam.builder().userStatus(UserStatus.DELETED).build(),
+        arguments(SearchUsersParam.builder().userStatus(UserStatus.DELETED).build(),
             new User[]{UserData.ID3, UserData.ID6}),
         // first_name
-        arguments(UserSearchParam.builder().firstName("unknown").build(), new User[]{}),
-        arguments(UserSearchParam.builder().firstName("ichiro").build(), new User[]{UserData.ID1, UserData.ID4}),
-        arguments(UserSearchParam.builder().firstName("giro").build(), new User[]{UserData.ID2, UserData.ID5}),
-        arguments(UserSearchParam.builder().firstName("saburo").build(), new User[]{UserData.ID3, UserData.ID6}),
+        arguments(SearchUsersParam.builder().firstName("unknown").build(), new User[]{}),
+        arguments(SearchUsersParam.builder().firstName("ichiro").build(), new User[]{UserData.ID1, UserData.ID4}),
+        arguments(SearchUsersParam.builder().firstName("giro").build(), new User[]{UserData.ID2, UserData.ID5}),
+        arguments(SearchUsersParam.builder().firstName("saburo").build(), new User[]{UserData.ID3, UserData.ID6}),
         // last_name
-        arguments(UserSearchParam.builder().lastName("unknown").build(), new User[]{}),
-        arguments(UserSearchParam.builder().lastName("tokyo").build(), new User[]{UserData.ID1, UserData.ID4}),
-        arguments(UserSearchParam.builder().lastName("chiba").build(), new User[]{UserData.ID2, UserData.ID5}),
-        arguments(UserSearchParam.builder().lastName("kanagawa").build(), new User[]{UserData.ID3, UserData.ID6}),
+        arguments(SearchUsersParam.builder().lastName("unknown").build(), new User[]{}),
+        arguments(SearchUsersParam.builder().lastName("tokyo").build(), new User[]{UserData.ID1, UserData.ID4}),
+        arguments(SearchUsersParam.builder().lastName("chiba").build(), new User[]{UserData.ID2, UserData.ID5}),
+        arguments(SearchUsersParam.builder().lastName("kanagawa").build(), new User[]{UserData.ID3, UserData.ID6}),
         // age
-        arguments(UserSearchParam.builder().age(0).build(), new User[]{}),
-        arguments(UserSearchParam.builder().age(20).build(), new User[]{UserData.ID1}),
-        arguments(UserSearchParam.builder().age(21).build(), new User[]{UserData.ID2}),
-        arguments(UserSearchParam.builder().age(22).build(), new User[]{UserData.ID3}),
+        arguments(SearchUsersParam.builder().age(0).build(), new User[]{}),
+        arguments(SearchUsersParam.builder().age(20).build(), new User[]{UserData.ID1}),
+        arguments(SearchUsersParam.builder().age(21).build(), new User[]{UserData.ID2}),
+        arguments(SearchUsersParam.builder().age(22).build(), new User[]{UserData.ID3}),
         // all
-        arguments(UserSearchParam.builder()
+        arguments(SearchUsersParam.builder()
             .id(1L)
             .userName("test_user_1")
             .userType(UserType.PRIVATE)
@@ -83,7 +83,7 @@ public class UserSearchTest extends ServiceTest {
             .lastName("tokyo")
             .age(20)
             .build(), new User[]{UserData.ID1}),
-        arguments(UserSearchParam.builder()
+        arguments(SearchUsersParam.builder()
             .id(2L)
             .userName("test_user_2")
             .userType(UserType.FREELANCE)
@@ -92,7 +92,7 @@ public class UserSearchTest extends ServiceTest {
             .lastName("chiba")
             .age(21)
             .build(), new User[]{UserData.ID2}),
-        arguments(UserSearchParam.builder()
+        arguments(SearchUsersParam.builder()
             .id(3L)
             .userName("test_user_3")
             .userType(UserType.CORPORATE)

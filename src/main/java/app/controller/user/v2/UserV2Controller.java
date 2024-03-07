@@ -9,7 +9,7 @@ import app.controller.response.Response;
 import app.controller.user.response.User;
 import app.controller.user.v2.request.InsertUserRequest;
 import app.controller.user.v2.request.UpdateUserRequest;
-import app.controller.user.v2.request.UserSearchRequest;
+import app.controller.user.v2.request.SearchUsersRequest;
 import app.controller.user.v2.response.UserSearchResponse;
 import app.service.userV2.UserV2Service;
 import app.service.userV2.parameter.InsertUserParam;
@@ -39,7 +39,7 @@ public class UserV2Controller {
 
   @RoleRead
   @GetMapping
-  public UserSearchResponse userSearch(@Valid UserSearchRequest request) {
+  public UserSearchResponse userSearch(@Valid SearchUsersRequest request) {
     var users = userService.userSearch(UserSearchParam.builder()
         .id(null)
         .userName(request.getUserName())

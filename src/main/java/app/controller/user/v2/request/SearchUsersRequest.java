@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Value;
 
 @Value
-public class UserSearchRequest {
+public class SearchUsersRequest {
 
   @UserName
   String userName;
