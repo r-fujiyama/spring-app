@@ -17,6 +17,7 @@ import app.enums.ErrorCode;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
+import app.service.userV1.result.UserInfo;
 import app.util.JSONUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
@@ -37,7 +38,7 @@ public class InsertUserTest extends ControllerTest {
 
   @BeforeEach
   public void beforeEach() {
-    var user = app.service.userV1.result.User.builder()
+    var user = UserInfo.builder()
         .id(1L)
         .name("user-name")
         .type(UserType.PRIVATE)

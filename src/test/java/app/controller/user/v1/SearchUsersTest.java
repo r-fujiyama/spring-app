@@ -16,6 +16,7 @@ import app.enums.ErrorCode;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.service.userV1.UserV1Service;
+import app.service.userV1.result.UserInfo;
 import app.util.JSONUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public class SearchUsersTest extends ControllerTest {
 
   @BeforeEach
   public void beforeEach() {
-    var users = new ArrayList<app.service.userV1.result.User>();
-    users.add(app.service.userV1.result.User.builder()
+    var users = new ArrayList<UserInfo>();
+    users.add(UserInfo.builder()
         .id(1L)
         .name("user-name")
         .type(UserType.PRIVATE)

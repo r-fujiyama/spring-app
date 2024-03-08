@@ -2,13 +2,14 @@ package app.service.userV1;
 
 import app.constants.ErrorMessage;
 import app.dao.UserDao;
+import app.entity.User;
 import app.enums.UserStatus;
 import app.enums.UserType;
 import app.exception.ConflictException;
 import app.service.userV1.parameter.InsertUserParam;
 import app.service.userV1.parameter.UpdateUserParam;
 import app.service.userV1.parameter.SearchUsersParam;
-import app.service.userV1.result.User;
+import app.service.userV1.result.UserInfo;
 import app.util.MessageUtils;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,11 +23,11 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   private final MessageUtils messageUtils;
 
   @Override
-  public List<User> searchUsers(SearchUsersParam param) {
+  public List<UserInfo> searchUsers(SearchUsersParam param) {
     getUserDetailProcess();
     var users = userDao.findBySearchUsersParam(param);
     return users.stream().map(
-        user -> User.builder()
+        user -> UserInfo.builder()
             .id(user.getId())
             .name(user.getName())
             .type(user.getType())
@@ -42,11 +43,11 @@ public abstract class AbstractUserV1Service implements UserV1Service {
 
   @Override
   @Transactional
-  public User insertUser(InsertUserParam param) {
+  public UserInfo insertUser(InsertUserParam param) {
     insertUserDetailProcess();
     userExistsCheck(param.getUserName());
 
-    userDao.insert(app.entity.User.builder()
+    userDao.insert(User.builder()
         .name(param.getUserName())
         .password(param.getPassword())
         .type(param.getUserType())
@@ -57,7 +58,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
         .build());
 
     var user = userDao.findByName(param.getUserName());
-    return User.builder()
+    return UserInfo.builder()
         .id(user.getId())
         .name(user.getName())
         .type(user.getType())
@@ -78,9 +79,9 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   protected abstract void insertUserDetailProcess();
 
   @Override
-  public User updateUser(UpdateUserParam param) {
+  public UserInfo updateUser(UpdateUserParam param) {
     updateUserDetailProcess();
-    return User.builder()
+    return UserInfo.builder()
         .id(1L)
         .name(null)
         .type(UserType.UNKNOWN)
@@ -94,9 +95,9 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   protected abstract void updateUserDetailProcess();
 
   @Override
-  public User deleteUser(long id) {
+  public UserInfo deleteUser(long id) {
     deleteUserDetailProcess();
-    return User.builder()
+    return UserInfo.builder()
         .id(1L)
         .name(null)
         .type(UserType.UNKNOWN)
