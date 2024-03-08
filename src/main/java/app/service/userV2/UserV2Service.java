@@ -2,13 +2,13 @@ package app.service.userV2;
 
 import app.service.userV2.parameter.InsertUserParam;
 import app.service.userV2.parameter.UpdateUserParam;
-import app.service.userV2.parameter.SearchUserParam;
+import app.service.userV2.parameter.SearchUsersParam;
 import app.service.userV2.result.User;
 import java.util.List;
 
 public interface UserV2Service {
 
-  List<User> searchUsers(SearchUserParam param);
+  List<User> searchUsers(SearchUsersParam param);
 
   void insertUser(InsertUserParam param);
 

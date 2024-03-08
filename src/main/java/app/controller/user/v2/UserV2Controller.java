@@ -14,7 +14,7 @@ import app.controller.user.v2.response.SearchUsersResponse;
 import app.service.userV2.UserV2Service;
 import app.service.userV2.parameter.InsertUserParam;
 import app.service.userV2.parameter.UpdateUserParam;
-import app.service.userV2.parameter.SearchUserParam;
+import app.service.userV2.parameter.SearchUsersParam;
 import jakarta.validation.Valid;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -40,7 +40,7 @@ public class UserV2Controller {
   @RoleRead
   @GetMapping
   public SearchUsersResponse searchUsers(@Valid SearchUsersRequest request) {
-    var users = userService.searchUsers(SearchUserParam.builder()
+    var users = userService.searchUsers(SearchUsersParam.builder()
         .id(null)
         .userName(request.getUserName())
         .userType(request.getUserType())
