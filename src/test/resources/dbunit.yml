@@ -1,2 +1,3 @@
 properties:
+  schema: app
   caseSensitiveTableNames: true

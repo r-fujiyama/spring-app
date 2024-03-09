@@ -1,0 +1,13 @@
+user:
+  - id: "regex:\\d+"
+    name: test_user_1
+    password: password
+    type: 1
+    status: 1
+    first_name: ichiro
+    last_name: tokyo
+    age: 20
+    updated_by: test_user
+    updated_at: "regex:^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{1}$"
+    created_by: test_user
+    created_at: "regex:^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{1}$"
