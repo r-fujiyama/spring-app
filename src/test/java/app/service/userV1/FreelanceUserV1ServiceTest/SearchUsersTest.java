@@ -45,7 +45,8 @@ public class SearchUsersTest extends ServiceTest {
         arguments(SearchUsersParam.builder().userName("test_user_3").build(), new UserInfo[]{UserData.ID3}),
         // type
         arguments(SearchUsersParam.builder().userType(UserType.UNKNOWN).build(), new UserInfo[]{}),
-        arguments(SearchUsersParam.builder().userType(UserType.PRIVATE).build(), new UserInfo[]{UserData.ID1, UserData.ID4}),
+        arguments(SearchUsersParam.builder().userType(UserType.PRIVATE).build(),
+            new UserInfo[]{UserData.ID1, UserData.ID4}),
         arguments(SearchUsersParam.builder().userType(UserType.FREELANCE).build(),
             new UserInfo[]{UserData.ID2, UserData.ID5}),
         arguments(SearchUsersParam.builder().userType(UserType.CORPORATE).build(),
