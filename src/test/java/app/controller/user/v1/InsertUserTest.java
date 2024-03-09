@@ -21,7 +21,7 @@ import app.service.userV1.result.UserInfo;
 import app.util.JSONUtils;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -36,7 +36,7 @@ public class InsertUserTest extends ControllerTest {
   @MockBean
   UserV1Service userService;
 
-  @BeforeEach
+  @BeforeAll
   public void beforeEach() {
     var user = UserInfo.builder()
         .id(1L)
