@@ -20,10 +20,12 @@ import org.springframework.context.annotation.Import;
 @Import(CorporateUserV1Service.class)
 public class SearchUsersTest extends ServiceTest {
 
+  private final static String TEST_DATA_BASE_PATH = "test-data/service/userV1/CorporateUserV1ServiceTest/SearchUsersTest/";
+
   @Autowired
   private CorporateUserV1Service service;
 
-  @DataSet("test-data/service/userV1/CorporateUserV1ServiceTest/SearchUsersTest/users.yml")
+  @DataSet(TEST_DATA_BASE_PATH + "setup-user.yml")
   @ParameterizedTest
   @MethodSource("searchUsersTestDataProvider")
   public void searchUsersTest(SearchUsersParam param, UserInfo[] expected) {
