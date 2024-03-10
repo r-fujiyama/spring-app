@@ -10,6 +10,7 @@ public enum ErrorCode implements CodeValueEnum<Integer, String> {
   UNKNOWN(Integer.MIN_VALUE, "Unknown"),
   BAD_REQUEST(400, "BadRequest"),
   UNAUTHORIZED(401, "Unauthorized"),
+  NOT_FOUND(404, "NotFound"),
   FORBIDDEN(403, "Forbidden"),
   CONFLICT(409, "Conflict"),
   INTERNAL_SERVER_ERROR(500, "InternalServerError");
