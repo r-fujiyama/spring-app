@@ -34,7 +34,7 @@ public class WebSecurityConfig {
       UsernamePasswordAuthenticationProvider usernamePasswordAuthenticationProvider) throws Exception {
     http.securityMatcher("/v1/**")
         .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.GET, "/v1/health-check").permitAll()
+            .requestMatchers(HttpMethod.GET, "/v1/health").permitAll()
             .anyRequest().authenticated()
         )
         .cors(Customizer.withDefaults())
@@ -64,7 +64,7 @@ public class WebSecurityConfig {
       APIKeyAuthenticationProvider apiKeyAuthenticationProvider) throws Exception {
     http.securityMatcher("/v2/**")
         .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(HttpMethod.GET, "/v2/health-check").permitAll()
+            .requestMatchers(HttpMethod.GET, "/v2/health").permitAll()
             .anyRequest().authenticated()
         )
         .cors(Customizer.withDefaults())
