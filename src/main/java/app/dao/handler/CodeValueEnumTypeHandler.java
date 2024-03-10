@@ -26,18 +26,21 @@ public class CodeValueEnumTypeHandler<T1, T2, T3 extends Enum<T3> & CodeValueEnu
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public T3 getNullableResult(ResultSet rs, String columnName) throws SQLException {
-    return CodeValueEnum.fromCode(type, rs.getInt(columnName));
+    return CodeValueEnum.fromCode(type, (T1) rs.getObject(columnName));
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public T3 getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-    return CodeValueEnum.fromCode(type, rs.getInt(columnIndex));
+    return CodeValueEnum.fromCode(type, (T1) rs.getObject(columnIndex));
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public T3 getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
-    return CodeValueEnum.fromCode(type, cs.getInt(columnIndex));
+    return CodeValueEnum.fromCode(type, (T1) cs.getObject(columnIndex));
   }
 
 }

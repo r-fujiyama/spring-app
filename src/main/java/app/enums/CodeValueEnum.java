@@ -8,7 +8,7 @@ public interface CodeValueEnum<T1, T2> {
 
   T2 getValue();
 
-  static <T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> T3 fromCode(Class<T3> clazz, Integer code) {
+  static <T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> T3 fromCode(Class<T3> clazz, T1 code) {
     if (code == null) {
       return null;
     }
@@ -18,7 +18,7 @@ public interface CodeValueEnum<T1, T2> {
         .orElse(getUnknown(clazz));
   }
 
-  static <T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> T3 fromValue(Class<T3> clazz, String value) {
+  static <T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> T3 fromValue(Class<T3> clazz, T2 value) {
     if (value == null) {
       return null;
     }

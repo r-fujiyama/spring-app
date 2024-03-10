@@ -18,7 +18,7 @@ public class StringToCodeValueEnumConverterFactoryTest {
   @ParameterizedTest
   @MethodSource("testValueProvider")
   public void convertTest(Class<StringEnum> clazz, String value, StringEnum expected) {
-    var converterFactory = new StringToCodeValueEnumConverterFactory<Integer, String, StringEnum>();
+    var converterFactory = new StringToCodeValueEnumConverterFactory<Integer, StringEnum>();
     var actual = converterFactory.getConverter(clazz).convert(value);
     assertThat(actual).isEqualTo(expected);
   }
@@ -50,7 +50,7 @@ public class StringToCodeValueEnumConverterFactoryTest {
 
   @Test
   public void noUnknownConvertTest() {
-    var converterFactory = new StringToCodeValueEnumConverterFactory<Integer, String, NoUnknown>();
+    var converterFactory = new StringToCodeValueEnumConverterFactory<Integer, NoUnknown>();
     assertThatThrownBy(() -> converterFactory.getConverter(NoUnknown.class).convert("illegal-value"))
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage(

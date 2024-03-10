@@ -6,7 +6,7 @@ import org.springframework.core.convert.converter.ConverterFactory;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
-public class StringToCodeValueEnumConverterFactory<T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>> implements
+public class StringToCodeValueEnumConverterFactory<T1, T3 extends Enum<T3> & CodeValueEnum<T1, String>> implements
     ConverterFactory<String, T3> {
 
   @Override
@@ -15,7 +15,7 @@ public class StringToCodeValueEnumConverterFactory<T1, T2, T3 extends Enum<T3> &
     return new StringToCodeValueEnum<>(targetType);
   }
 
-  private static class StringToCodeValueEnum<T1, T2, T3 extends Enum<T3> & CodeValueEnum<T1, T2>, T4 extends T3> implements
+  private static class StringToCodeValueEnum<T1, T3 extends Enum<T3> & CodeValueEnum<T1, String>, T4 extends T3> implements
       Converter<String, T4> {
 
     private final Class<T4> targetType;
