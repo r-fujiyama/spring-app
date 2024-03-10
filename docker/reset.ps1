@@ -1,3 +1,8 @@
+$status = wsl.exe -d Ubuntu-22.04 service docker status
+if ($status.Split(' ')[4] -eq 'not') {
+  wsl.exe -d Ubuntu-22.04 sudo service docker start
+}
+
 $result = ""
 $loop = $true
 while ($loop) {
@@ -5,8 +10,7 @@ while ($loop) {
   switch ($result) {
     ({ $_ -eq "Yes" -or $_ -eq "yes" -or $_ -eq "y" }) {
       $loop = $false
-      $userName = $env:UserName
-      $targetFolder = "\\wsl$\Ubuntu-22.04\home\${userName}\develop\spring-app\docker"
+      $targetFolder = "\\wsl$\Ubuntu-22.04\home\$env:UserName\develop\spring-app\docker"
       if (-not (Test-Path $targetFolder)) {
         echo "The target folder does not exist."
         break
