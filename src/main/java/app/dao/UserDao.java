@@ -1,7 +1,7 @@
 package app.dao;
 
 import app.entity.User;
-import app.entity.join.UserInfo;
+import app.entity.join.UserAndRole;
 import app.service.userV1.parameter.SearchUsersParam;
 import java.util.List;
 import org.apache.ibatis.annotations.Insert;
@@ -77,7 +77,7 @@ public interface UserDao {
       @Result(property = "user", one = @One(resultMap = "userResultMap")),
       @Result(property = "role", one = @One(resultMap = "app.dao.RoleDao.roleResultMap", columnPrefix = "role_"))
   })
-  UserInfo findUserAndRoleByUserName(String userName);
+  UserAndRole findUserAndRoleByUserName(String userName);
 
   @Select({"<script>", """
       SELECT
@@ -102,7 +102,7 @@ public interface UserDao {
       @Result(property = "user", one = @One(resultMap = "userResultMap")),
       @Result(property = "role", one = @One(resultMap = "app.dao.RoleDao.roleResultMap", columnPrefix = "role_"))
   })
-  UserInfo findUserAndRoleByAPIKey(String apiKey);
+  UserAndRole findUserAndRoleByAPIKey(String apiKey);
 
   @Insert({"<script>", """
       INSERT INTO user(

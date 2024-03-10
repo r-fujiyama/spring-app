@@ -17,12 +17,12 @@ public class APIKeyAuthenticationProvider implements AuthenticationProvider {
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
     String apiKey = authentication.getCredentials().toString();
-    var userInfo = userDao.findUserAndRoleByAPIKey(apiKey);
-    if (userInfo == null) {
+    var userAndRole = userDao.findUserAndRoleByAPIKey(apiKey);
+    if (userAndRole == null) {
       return null;
     }
-    return new PreAuthenticatedAuthenticationToken(userInfo.getUser().getName(), apiKey,
-        userInfo.getRole().getGrantList());
+    return new PreAuthenticatedAuthenticationToken(userAndRole.getUser().getName(), apiKey,
+        userAndRole.getRole().getGrantList());
   }
 
   @Override

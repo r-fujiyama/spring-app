@@ -5,7 +5,7 @@ import app.entity.User;
 import lombok.Data;
 
 @Data
-public class UserInfo {
+public class UserAndRole {
 
   private User user;
   private Role role;

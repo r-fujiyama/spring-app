@@ -1,7 +1,7 @@
 package app.security.basic;
 
 import app.dao.UserDao;
-import app.entity.join.UserInfo;
+import app.entity.join.UserAndRole;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,19 +20,19 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
     var userName = authentication.getName();
     var password = authentication.getCredentials().toString();
 
-    var userInfo = userDao.findUserAndRoleByUserName(userName);
-    if (!userExists(userInfo, password)) {
+    var userAndRole = userDao.findUserAndRoleByUserName(userName);
+    if (!userExists(userAndRole, password)) {
       return null;
     }
 
-    return new UsernamePasswordAuthenticationToken(userName, password, userInfo.getRole().getGrantList());
+    return new UsernamePasswordAuthenticationToken(userName, password, userAndRole.getRole().getGrantList());
   }
 
-  private boolean userExists(UserInfo userInfo, String password) {
-    if (userInfo == null) {
+  private boolean userExists(UserAndRole userAndRole, String password) {
+    if (userAndRole == null) {
       return false;
     }
-    return userInfo.getUser().getPassword().equals(password);
+    return userAndRole.getUser().getPassword().equals(password);
   }
 
   @Override
