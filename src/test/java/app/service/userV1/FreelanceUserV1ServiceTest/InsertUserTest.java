@@ -29,7 +29,7 @@ public class InsertUserTest extends ServiceTest {
   }
 
   @Test
-  @DataSet(TEST_DATA_BASE_PATH + "clean-user.yml")
+  @DataSet(CLEAN_TABLE_DATA_BASE_PATH + "clean-user.yml")
   @ExpectedDataSet(TEST_DATA_BASE_PATH + "expected-user.yml")
   public void insertUserTest() {
     var actual = service.insertUser(InsertUserParam.builder()

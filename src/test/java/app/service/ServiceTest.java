@@ -20,4 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Import({MessageUtils.class})
 public abstract class ServiceTest {
 
+  protected static final String CLEAN_TABLE_DATA_BASE_PATH = "test-data/clean-table/";
+
 }
