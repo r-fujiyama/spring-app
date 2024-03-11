@@ -15,10 +15,10 @@ public class ErrorMessage {
   // {0}に指定された値の型に誤りがあります。
   public static final String TYPE_MISMATCH = "app.error.message.type.mismatch";
   // リクエストメソッド'{0}'はサポートされていません。
-  public static final String METHOD_NOT_SUPPORTED = "app.error.method.not.supported";
+  public static final String METHOD_NOT_SUPPORTED = "app.error.message.method.not.supported";
   // ユーザー:'{0}'は既に存在します。追加することは出来ません。
-  public static final String USER_ALREADY_EXISTS = "app.error.user.already.exists";
+  public static final String USER_ALREADY_EXISTS = "app.error.message.user.already.exists";
   // ユーザー:'{0}'が見つかりません。
-  public static final String USER_NOT_FOUND = "app.error.user.not.found";
+  public static final String USER_NOT_FOUND = "app.error.message.user.not.found";
 
 }
