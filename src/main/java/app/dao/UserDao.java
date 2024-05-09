@@ -10,9 +10,20 @@ import org.apache.ibatis.annotations.One;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface UserDao {
+
+  @Select({"<script>", """
+      SELECT
+        *
+      FROM
+        user
+      WHERE
+        id = #{id}
+      """, "</script>"})
+  User findByID(long id);
 
   @Select({"<script>", """
       SELECT
@@ -133,6 +144,23 @@ public interface UserDao {
       )
       """, "</script>"})
   void insert(User user);
+
+  @Update({"<script>", """
+      UPDATE user
+      SET
+        <if test="name != null"> name = #{name}, </if>
+        <if test="password != null"> password = #{password}, </if>
+        <if test="type != null"> type = #{type}, </if>
+        <if test="status != null"> status = #{status}, </if>
+        <if test="firstName != null"> first_name = #{firstName}, </if>
+        <if test="lastName != null"> last_name = #{lastName}, </if>
+        <if test="age != null"> age = #{age}, </if>
+        updated_by = '${@app.TransactionInfo@getUserName()}',
+        updated_at = NOW()
+      WHERE
+        id = #{id}
+      """, "</script>"})
+  void update(User user);
 
   @Select("SELECT 1")
   @Results(id = "userResultMap", value = {

@@ -21,7 +21,7 @@ public class User {
   private UserStatus status;
   private String firstName;
   private String lastName;
-  private int age;
+  private Integer age;
   private String updatedBy;
   private LocalDateTime updatedAt;
   private String createdBy;

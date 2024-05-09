@@ -9,6 +9,8 @@ import lombok.Value;
 public class UpdateUserParam {
 
   long id;
+  String name;
+  String password;
   UserType userType;
   String firstName;
   String lastName;

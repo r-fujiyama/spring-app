@@ -11,6 +11,7 @@ import app.service.userV1.parameter.SearchUsersParam;
 import app.service.userV1.parameter.UpdateUserParam;
 import app.service.userV1.result.UserInfo;
 import app.util.MessageUtils;
+import app.util.StringUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   private final MessageUtils messageUtils;
 
   @Override
+  @Transactional(readOnly = true)
   public List<UserInfo> searchUsers(SearchUsersParam param) {
     getUserDetailProcess();
     var users = userDao.findBySearchUsersParam(param);
@@ -79,16 +81,32 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   protected abstract void insertUserDetailProcess();
 
   @Override
+  @Transactional
   public UserInfo updateUser(UpdateUserParam param) {
     updateUserDetailProcess();
+    if (!StringUtils.isEmpty(param.getName())) {
+      userExistsCheck(param.getName());
+    }
+
+    userDao.update(User.builder()
+        .id(param.getId())
+        .name(param.getName())
+        .password(param.getPassword())
+        .type(param.getUserType())
+        .firstName(param.getFirstName())
+        .lastName(param.getLastName())
+        .age(param.getAge())
+        .build());
+
+    var user = userDao.findByID(param.getId());
     return UserInfo.builder()
-        .id(1L)
-        .name(null)
-        .type(UserType.UNKNOWN)
-        .status(UserStatus.UNKNOWN)
-        .firstName(null)
-        .lastName(null)
-        .age(0)
+        .id(user.getId())
+        .name(user.getName())
+        .type(user.getType())
+        .status(user.getStatus())
+        .firstName(user.getFirstName())
+        .lastName(user.getLastName())
+        .age(user.getAge())
         .build();
   }
 

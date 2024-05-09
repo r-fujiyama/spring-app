@@ -52,7 +52,7 @@ public class UpdateUserTest extends ControllerTest {
 
   @Test
   public void OK200() throws Exception {
-    var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);
+    var req = new UpdateUserRequest("test_user_1", "password", UserType.PRIVATE, "taro", "tokyo", 20);
     var actual = mockMvc.perform(put("/v1/user/{id}", 1)
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.toJSON(req)))
@@ -77,7 +77,7 @@ public class UpdateUserTest extends ControllerTest {
   @MethodSource("validationErrorProvider")
   public void validationErrorTest(String id, UserType userType, String firstName, String lastName,
       Integer age, Error error) throws Exception {
-    var req = new UpdateUserRequest(userType, firstName, lastName, age);
+    var req = new UpdateUserRequest(null, null, userType, firstName, lastName, age);
     var res = mockMvc.perform(put("/v1/user/{id}", id)
             .contentType(MediaType.APPLICATION_JSON)
             .content(JSONUtils.toJSON(req)))
@@ -134,7 +134,7 @@ public class UpdateUserTest extends ControllerTest {
 
   @Test
   public void unsupportedMediaTypesTest() throws Exception {
-    var req = new UpdateUserRequest(UserType.PRIVATE, "taro", "tokyo", 20);
+    var req = new UpdateUserRequest("test_user_1", "password", UserType.PRIVATE, "taro", "tokyo", 20);
     var actual = mockMvc.perform(put("/v1/user/{id}", 1)
             .contentType(MediaType.APPLICATION_FORM_URLENCODED)
             .content(JSONUtils.toJSON(req)))

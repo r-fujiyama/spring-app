@@ -106,6 +106,8 @@ public class UserV1Controller {
       @Valid @RequestBody UpdateUserRequest request) {
     var user = userService.updateUser(UpdateUserParam.builder()
         .id(id)
+        .name(request.getUserName())
+        .password(request.getPassword())
         .userType(request.getUserType())
         .firstName(request.getFirstName())
         .lastName(request.getLastName())
