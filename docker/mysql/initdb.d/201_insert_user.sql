@@ -23,9 +23,9 @@ VALUES (
   , 'tokyo'
   , 'taro'
   , 20
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
 )
 , (
@@ -37,9 +37,9 @@ VALUES (
   , 'chiba'
   , 'taro'
   , 21
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
 )
 , (
@@ -51,8 +51,8 @@ VALUES (
   , 'saitama'
   , 'taro'
   , 22
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
 )

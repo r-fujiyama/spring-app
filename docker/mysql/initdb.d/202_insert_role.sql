@@ -17,9 +17,9 @@ VALUES (
   , true
   , true
   , true
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
 )
 , (
@@ -28,9 +28,9 @@ VALUES (
   , true
   , true
   , true
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
 )
 , (
@@ -39,8 +39,8 @@ VALUES (
   , true
   , true
   , true
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
 )

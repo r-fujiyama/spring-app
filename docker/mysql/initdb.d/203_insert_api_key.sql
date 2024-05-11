@@ -11,24 +11,24 @@ INSERT INTO api_key (
 VALUES (
   1
   , '234b282f-91d3-e7aa-2539-6ac2c26f6ed7'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
 )
 , (
   2
   , '77488f19-e6e7-0870-81ae-73c946d76935'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
 )
 , (
   3
   , '9581fea3-5f95-60cd-71db-42fdfcb111e6'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
-  , 'test user'
+  , 'test_user'
   , '2023-01-01 00:00:00'
 )
