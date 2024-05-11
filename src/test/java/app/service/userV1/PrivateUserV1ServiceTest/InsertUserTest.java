@@ -67,12 +67,12 @@ public class InsertUserTest extends ServiceTest {
         .build())
     ).isInstanceOfSatisfying(ConflictException.class, e -> {
       assertThat(e.getMessage()).isEqualTo(
-          "ErrorCode:Conflict, Message:ユーザー:'test_user_1'は既に存在します。追加することは出来ません。");
+          "ErrorCode:Conflict, Message:ユーザー:'test_user_1'は既に存在します。追加、更新することは出来ません。");
       assertThat(e.getHttpStatus()).isEqualTo(HttpStatus.CONFLICT);
       assertThat(e.getErrors()).hasSize(1);
       assertThat(e.getErrors().getFirst().getCode()).isEqualTo(ErrorCode.CONFLICT);
       assertThat(e.getErrors().getFirst().getMessage()).isEqualTo(
-          "ユーザー:'test_user_1'は既に存在します。追加することは出来ません。");
+          "ユーザー:'test_user_1'は既に存在します。追加、更新することは出来ません。");
     });
   }
 
