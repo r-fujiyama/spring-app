@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.2'
+    id 'org.springframework.boot' version '3.2.5'
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
@@ -21,13 +21,13 @@ repositories {
     mavenCentral()
 }
 
-def springSessionDataRedisVersion = '3.2.1'
+def springSessionDataRedisVersion = '3.2.2'
 def mybatisSpringBootStarter = '3.0.3'
-def guavaVersion = '33.0.0-jre'
-def mysqlConnectorJVersion = '8.3.0'
-def lombokVersion = '1.18.30'
-def springSecurityTestVersion = '6.2.1'
-def riderJunit5Version = '1.41.1'
+def guavaVersion = '33.2.0-jre'
+def mysqlConnectorJVersion = '8.4.0'
+def lombokVersion = '1.18.32'
+def springSecurityTestVersion = '6.2.4'
+def riderJunit5Version = '1.42.0'
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
