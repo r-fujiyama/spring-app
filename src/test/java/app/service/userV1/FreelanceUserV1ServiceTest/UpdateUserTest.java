@@ -57,7 +57,7 @@ public class UpdateUserTest extends ServiceTest {
   @Test
   @DataSet(TEST_DATA_BASE_PATH + "setup-user.yml")
   @ExpectedDataSet(TEST_DATA_BASE_PATH + "setup-user.yml")
-  public void existsUserUpdateTest() {
+  public void existsUserNameUpdateTest() {
     assertThatThrownBy(() -> service.updateUser(UpdateUserParam.builder()
         .name("test_user_1")
         .build())
