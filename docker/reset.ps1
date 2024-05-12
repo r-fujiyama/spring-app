@@ -3,7 +3,6 @@ if ($status.Split(' ')[4] -eq 'not') {
   wsl.exe -d Ubuntu-22.04 sudo service docker start
 }
 
-$result = ""
 $loop = $true
 while ($loop) {
   $result = Read-Host "Delete all Docker data. Are you sure?`nYes(y) No(n)"
