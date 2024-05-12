@@ -29,7 +29,7 @@ public class InsertUserTest extends ServiceTest {
 
   @BeforeAll
   public void beforeAll() {
-    TransactionInfo.init("test_user", UserType.FREELANCE);
+    TransactionInfo.init("test_user", UserType.PRIVATE);
   }
 
   @Test
