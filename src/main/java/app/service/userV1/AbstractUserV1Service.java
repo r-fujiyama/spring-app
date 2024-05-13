@@ -4,8 +4,8 @@ import app.constants.ErrorMessage;
 import app.dao.UserDao;
 import app.entity.User;
 import app.enums.UserStatus;
-import app.enums.UserType;
 import app.exception.ConflictException;
+import app.exception.NotFoundException;
 import app.service.userV1.parameter.InsertUserParam;
 import app.service.userV1.parameter.SearchUsersParam;
 import app.service.userV1.parameter.UpdateUserParam;
@@ -47,7 +47,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   @Transactional
   public UserInfo insertUser(InsertUserParam param) {
     insertUserDetailProcess();
-    userExistsCheck(param.getUserName());
+    userNameConflictCheck(param.getUserName());
 
     userDao.insert(User.builder()
         .name(param.getUserName())
@@ -71,7 +71,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
         .build();
   }
 
-  private void userExistsCheck(String userName) {
+  private void userNameConflictCheck(String userName) {
     var user = userDao.findByName(userName);
     if (user != null) {
       throw new ConflictException(messageUtils.getMessage(ErrorMessage.USER_ALREADY_EXISTS, user.getName()));
@@ -85,7 +85,7 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   public UserInfo updateUser(UpdateUserParam param) {
     updateUserDetailProcess();
     if (!StringUtils.isEmpty(param.getName())) {
-      userExistsCheck(param.getName());
+      userNameConflictCheck(param.getName());
     }
 
     userDao.update(User.builder()
@@ -113,17 +113,18 @@ public abstract class AbstractUserV1Service implements UserV1Service {
   protected abstract void updateUserDetailProcess();
 
   @Override
-  public UserInfo deleteUser(long id) {
+  @Transactional
+  public void deleteUser(long id) {
     deleteUserDetailProcess();
-    return UserInfo.builder()
-        .id(1L)
-        .name(null)
-        .type(UserType.UNKNOWN)
-        .status(UserStatus.UNKNOWN)
-        .firstName(null)
-        .lastName(null)
-        .age(0)
-        .build();
+    existsUserIDCheck(id);
+    userDao.delete(id);
+  }
+
+  private void existsUserIDCheck(long id) {
+    var user = userDao.findByID(id);
+    if (user == null) {
+      throw new NotFoundException(messageUtils.getMessage(ErrorMessage.USER_NOT_FOUND));
+    }
   }
 
   protected abstract void deleteUserDetailProcess();

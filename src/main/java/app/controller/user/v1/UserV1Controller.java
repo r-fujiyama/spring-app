@@ -9,10 +9,10 @@ import app.annotation.role.RoleDelete;
 import app.annotation.role.RoleRead;
 import app.annotation.role.RoleUpdate;
 import app.constants.RegExp;
+import app.controller.response.Response;
 import app.controller.user.response.User;
 import app.controller.user.v1.request.InsertUserRequest;
 import app.controller.user.v1.request.UpdateUserRequest;
-import app.controller.user.v1.response.DeleteUserResponse;
 import app.controller.user.v1.response.InsertUserResponse;
 import app.controller.user.v1.response.SearchUsersResponse;
 import app.controller.user.v1.response.UpdateUserResponse;
@@ -126,17 +126,9 @@ public class UserV1Controller {
 
   @RoleDelete
   @DeleteMapping(path = "{id}")
-  public DeleteUserResponse deleteUser(@Valid @ID @PathVariable("id") long id) {
-    var user = userService.deleteUser(id);
-    return new DeleteUserResponse(User.builder()
-        .id(user.getId())
-        .name(user.getName())
-        .type(user.getType())
-        .status(user.getStatus())
-        .firstName(user.getFirstName())
-        .lastName(user.getLastName())
-        .age(user.getAge())
-        .build());
+  public Response deleteUser(@Valid @ID @PathVariable("id") long id) {
+    userService.deleteUser(id);
+    return new Response();
   }
 
 }

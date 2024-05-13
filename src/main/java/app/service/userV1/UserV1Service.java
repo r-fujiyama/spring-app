@@ -14,6 +14,6 @@ public interface UserV1Service {
 
   UserInfo updateUser(UpdateUserParam param);
 
-  UserInfo deleteUser(long id);
+  void deleteUser(long id);
 
 }

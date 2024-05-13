@@ -4,6 +4,7 @@ import app.entity.User;
 import app.entity.join.UserAndRole;
 import app.service.userV1.parameter.SearchUsersParam;
 import java.util.List;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.One;
@@ -161,6 +162,13 @@ public interface UserDao {
         id = #{id}
       """, "</script>"})
   void update(User user);
+
+  @Delete({"<script>", """
+      DELETE FROM user
+      WHERE
+        id = #{id}
+      """, "</script>"})
+  void delete(long id);
 
   @Select("SELECT 1")
   @Results(id = "userResultMap", value = {

@@ -18,7 +18,7 @@ public class ErrorMessage {
   public static final String METHOD_NOT_SUPPORTED = "app.error.message.method.not.supported";
   // ユーザー:'{0}'は既に存在します。追加、更新することは出来ません。
   public static final String USER_ALREADY_EXISTS = "app.error.message.user.already.exists";
-  // ユーザー:'{0}'が見つかりません。
+  // 指定されたユーザーは存在しません。
   public static final String USER_NOT_FOUND = "app.error.message.user.not.found";
 
 }
