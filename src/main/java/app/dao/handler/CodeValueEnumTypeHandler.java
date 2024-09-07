@@ -18,11 +18,7 @@ public class CodeValueEnumTypeHandler<T1, T2, T3 extends Enum<T3> & CodeValueEnu
 
   @Override
   public void setNonNullParameter(PreparedStatement ps, int i, T3 parameter, JdbcType jdbcType) throws SQLException {
-    if (parameter == null) {
-      ps.setObject(i, null);
-    } else {
-      ps.setObject(i, parameter.getCode());
-    }
+    ps.setObject(i, parameter.getCode());
   }
 
   @Override
