@@ -10,8 +10,8 @@ public enum UserStatus implements CodeValueEnum<Integer, String> {
   UNKNOWN(Integer.MIN_VALUE, "Unknown"),
   UNREGISTERED(0, "Unregistered"),
   REGISTERED(1, "Registered"),
-  BLOCKED(2, "blocked"),
-  DELETED(3, "deleted");
+  BLOCKED(2, "Blocked"),
+  DELETED(3, "Deleted");
 
   private final int code;
   private final String value;
